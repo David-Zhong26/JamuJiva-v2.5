@@ -29,7 +29,11 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   // ——— Bottle: smaller; no rotation; scroll-controlled slide from left to bottom ———
   const bottleOpacity = useTransform(smoothProgress, [0, 0.05, 0.14, 0.42, 0.58, 0.72, 0.90, 1], [0, 1, 1, 1, 1, 0.7, 0.4, 0]);
   const bottleScale = useTransform(smoothProgress, [0, 0.08, 0.14, 0.28, 0.42, 0.58, 0.78, 1], [0.9, 1.05, 0.88, 0.82, 0.76, 0.72, 0.68, 0.64]);
-  const bottleX = useTransform(smoothProgress, [0, 0.08, 0.14, 0.28, 0.42, 0.58, 1], [0, 0, -220, -220, 0, 0, 0]);
+  const bottleX = useTransform(
+    smoothProgress,
+    [0, 0.08, 0.14, 0.28, 0.42, 0.52, 0.65, 0.78, 1],
+    [0, 0, -220, -220, 0, 0, 320, 320, 320]
+  );
   const bottleY = useTransform(smoothProgress, [0, 0.14, 0.28, 0.42, 0.58, 1], [0, 0, 0, 340, 340, 340]);
   const bottleZIndex = useTransform(smoothProgress, [0, 0.08, 0.14, 0.42, 0.58, 0.78, 1], [5, 30, 30, 18, 15, 10, 5]);
 
@@ -51,25 +55,27 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   const flavorsOpacity = useTransform(smoothProgress, [0.76, 0.84, 0.92, 1], [0, 1, 1, 1]);
   const flavorsScale = useTransform(smoothProgress, [0.76, 0.86], [0.96, 1]);
 
-  // ——— Ingredient section: map global progress [0.28, 0.52] → [0, 1] (~400vh), 3 segments 0–0.33, 0.33–0.66, 0.66–1 ———
-  const ingredientSectionProgress = useTransform(smoothProgress, [0.28, 0.52], [0, 1]);
-  // Wheel rotation: clockwise steps so active node moves to top. [0, 0.33, 0.66, 1] → [0, 120, 240, 360] (subtle, no bounce)
-  const wheelRotate = useTransform(ingredientSectionProgress, [0, 0.33, 0.66, 1], [0, 120, 240, 360]);
-  // Step opacities (smooth crossfade; each step holds then fades)
-  const step1Opacity = useTransform(ingredientSectionProgress, [0, 0.08, 0.28, 0.38], [0, 1, 1, 0]);
-  const step2Opacity = useTransform(ingredientSectionProgress, [0.25, 0.35, 0.58, 0.68], [0, 1, 1, 0]);
-  const step3Opacity = useTransform(ingredientSectionProgress, [0.55, 0.65, 0.88, 0.98], [0, 1, 1, 0]);
-  // Step background overlays (premium muted: deeper orange, golden orange, warm earthy)
-  const bgGingerOpacity = useTransform(ingredientSectionProgress, [0, 0.08, 0.28, 0.38], [0, 1, 1, 0]);
-  const bgTurmericOpacity = useTransform(ingredientSectionProgress, [0.25, 0.35, 0.58, 0.68], [0, 1, 1, 0]);
-  const bgTamarindOpacity = useTransform(ingredientSectionProgress, [0.55, 0.65, 0.88, 0.98], [0, 1, 1, 0]);
-  // Active node: brighter, slightly larger; inactive: subdued (lower opacity). Clockwise = step 1→2→3 at top.
-  const circle1Active = useTransform(ingredientSectionProgress, [0.05, 0.20, 0.35, 0.45], [0.65, 1.2, 1.2, 0.65]);
-  const circle2Active = useTransform(ingredientSectionProgress, [0.28, 0.43, 0.58, 0.70], [0.65, 1.2, 1.2, 0.65]);
-  const circle3Active = useTransform(ingredientSectionProgress, [0.61, 0.75, 0.90, 1], [0.65, 1.2, 1.2, 0.65]);
-  const node1Opacity = useTransform(ingredientSectionProgress, [0, 0.12, 0.30, 0.42], [0.45, 1, 1, 0.45]);
-  const node2Opacity = useTransform(ingredientSectionProgress, [0.22, 0.35, 0.52, 0.65], [0.45, 1, 1, 0.45]);
-  const node3Opacity = useTransform(ingredientSectionProgress, [0.52, 0.65, 0.82, 0.95], [0.45, 1, 1, 0.45]);
+  // ——— Ingredient section: wheel rotation starts only AFTER bottle settles (bottleY/bottleScale complete by 0.42) ———
+  const bottleSettleProgress = 0.42;
+  const rotationProgress = useTransform(smoothProgress, (v) => {
+    const t = (v - bottleSettleProgress) / (0.52 - bottleSettleProgress);
+    return Math.max(0, Math.min(1, t));
+  });
+  // Wheel rotation: locked at 0 until bottle settled; then [0, 0.33, 0.66, 1] → [0, 120, 240, 360]
+  const wheelRotate = useTransform(rotationProgress, [0, 0.33, 0.66, 1], [0, 120, 240, 360]);
+  // Step opacities + backgrounds + node highlights: all driven by rotationProgress so steps don’t change early
+  const step1Opacity = useTransform(rotationProgress, [0, 0.08, 0.28, 0.38], [0, 1, 1, 0]);
+  const step2Opacity = useTransform(rotationProgress, [0.25, 0.35, 0.58, 0.68], [0, 1, 1, 0]);
+  const step3Opacity = useTransform(rotationProgress, [0.55, 0.65, 0.88, 0.98], [0, 1, 1, 0]);
+  const bgGingerOpacity = useTransform(rotationProgress, [0, 0.08, 0.28, 0.38], [0, 1, 1, 0]);
+  const bgTurmericOpacity = useTransform(rotationProgress, [0.25, 0.35, 0.58, 0.68], [0, 1, 1, 0]);
+  const bgTamarindOpacity = useTransform(rotationProgress, [0.55, 0.65, 0.88, 0.98], [0, 1, 1, 0]);
+  const circle1Active = useTransform(rotationProgress, [0.05, 0.20, 0.35, 0.45], [0.65, 1.2, 1.2, 0.65]);
+  const circle2Active = useTransform(rotationProgress, [0.28, 0.43, 0.58, 0.70], [0.65, 1.2, 1.2, 0.65]);
+  const circle3Active = useTransform(rotationProgress, [0.61, 0.75, 0.90, 1], [0.65, 1.2, 1.2, 0.65]);
+  const node1Opacity = useTransform(rotationProgress, [0, 0.12, 0.30, 0.42], [0.45, 1, 1, 0.45]);
+  const node2Opacity = useTransform(rotationProgress, [0.22, 0.35, 0.52, 0.65], [0.45, 1, 1, 0.45]);
+  const node3Opacity = useTransform(rotationProgress, [0.52, 0.65, 0.82, 0.95], [0.45, 1, 1, 0.45]);
 
   return (
     <>
@@ -112,7 +118,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             <img
               src={demoJivaBottle}
               alt="Jamu Jiva"
-              className="w-[130%] min-w-[1200px] max-w-[1400px] h-auto object-contain drop-shadow-2xl"
+              className="w-[120%] min-w-[1350px] max-w-[1600px] h-auto object-contain drop-shadow-2xl"
             />
           </motion.div>
 
@@ -184,47 +190,51 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             </div>
           </motion.div>
 
-          {/* ——— Ingredient Carousel: Our Edge — wheel DOWN (center ≈ bottle lid), 3 edge nodes, clockwise step rotation ——— */}
+          {/* ——— Ingredient Carousel: Our Edge — text primary (left, Benefits/Tradition style), wheel secondary (right) ——— */}
           <motion.div
             style={{ opacity: ingredientCarouselOpacity }}
-            className="absolute inset-0 z-[8] flex flex-col items-center justify-end pointer-events-none"
+            className="absolute inset-0 z-[8] flex flex-col md:flex-row items-stretch justify-between gap-8 pointer-events-none"
           >
-            <div className="flex flex-col items-center gap-5 md:gap-6 w-full max-w-xl px-8 pb-[18vh]">
-              {/* Title + content block: shifted down with wheel for balance */}
-              <p className="font-serif text-xl md:text-2xl font-semibold text-white/95 text-center">
+            {/* Left: ingredient text block — eyebrow + large headline + body (match Tradition scale) */}
+            <div className="flex-1 flex flex-col justify-center pl-8 md:pl-20 pr-4 md:pr-12 pb-12 md:pb-0 max-w-xl">
+              <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4 block">
                 Our Edge
-              </p>
-              {/* Step labels + short descriptions (fade per step) */}
-              <div className="relative h-20 flex items-center justify-center min-h-[5rem]">
-                <motion.div style={{ opacity: step1Opacity }} className="absolute text-center">
-                  <p className="font-serif text-lg font-semibold text-white/95">Ginger</p>
-                  <p className="text-white/80 text-sm font-medium mt-1 max-w-[280px] leading-relaxed">
+              </span>
+              <div className="relative min-h-[12rem]">
+                <motion.div style={{ opacity: step1Opacity }} className="absolute inset-0">
+                  <h2 className="font-serif text-4xl md:text-6xl font-black text-white leading-tight mb-6">
+                    <span className="text-[#F47C3E]">GINGER.</span>
+                  </h2>
+                  <p className="text-white/90 font-medium text-lg leading-relaxed max-w-lg">
                     Cold-pressed from Central Java. Sustained focus without the jitters.
                   </p>
                 </motion.div>
-                <motion.div style={{ opacity: step2Opacity }} className="absolute text-center">
-                  <p className="font-serif text-lg font-semibold text-white/95">Turmeric</p>
-                  <p className="text-white/80 text-sm font-medium mt-1 max-w-[280px] leading-relaxed">
+                <motion.div style={{ opacity: step2Opacity }} className="absolute inset-0">
+                  <h2 className="font-serif text-4xl md:text-6xl font-black text-white leading-tight mb-6">
+                    <span className="text-[#F47C3E]">TURMERIC.</span>
+                  </h2>
+                  <p className="text-white/90 font-medium text-lg leading-relaxed max-w-lg">
                     Pure curcumin and natural anti-inflammatories for the modern routine.
                   </p>
                 </motion.div>
-                <motion.div style={{ opacity: step3Opacity }} className="absolute text-center">
-                  <p className="font-serif text-lg font-semibold text-white/95">Tamarind</p>
-                  <p className="text-white/80 text-sm font-medium mt-1 max-w-[280px] leading-relaxed">
+                <motion.div style={{ opacity: step3Opacity }} className="absolute inset-0">
+                  <h2 className="font-serif text-4xl md:text-6xl font-black text-white leading-tight mb-6">
+                    <span className="text-[#F47C3E]">TAMARIND.</span>
+                  </h2>
+                  <p className="text-white/90 font-medium text-lg leading-relaxed max-w-lg">
                     A touch of warmth and balance. Crafted daily, small-batch.
                   </p>
                 </motion.div>
               </div>
-              {/* Wheel: outer ring + inner ring; THREE small nodes on the edge. Clockwise rotation brings next node to top. */}
+            </div>
+            {/* Right: wheel as secondary visual, aligned toward bottle lid area */}
+            <div className="flex-shrink-0 flex items-end justify-center md:justify-end pr-8 md:pr-16 pb-[18vh]">
               <motion.div
                 style={{ rotate: wheelRotate }}
-                className="relative w-48 h-48 md:w-56 md:h-56 rounded-full flex items-center justify-center flex-shrink-0"
+                className="relative w-44 h-44 md:w-52 md:h-52 rounded-full flex items-center justify-center"
               >
-                {/* Big wheel: outer ring */}
                 <div className="absolute inset-0 rounded-full border-2 border-white/30" />
-                {/* Inner ring */}
                 <div className="absolute inset-0 rounded-full border border-white/20 m-4" />
-                {/* Three nodes on the wheel edge: top (-90°), then 120° apart so at 120° and 240° rotation the next is at top */}
                 {[
                   { label: 'Ginger', letter: 'G', scale: circle1Active, opacity: node1Opacity, angle: -90 },
                   { label: 'Turmeric', letter: 'T', scale: circle2Active, opacity: node2Opacity, angle: 150 },
