@@ -45,16 +45,16 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   const heroOpacity = useTransform(smoothProgress, [0, 0.04, 0.10, 0.16], [1, 1, 1, 0]);
   const benefitsOpacity = useTransform(smoothProgress, [0.10, 0.18, 0.26, 0.36], [0, 1, 1, 0]);
   const benefitsSlideX = useTransform(smoothProgress, [0.10, 0.22], [60, 0]);
-  const ingredientCarouselOpacity = useTransform(smoothProgress, [0.28, 0.34, 0.52, 0.58], [0, 1, 1, 0]);
+  const ingredientCarouselOpacity = useTransform(smoothProgress, [0.26, 0.32, 0.50, 0.56], [0, 1, 1, 0]);
   const cultureOpacity = useTransform(smoothProgress, [0.52, 0.62, 0.72, 0.82], [0, 1, 1, 0]);
   const cultureSlideX = useTransform(smoothProgress, [0.52, 0.66], [-60, 0]);
   const flavorsOpacity = useTransform(smoothProgress, [0.76, 0.84, 0.92, 1], [0, 1, 1, 1]);
   const flavorsScale = useTransform(smoothProgress, [0.76, 0.86], [0.96, 1]);
 
-  // ——— Ingredient section: map global progress [0.30, 0.54] → [0, 1] for ~400vh of scroll ———
-  const ingredientSectionProgress = useTransform(smoothProgress, [0.30, 0.54], [0, 1]);
-  // Wheel rotation: 3 steps → 0°, 120°, 240° (scroll-driven, no time-based)
-  const wheelRotate = useTransform(ingredientSectionProgress, [0, 0.33, 0.66, 1], [0, 120, 240, 240]);
+  // ——— Ingredient section: map global progress [0.28, 0.52] → [0, 1] (~400vh), 3 segments 0–0.33, 0.33–0.66, 0.66–1 ———
+  const ingredientSectionProgress = useTransform(smoothProgress, [0.28, 0.52], [0, 1]);
+  // Wheel rotation: clockwise steps so active node moves to top. [0, 0.33, 0.66, 1] → [0, 120, 240, 360] (subtle, no bounce)
+  const wheelRotate = useTransform(ingredientSectionProgress, [0, 0.33, 0.66, 1], [0, 120, 240, 360]);
   // Step opacities (smooth crossfade; each step holds then fades)
   const step1Opacity = useTransform(ingredientSectionProgress, [0, 0.08, 0.28, 0.38], [0, 1, 1, 0]);
   const step2Opacity = useTransform(ingredientSectionProgress, [0.25, 0.35, 0.58, 0.68], [0, 1, 1, 0]);
@@ -63,10 +63,13 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   const bgGingerOpacity = useTransform(ingredientSectionProgress, [0, 0.08, 0.28, 0.38], [0, 1, 1, 0]);
   const bgTurmericOpacity = useTransform(ingredientSectionProgress, [0.25, 0.35, 0.58, 0.68], [0, 1, 1, 0]);
   const bgTamarindOpacity = useTransform(ingredientSectionProgress, [0.55, 0.65, 0.88, 0.98], [0, 1, 1, 0]);
-  // Active circle highlight per step (scale/opacity)
-  const circle1Active = useTransform(ingredientSectionProgress, [0.05, 0.20, 0.35, 0.45], [0.6, 1.15, 1.15, 0.6]);
-  const circle2Active = useTransform(ingredientSectionProgress, [0.30, 0.45, 0.60, 0.72], [0.6, 1.15, 1.15, 0.6]);
-  const circle3Active = useTransform(ingredientSectionProgress, [0.58, 0.72, 0.88, 0.98], [0.6, 1.15, 1.15, 0.6]);
+  // Active node: brighter, slightly larger; inactive: subdued (lower opacity). Clockwise = step 1→2→3 at top.
+  const circle1Active = useTransform(ingredientSectionProgress, [0.05, 0.20, 0.35, 0.45], [0.65, 1.2, 1.2, 0.65]);
+  const circle2Active = useTransform(ingredientSectionProgress, [0.28, 0.43, 0.58, 0.70], [0.65, 1.2, 1.2, 0.65]);
+  const circle3Active = useTransform(ingredientSectionProgress, [0.61, 0.75, 0.90, 1], [0.65, 1.2, 1.2, 0.65]);
+  const node1Opacity = useTransform(ingredientSectionProgress, [0, 0.12, 0.30, 0.42], [0.45, 1, 1, 0.45]);
+  const node2Opacity = useTransform(ingredientSectionProgress, [0.22, 0.35, 0.52, 0.65], [0.45, 1, 1, 0.45]);
+  const node3Opacity = useTransform(ingredientSectionProgress, [0.52, 0.65, 0.82, 0.95], [0.45, 1, 1, 0.45]);
 
   return (
     <>
@@ -109,7 +112,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             <img
               src={demoJivaBottle}
               alt="Jamu Jiva"
-              className="w-[68%] min-w-[380px] max-w-[720px] h-auto object-contain drop-shadow-2xl"
+              className="w-[130%] min-w-[1200px] max-w-[1400px] h-auto object-contain drop-shadow-2xl"
             />
           </motion.div>
 
@@ -181,13 +184,13 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             </div>
           </motion.div>
 
-          {/* ——— Ingredient Carousel: Our Edge — 3 steps (Ginger → Turmeric → Tamarind), wheel anchored to bottle top ——— */}
+          {/* ——— Ingredient Carousel: Our Edge — wheel DOWN (center ≈ bottle lid), 3 edge nodes, clockwise step rotation ——— */}
           <motion.div
             style={{ opacity: ingredientCarouselOpacity }}
             className="absolute inset-0 z-[8] flex flex-col items-center justify-end pointer-events-none"
           >
-            <div className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-xl px-8 pb-[37vh]">
-              {/* Title: moved down for balance with wheel + bottle */}
+            <div className="flex flex-col items-center gap-5 md:gap-6 w-full max-w-xl px-8 pb-[18vh]">
+              {/* Title + content block: shifted down with wheel for balance */}
               <p className="font-serif text-xl md:text-2xl font-semibold text-white/95 text-center">
                 Our Edge
               </p>
@@ -212,32 +215,36 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
                   </p>
                 </motion.div>
               </div>
-              {/* Wheel: center aligns with bottle lid/rim; scroll-driven rotation 0° → 120° → 240° */}
+              {/* Wheel: outer ring + inner ring; THREE small nodes on the edge. Clockwise rotation brings next node to top. */}
               <motion.div
                 style={{ rotate: wheelRotate }}
-                className="relative w-44 h-44 md:w-52 md:h-52 rounded-full border-2 border-white/25 flex items-center justify-center flex-shrink-0"
+                className="relative w-48 h-48 md:w-56 md:h-56 rounded-full flex items-center justify-center flex-shrink-0"
               >
-                <div className="absolute inset-0 rounded-full border-2 border-white/15 -m-3" />
+                {/* Big wheel: outer ring */}
+                <div className="absolute inset-0 rounded-full border-2 border-white/30" />
+                {/* Inner ring */}
+                <div className="absolute inset-0 rounded-full border border-white/20 m-4" />
+                {/* Three nodes on the wheel edge: top (-90°), then 120° apart so at 120° and 240° rotation the next is at top */}
                 {[
-                  { label: 'Ginger', letter: 'G', scale: circle1Active },
-                  { label: 'Turmeric', letter: 'T', scale: circle2Active },
-                  { label: 'Tamarind', letter: 'A', scale: circle3Active },
-                ].map((item, i) => {
-                  const angle = (i * 120) - 90;
-                  return (
+                  { label: 'Ginger', letter: 'G', scale: circle1Active, opacity: node1Opacity, angle: -90 },
+                  { label: 'Turmeric', letter: 'T', scale: circle2Active, opacity: node2Opacity, angle: 150 },
+                  { label: 'Tamarind', letter: 'A', scale: circle3Active, opacity: node3Opacity, angle: 30 },
+                ].map((item) => (
+                  <div
+                    key={item.label}
+                    className="absolute w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center"
+                    style={{
+                      transform: `rotate(${item.angle}deg) translateY(-5.5rem) rotate(${-item.angle}deg)`,
+                    }}
+                  >
                     <motion.div
-                      key={item.label}
-                      style={{
-                        scale: item.scale,
-                        position: 'absolute',
-                        transform: `rotate(${angle}deg) translateY(-4.75rem) rotate(${-angle}deg)`,
-                      }}
-                      className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center font-serif font-bold text-white/95 text-xs uppercase"
+                      style={{ scale: item.scale, opacity: item.opacity }}
+                      className="w-full h-full rounded-full bg-white/25 backdrop-blur-sm border border-white/35 flex items-center justify-center font-serif font-bold text-white/95 text-xs uppercase shadow-lg"
                     >
                       {item.letter}
                     </motion.div>
-                  );
-                })}
+                  </div>
+                ))}
               </motion.div>
             </div>
           </motion.div>

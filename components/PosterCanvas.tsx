@@ -147,7 +147,7 @@ const PosterCanvas: React.FC<PosterCanvasProps> = ({
         <img
           src={demoJivaBottle}
           alt="Jamu Jiva Bottle"
-          className="w-[400%] min-w-[3000px] max-w-[4000px] h-auto object-contain drop-shadow-2xl"
+          className="w-[100%] min-w-[1000px] max-w-【1200px] h-auto object-contain drop-shadow-2xl"
         />
       </motion.div>
     </div>
