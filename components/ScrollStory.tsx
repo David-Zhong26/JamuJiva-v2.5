@@ -23,7 +23,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
 
   const smoothProgress = useTransform(scrollYProgress, (v) => easeInOutCubic(v));
 
-  // ——— Section boundaries: 1700vh total; ingredient wheel gets ~400vh (0.30–0.54) for slow, immersive pacing ———
+  // ——— Section boundaries: 1500vh total (shorter tail so Flavors/CTA section scroll length is reduced) ———
   // Hero | Benefits | Bottle slide | Ingredient 3-step (Ginger/Turmeric/Tamarind) | Tradition | Flavors
 
   // ——— Bottle: smaller; no rotation; scroll-controlled slide from left to bottom ———
@@ -56,8 +56,8 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   const ingredientCarouselOpacity = useTransform(smoothProgress, [0.26, 0.32, 0.54, 0.60], [0, 1, 1, 0]);
   const cultureOpacity = useTransform(smoothProgress, [0.52, 0.62, 0.72, 0.82], [0, 1, 1, 0]);
   const cultureSlideX = useTransform(smoothProgress, [0.52, 0.66], [-60, 0]);
-  const flavorsOpacity = useTransform(smoothProgress, [0.76, 0.84, 0.92, 1], [0, 1, 1, 1]);
-  const flavorsScale = useTransform(smoothProgress, [0.76, 0.86], [0.96, 1]);
+  const flavorsOpacity = useTransform(smoothProgress, [0.78, 0.85, 0.92, 1], [0, 1, 1, 1]);
+  const flavorsScale = useTransform(smoothProgress, [0.78, 0.88], [0.96, 1]);
 
   // ——— Ingredient section: wheel rotation starts only AFTER bottle settles (bottleY/bottleScale complete by 0.42) ———
   const bottleSettleProgress = 0.42;
@@ -83,8 +83,8 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
 
   return (
     <>
-      {/* Scroll wrapper: 1700vh — ingredient wheel section ~400vh for slow 3-step storytelling */}
-      <div ref={scrollRef} className="relative" style={{ height: '1700vh' }}>
+      {/* Scroll wrapper: 1500vh — shorter so Flavors/CTA section scroll length is reduced */}
+      <div ref={scrollRef} className="relative" style={{ height: '1500vh' }}>
         {/* Sticky viewport */}
         <div className="sticky top-0 h-screen w-full overflow-hidden">
           {/* Background base */}
