@@ -53,38 +53,43 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   const heroOpacity = useTransform(smoothProgress, [0, 0.04, 0.10, 0.16], [1, 1, 1, 0]);
   const benefitsOpacity = useTransform(smoothProgress, [0.10, 0.18, 0.26, 0.36], [0, 1, 1, 0]);
   const benefitsSlideX = useTransform(smoothProgress, [0.10, 0.22], [60, 0]);
-  const ingredientCarouselOpacity = useTransform(smoothProgress, [0.26, 0.32, 0.54, 0.60], [0, 1, 1, 0]);
-  const cultureOpacity = useTransform(smoothProgress, [0.52, 0.62, 0.72, 0.82], [0, 1, 1, 0]);
-  const cultureSlideX = useTransform(smoothProgress, [0.52, 0.66], [-60, 0]);
+  const ingredientCarouselOpacity = useTransform(smoothProgress, [0.26, 0.32, 0.62, 0.68], [0, 1, 1, 0]);
+  const cultureOpacity = useTransform(smoothProgress, [0.58, 0.66, 0.74, 0.84], [0, 1, 1, 0]);
+  const cultureSlideX = useTransform(smoothProgress, [0.58, 0.70], [-60, 0]);
   const flavorsOpacity = useTransform(smoothProgress, [0.78, 0.85, 0.92, 1], [0, 1, 1, 1]);
   const flavorsScale = useTransform(smoothProgress, [0.78, 0.88], [0.96, 1]);
 
   // ——— Ingredient section: wheel rotation starts only AFTER bottle settles (bottleY/bottleScale complete by 0.42) ———
   const bottleSettleProgress = 0.42;
-  // Rotation uses [0.42, 0.58] so user must scroll more to complete wheel; each step holds longer
+  // Rotation [0.42, 0.62]: more scroll for wheel; TAMARIND finishes at 0.62, then transition starts
   const rotationProgress = useTransform(smoothProgress, (v) => {
-    const t = (v - bottleSettleProgress) / (0.58 - bottleSettleProgress);
+    const t = (v - bottleSettleProgress) / (0.62 - bottleSettleProgress);
     return Math.max(0, Math.min(1, t));
   });
-  // Wheel: each step requires more scroll — thresholds 0.4 and 0.75 so step 2/3 hold longer
-  const wheelRotate = useTransform(rotationProgress, [0, 0.4, 0.75, 1], [0, 120, 240, 360]);
-  const step1Opacity = useTransform(rotationProgress, [0, 0.06, 0.32, 0.42], [0, 1, 1, 0]);
-  const step2Opacity = useTransform(rotationProgress, [0.28, 0.42, 0.68, 0.78], [0, 1, 1, 0]);
-  const step3Opacity = useTransform(rotationProgress, [0.62, 0.75, 0.94, 1], [0, 1, 1, 0]);
-  const bgGingerOpacity = useTransform(rotationProgress, [0, 0.06, 0.32, 0.42], [0, 1, 1, 0]);
-  const bgTurmericOpacity = useTransform(rotationProgress, [0.28, 0.42, 0.68, 0.78], [0, 1, 1, 0]);
-  const bgTamarindOpacity = useTransform(rotationProgress, [0.62, 0.75, 0.94, 1], [0, 1, 1, 0]);
-  const circle1Active = useTransform(rotationProgress, [0.02, 0.18, 0.38, 0.48], [0.65, 1.2, 1.2, 0.65]);
-  const circle2Active = useTransform(rotationProgress, [0.32, 0.48, 0.72, 0.82], [0.65, 1.2, 1.2, 0.65]);
+  // Wheel: plateaus at 0°, 120°, 240°, 360° so each step “stops” and scroll feels held
+  const wheelRotate = useTransform(
+    rotationProgress,
+    [0, 0.08, 0.28, 0.32, 0.52, 0.56, 0.82, 1],
+    [0, 120, 120, 240, 240, 360, 360, 360]
+  );
+  // Each step: long hold (flat 1), short transition. Ginger → Turmeric → Tamarind each “stops”.
+  const step1Opacity = useTransform(rotationProgress, [0, 0.04, 0.26, 0.36], [0, 1, 1, 0]);
+  const step2Opacity = useTransform(rotationProgress, [0.28, 0.38, 0.64, 0.74], [0, 1, 1, 0]);
+  const step3Opacity = useTransform(rotationProgress, [0.66, 0.76, 0.98, 1], [0, 1, 1, 0]);
+  const bgGingerOpacity = useTransform(rotationProgress, [0, 0.04, 0.26, 0.36], [0, 1, 1, 0]);
+  const bgTurmericOpacity = useTransform(rotationProgress, [0.28, 0.38, 0.64, 0.74], [0, 1, 1, 0]);
+  const bgTamarindOpacity = useTransform(rotationProgress, [0.66, 0.76, 0.98, 1], [0, 1, 1, 0]);
+  const circle1Active = useTransform(rotationProgress, [0.02, 0.16, 0.30, 0.40], [0.65, 1.2, 1.2, 0.65]);
+  const circle2Active = useTransform(rotationProgress, [0.30, 0.44, 0.68, 0.78], [0.65, 1.2, 1.2, 0.65]);
   const circle3Active = useTransform(rotationProgress, [0.68, 0.80, 0.96, 1], [0.65, 1.2, 1.2, 0.65]);
-  const node1Opacity = useTransform(rotationProgress, [0, 0.10, 0.34, 0.44], [0.45, 1, 1, 0.45]);
-  const node2Opacity = useTransform(rotationProgress, [0.26, 0.40, 0.66, 0.76], [0.45, 1, 1, 0.45]);
-  const node3Opacity = useTransform(rotationProgress, [0.60, 0.72, 0.92, 1], [0.45, 1, 1, 0.45]);
+  const node1Opacity = useTransform(rotationProgress, [0, 0.08, 0.28, 0.38], [0.45, 1, 1, 0.45]);
+  const node2Opacity = useTransform(rotationProgress, [0.26, 0.36, 0.62, 0.72], [0.45, 1, 1, 0.45]);
+  const node3Opacity = useTransform(rotationProgress, [0.64, 0.74, 0.96, 1], [0.45, 1, 1, 0.45]);
 
   return (
     <>
       {/* Scroll wrapper: 1500vh — shorter so Flavors/CTA section scroll length is reduced */}
-      <div ref={scrollRef} className="relative" style={{ height: '1500vh' }}>
+      <div ref={scrollRef} className="relative" style={{ height: '2000vh' }}>
         {/* Sticky viewport */}
         <div className="sticky top-0 h-screen w-full overflow-hidden">
           {/* Background base */}
