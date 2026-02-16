@@ -34,7 +34,11 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
     [0, 0.08, 0.14, 0.28, 0.42, 0.52, 0.65, 0.78, 1],
     [0, 0, -220, -220, 0, 0, 320, 320, 320]
   );
-  const bottleY = useTransform(smoothProgress, [0, 0.14, 0.28, 0.42, 0.58, 1], [0, 0, 0, 340, 340, 340]);
+  const bottleY = useTransform(
+    smoothProgress,
+    [0, 0.14, 0.28, 0.42, 0.52, 0.64, 0.78, 1],
+    [0, 0, 0, 340, 340, 0, 0, 0]
+  );
   const bottleZIndex = useTransform(smoothProgress, [0, 0.08, 0.14, 0.42, 0.58, 0.78, 1], [5, 30, 30, 18, 15, 10, 5]);
 
   // ——— Background (base); ingredient step overlays applied separately ———
@@ -49,7 +53,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   const heroOpacity = useTransform(smoothProgress, [0, 0.04, 0.10, 0.16], [1, 1, 1, 0]);
   const benefitsOpacity = useTransform(smoothProgress, [0.10, 0.18, 0.26, 0.36], [0, 1, 1, 0]);
   const benefitsSlideX = useTransform(smoothProgress, [0.10, 0.22], [60, 0]);
-  const ingredientCarouselOpacity = useTransform(smoothProgress, [0.26, 0.32, 0.50, 0.56], [0, 1, 1, 0]);
+  const ingredientCarouselOpacity = useTransform(smoothProgress, [0.26, 0.32, 0.54, 0.60], [0, 1, 1, 0]);
   const cultureOpacity = useTransform(smoothProgress, [0.52, 0.62, 0.72, 0.82], [0, 1, 1, 0]);
   const cultureSlideX = useTransform(smoothProgress, [0.52, 0.66], [-60, 0]);
   const flavorsOpacity = useTransform(smoothProgress, [0.76, 0.84, 0.92, 1], [0, 1, 1, 1]);
@@ -57,25 +61,25 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
 
   // ——— Ingredient section: wheel rotation starts only AFTER bottle settles (bottleY/bottleScale complete by 0.42) ———
   const bottleSettleProgress = 0.42;
+  // Rotation uses [0.42, 0.58] so user must scroll more to complete wheel; each step holds longer
   const rotationProgress = useTransform(smoothProgress, (v) => {
-    const t = (v - bottleSettleProgress) / (0.52 - bottleSettleProgress);
+    const t = (v - bottleSettleProgress) / (0.58 - bottleSettleProgress);
     return Math.max(0, Math.min(1, t));
   });
-  // Wheel rotation: locked at 0 until bottle settled; then [0, 0.33, 0.66, 1] → [0, 120, 240, 360]
-  const wheelRotate = useTransform(rotationProgress, [0, 0.33, 0.66, 1], [0, 120, 240, 360]);
-  // Step opacities + backgrounds + node highlights: all driven by rotationProgress so steps don’t change early
-  const step1Opacity = useTransform(rotationProgress, [0, 0.08, 0.28, 0.38], [0, 1, 1, 0]);
-  const step2Opacity = useTransform(rotationProgress, [0.25, 0.35, 0.58, 0.68], [0, 1, 1, 0]);
-  const step3Opacity = useTransform(rotationProgress, [0.55, 0.65, 0.88, 0.98], [0, 1, 1, 0]);
-  const bgGingerOpacity = useTransform(rotationProgress, [0, 0.08, 0.28, 0.38], [0, 1, 1, 0]);
-  const bgTurmericOpacity = useTransform(rotationProgress, [0.25, 0.35, 0.58, 0.68], [0, 1, 1, 0]);
-  const bgTamarindOpacity = useTransform(rotationProgress, [0.55, 0.65, 0.88, 0.98], [0, 1, 1, 0]);
-  const circle1Active = useTransform(rotationProgress, [0.05, 0.20, 0.35, 0.45], [0.65, 1.2, 1.2, 0.65]);
-  const circle2Active = useTransform(rotationProgress, [0.28, 0.43, 0.58, 0.70], [0.65, 1.2, 1.2, 0.65]);
-  const circle3Active = useTransform(rotationProgress, [0.61, 0.75, 0.90, 1], [0.65, 1.2, 1.2, 0.65]);
-  const node1Opacity = useTransform(rotationProgress, [0, 0.12, 0.30, 0.42], [0.45, 1, 1, 0.45]);
-  const node2Opacity = useTransform(rotationProgress, [0.22, 0.35, 0.52, 0.65], [0.45, 1, 1, 0.45]);
-  const node3Opacity = useTransform(rotationProgress, [0.52, 0.65, 0.82, 0.95], [0.45, 1, 1, 0.45]);
+  // Wheel: each step requires more scroll — thresholds 0.4 and 0.75 so step 2/3 hold longer
+  const wheelRotate = useTransform(rotationProgress, [0, 0.4, 0.75, 1], [0, 120, 240, 360]);
+  const step1Opacity = useTransform(rotationProgress, [0, 0.06, 0.32, 0.42], [0, 1, 1, 0]);
+  const step2Opacity = useTransform(rotationProgress, [0.28, 0.42, 0.68, 0.78], [0, 1, 1, 0]);
+  const step3Opacity = useTransform(rotationProgress, [0.62, 0.75, 0.94, 1], [0, 1, 1, 0]);
+  const bgGingerOpacity = useTransform(rotationProgress, [0, 0.06, 0.32, 0.42], [0, 1, 1, 0]);
+  const bgTurmericOpacity = useTransform(rotationProgress, [0.28, 0.42, 0.68, 0.78], [0, 1, 1, 0]);
+  const bgTamarindOpacity = useTransform(rotationProgress, [0.62, 0.75, 0.94, 1], [0, 1, 1, 0]);
+  const circle1Active = useTransform(rotationProgress, [0.02, 0.18, 0.38, 0.48], [0.65, 1.2, 1.2, 0.65]);
+  const circle2Active = useTransform(rotationProgress, [0.32, 0.48, 0.72, 0.82], [0.65, 1.2, 1.2, 0.65]);
+  const circle3Active = useTransform(rotationProgress, [0.68, 0.80, 0.96, 1], [0.65, 1.2, 1.2, 0.65]);
+  const node1Opacity = useTransform(rotationProgress, [0, 0.10, 0.34, 0.44], [0.45, 1, 1, 0.45]);
+  const node2Opacity = useTransform(rotationProgress, [0.26, 0.40, 0.66, 0.76], [0.45, 1, 1, 0.45]);
+  const node3Opacity = useTransform(rotationProgress, [0.60, 0.72, 0.92, 1], [0.45, 1, 1, 0.45]);
 
   return (
     <>
@@ -118,7 +122,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             <img
               src={demoJivaBottle}
               alt="Jamu Jiva"
-              className="w-[120%] min-w-[1350px] max-w-[1600px] h-auto object-contain drop-shadow-2xl"
+              className="w-[110%] min-w-[1400px] max-w-[1600px] h-auto object-contain drop-shadow-2xl"
             />
           </motion.div>
 
@@ -190,18 +194,17 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             </div>
           </motion.div>
 
-          {/* ——— Ingredient Carousel: Our Edge — text primary (left, Benefits/Tradition style), wheel secondary (right) ——— */}
+          {/* ——— Ingredient Carousel: Our Edge — everything centered; text above wheel; wheel at bottle ——— */}
           <motion.div
             style={{ opacity: ingredientCarouselOpacity }}
-            className="absolute inset-0 z-[8] flex flex-col md:flex-row items-stretch justify-between gap-8 pointer-events-none"
+            className="absolute inset-0 z-[8] flex flex-col items-center justify-end pointer-events-none"
           >
-            {/* Left: ingredient text block — eyebrow + large headline + body (match Tradition scale) */}
-            <div className="flex-1 flex flex-col justify-center pl-8 md:pl-20 pr-4 md:pr-12 pb-12 md:pb-0 max-w-xl">
-              <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4 block">
+            <div className="flex flex-col items-center text-center w-full max-w-xl px-8 pb-[38vh]">
+              <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4">
                 Our Edge
               </span>
-              <div className="relative min-h-[12rem]">
-                <motion.div style={{ opacity: step1Opacity }} className="absolute inset-0">
+              <div className="relative min-h-[11rem] w-full flex flex-col items-center">
+                <motion.div style={{ opacity: step1Opacity }} className="absolute inset-0 flex flex-col items-center text-center">
                   <h2 className="font-serif text-4xl md:text-6xl font-black text-white leading-tight mb-6">
                     <span className="text-[#F47C3E]">GINGER.</span>
                   </h2>
@@ -209,7 +212,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
                     Cold-pressed from Central Java. Sustained focus without the jitters.
                   </p>
                 </motion.div>
-                <motion.div style={{ opacity: step2Opacity }} className="absolute inset-0">
+                <motion.div style={{ opacity: step2Opacity }} className="absolute inset-0 flex flex-col items-center text-center">
                   <h2 className="font-serif text-4xl md:text-6xl font-black text-white leading-tight mb-6">
                     <span className="text-[#F47C3E]">TURMERIC.</span>
                   </h2>
@@ -217,7 +220,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
                     Pure curcumin and natural anti-inflammatories for the modern routine.
                   </p>
                 </motion.div>
-                <motion.div style={{ opacity: step3Opacity }} className="absolute inset-0">
+                <motion.div style={{ opacity: step3Opacity }} className="absolute inset-0 flex flex-col items-center text-center">
                   <h2 className="font-serif text-4xl md:text-6xl font-black text-white leading-tight mb-6">
                     <span className="text-[#F47C3E]">TAMARIND.</span>
                   </h2>
@@ -226,12 +229,10 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
                   </p>
                 </motion.div>
               </div>
-            </div>
-            {/* Right: wheel as secondary visual, aligned toward bottle lid area */}
-            <div className="flex-shrink-0 flex items-end justify-center md:justify-end pr-8 md:pr-16 pb-[18vh]">
+              {/* Wheel centered, positioned at bottle (low pb so it sits at lid/rim) */}
               <motion.div
                 style={{ rotate: wheelRotate }}
-                className="relative w-44 h-44 md:w-52 md:h-52 rounded-full flex items-center justify-center"
+                className="relative w-44 h-44 md:w-52 md:h-52 rounded-full flex items-center justify-center flex-shrink-0 mt-2"
               >
                 <div className="absolute inset-0 rounded-full border-2 border-white/30" />
                 <div className="absolute inset-0 rounded-full border border-white/20 m-4" />
