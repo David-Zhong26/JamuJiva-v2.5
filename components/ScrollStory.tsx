@@ -27,7 +27,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   // Hero | Benefits | Bottle slide | Ingredient 3-step (Ginger/Turmeric/Tamarind) | Tradition | Flavors
 
   // ——— Bottle: smaller; no rotation; scroll-controlled slide from left to bottom ———
-  const bottleOpacity = useTransform(smoothProgress, [0, 0.05, 0.14, 0.42, 0.58, 0.72, 0.90, 1], [0, 1, 1, 1, 1, 0.7, 0.4, 0]);
+  const bottleOpacity = useTransform(smoothProgress, [0, 0.05, 0.14, 0.42, 0.58, 0.78, 0.86, 1], [0, 1, 1, 1, 1, 1, 0.2, 0]);
   const bottleScale = useTransform(smoothProgress, [0, 0.08, 0.14, 0.28, 0.42, 0.58, 0.78, 1], [0.9, 1.05, 0.88, 0.82, 0.76, 0.72, 0.68, 0.64]);
   const bottleX = useTransform(
     smoothProgress,
@@ -122,7 +122,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             <img
               src={demoJivaBottle}
               alt="Jamu Jiva"
-              className="w-[110%] min-w-[1400px] max-w-[1600px] h-auto object-contain drop-shadow-2xl"
+              className="w-[110%] min-w-[1500px] max-w-[1600px] h-auto object-contain drop-shadow-2xl"
             />
           </motion.div>
 
@@ -199,7 +199,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             style={{ opacity: ingredientCarouselOpacity }}
             className="absolute inset-0 z-[8] flex flex-col items-center justify-end pointer-events-none"
           >
-            <div className="flex flex-col items-center text-center w-full max-w-xl px-8 pb-[38vh]">
+            <div className="flex flex-col items-center text-center w-full max-w-xl px-8 pb-[26vh]">
               <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4">
                 Our Edge
               </span>
