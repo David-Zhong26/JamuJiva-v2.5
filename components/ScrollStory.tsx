@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Send, ChevronDown, ChevronUp, ChevronDown as ChevronDownIcon } from 'lucide-react';
 import demoJiva from '../materials/demo jiva.jpg';
+import background from '../materials/background.jpg';
 import demoJivaBottle from '../materials/demo jiva removed.png';
 
 const easeInOutCubic = (t: number) =>
@@ -41,8 +42,9 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   );
   const bottleZIndex = useTransform(smoothProgress, [0, 0.08, 0.14, 0.42, 0.58, 0.78, 1], [5, 30, 30, 18, 15, 10, 5]);
 
-  // ——— Background (base); ingredient step overlays applied separately ———
-  const bgImageOpacity = useTransform(smoothProgress, [0, 0.14, 0.22], [1, 0.2, 0]);
+  // ——— Background: demo jiva until bottle pops to max, then crossfade to background.jpg before bottle moves ———
+  const bgDemoJivaOpacity = useTransform(smoothProgress, [0, 0.08, 0.14], [1, 1, 0]);
+  const bgBackgroundOpacity = useTransform(smoothProgress, [0, 0.08, 0.14, 0.22], [0, 0, 1, 0]);
   const bgColor = useTransform(
     smoothProgress,
     [0, 0.14, 0.28, 0.30, 0.54, 0.60, 0.78, 0.86, 1],
@@ -103,11 +105,22 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
           <motion.div style={{ opacity: bgTurmericOpacity }} className="absolute inset-0 z-0 bg-[#C99A6B]/80" />
           <motion.div style={{ opacity: bgTamarindOpacity }} className="absolute inset-0 z-0 bg-[#8B6914]/75" />
           <motion.div
-            style={{ opacity: bgImageOpacity }}
+            style={{ opacity: bgDemoJivaOpacity }}
             className="absolute inset-0 z-0"
           >
             <img
               src={demoJiva}
+              alt=""
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#2D4F3E]/90 via-transparent to-black/20" />
+          </motion.div>
+          <motion.div
+            style={{ opacity: bgBackgroundOpacity }}
+            className="absolute inset-0 z-0"
+          >
+            <img
+              src={background}
               alt=""
               className="w-full h-full object-cover"
             />
@@ -128,7 +141,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             <img
               src={demoJivaBottle}
               alt="Jamu Jiva"
-              className="w-[90%] min-w-[1500px] max-w-[1600px] h-auto object-contain drop-shadow-2xl"
+              className="w-[90%] min-w-[600px] max-w-[700px] h-auto object-contain drop-shadow-2xl"
             />
           </motion.div>
 
