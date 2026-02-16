@@ -31,13 +31,13 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   const bottleScale = useTransform(smoothProgress, [0, 0.08, 0.14, 0.28, 0.42, 0.58, 0.78, 1], [0.9, 1.05, 0.88, 0.82, 0.76, 0.72, 0.68, 0.64]);
   const bottleX = useTransform(
     smoothProgress,
-    [0, 0.08, 0.14, 0.28, 0.42, 0.52, 0.65, 0.78, 1],
+    [0, 0.08, 0.14, 0.28, 0.42, 0.62, 0.72, 0.80, 1],
     [0, 0, -220, -220, 0, 0, 320, 320, 320]
   );
   const bottleY = useTransform(
     smoothProgress,
-    [0, 0.14, 0.28, 0.42, 0.52, 0.64, 0.78, 1],
-    [0, 0, 0, 340, 340, 0, 0, 0]
+    [0, 0.14, 0.28, 0.42, 0.52, 0.62, 0.72, 0.80, 1],
+    [0, 0, 0, 340, 340, 340, 0, 0, 0]
   );
   const bottleZIndex = useTransform(smoothProgress, [0, 0.08, 0.14, 0.42, 0.58, 0.78, 1], [5, 30, 30, 18, 15, 10, 5]);
 
@@ -72,6 +72,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
     [0, 0.08, 0.28, 0.32, 0.52, 0.56, 0.82, 1],
     [0, 120, 120, 240, 240, 360, 360, 360]
   );
+  const wheelRotateInverse = useTransform(wheelRotate, (v) => -v);
   // Each step: long hold (flat 1), short transition. Ginger → Turmeric → Tamarind each “stops”.
   const step1Opacity = useTransform(rotationProgress, [0, 0.04, 0.26, 0.36], [0, 1, 1, 0]);
   const step2Opacity = useTransform(rotationProgress, [0.28, 0.38, 0.64, 0.74], [0, 1, 1, 0]);
@@ -127,7 +128,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             <img
               src={demoJivaBottle}
               alt="Jamu Jiva"
-              className="w-[110%] min-w-[1500px] max-w-[1600px] h-auto object-contain drop-shadow-2xl"
+              className="w-[90%] min-w-[1500px] max-w-[1600px] h-auto object-contain drop-shadow-2xl"
             />
           </motion.div>
 
@@ -248,13 +249,13 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
                 ].map((item) => (
                   <div
                     key={item.label}
-                    className="absolute w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center"
+                    className="absolute w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center left-1/2 top-1/2"
                     style={{
-                      transform: `rotate(${item.angle}deg) translateY(-5.5rem) rotate(${-item.angle}deg)`,
+                      transform: `translate(-50%, -50%) rotate(${item.angle}deg) translateY(-5.5rem) rotate(${-item.angle}deg)`,
                     }}
                   >
                     <motion.div
-                      style={{ scale: item.scale, opacity: item.opacity }}
+                      style={{ scale: item.scale, opacity: item.opacity, rotate: wheelRotateInverse }}
                       className="w-full h-full rounded-full bg-white/25 backdrop-blur-sm border border-white/35 flex items-center justify-center font-serif font-bold text-white/95 text-xs uppercase shadow-lg"
                     >
                       {item.letter}
