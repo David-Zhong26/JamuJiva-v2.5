@@ -23,52 +23,66 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
 
   const smoothProgress = useTransform(scrollYProgress, (v) => easeInOutCubic(v));
 
-  // ——— Section boundaries: longer scroll (1400vh), wider ranges, less sensitivity ———
-  // Hero: 0–0.07 | Benefits: 0.12–0.30 | Bottle slides left→bottom: 0.28–0.42 (no spin)
-  // Ingredient Carousel: 0.38–0.62 | Tradition: 0.58–0.80 | Flavors: 0.80–1
+  // ——— Section boundaries: 1700vh total; ingredient wheel gets ~400vh (0.30–0.54) for slow, immersive pacing ———
+  // Hero | Benefits | Bottle slide | Ingredient 3-step (Ginger/Turmeric/Tamarind) | Tradition | Flavors
 
-  // ——— Bottle: no rotation; scroll-controlled slide from left to bottom (lower half visible) ———
-  const bottleOpacity = useTransform(smoothProgress, [0, 0.05, 0.14, 0.42, 0.60, 0.75, 0.92, 1], [0, 1, 1, 1, 1, 0.7, 0.4, 0]);
-  const bottleScale = useTransform(smoothProgress, [0, 0.08, 0.14, 0.28, 0.42, 0.60, 0.80, 1], [0.9, 1.1, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65]);
-  const bottleX = useTransform(smoothProgress, [0, 0.08, 0.14, 0.28, 0.42, 0.62, 1], [0, 0, -220, -220, 0, 0, 0]);
-  const bottleY = useTransform(smoothProgress, [0, 0.14, 0.28, 0.42, 0.62, 1], [0, 0, 0, 380, 380, 380]);
-  const bottleZIndex = useTransform(smoothProgress, [0, 0.08, 0.14, 0.42, 0.62, 0.80, 1], [5, 30, 30, 20, 15, 10, 5]);
+  // ——— Bottle: smaller; no rotation; scroll-controlled slide from left to bottom ———
+  const bottleOpacity = useTransform(smoothProgress, [0, 0.05, 0.14, 0.42, 0.58, 0.72, 0.90, 1], [0, 1, 1, 1, 1, 0.7, 0.4, 0]);
+  const bottleScale = useTransform(smoothProgress, [0, 0.08, 0.14, 0.28, 0.42, 0.58, 0.78, 1], [0.9, 1.05, 0.88, 0.82, 0.76, 0.72, 0.68, 0.64]);
+  const bottleX = useTransform(smoothProgress, [0, 0.08, 0.14, 0.28, 0.42, 0.58, 1], [0, 0, -220, -220, 0, 0, 0]);
+  const bottleY = useTransform(smoothProgress, [0, 0.14, 0.28, 0.42, 0.58, 1], [0, 0, 0, 340, 340, 340]);
+  const bottleZIndex = useTransform(smoothProgress, [0, 0.08, 0.14, 0.42, 0.58, 0.78, 1], [5, 30, 30, 18, 15, 10, 5]);
 
-  // ——— Background ———
+  // ——— Background (base); ingredient step overlays applied separately ———
   const bgImageOpacity = useTransform(smoothProgress, [0, 0.14, 0.22], [1, 0.2, 0]);
   const bgColor = useTransform(
     smoothProgress,
-    [0, 0.14, 0.30, 0.42, 0.62, 0.80, 0.88, 1],
-    ['#2D4F3E', '#2D4F3E', '#2D4F3E', '#F5F2ED', '#2D4F3E', '#2D4F3E', '#F5F2ED', '#F5F2ED']
+    [0, 0.14, 0.28, 0.30, 0.54, 0.60, 0.78, 0.86, 1],
+    ['#2D4F3E', '#2D4F3E', '#2D4F3E', '#2D4F3E', '#2D4F3E', '#2D4F3E', '#2D4F3E', '#F5F2ED', '#F5F2ED']
   );
 
-  // ——— Section content opacities (wider ranges = slower transitions) ———
+  // ——— Section content opacities ———
   const heroOpacity = useTransform(smoothProgress, [0, 0.04, 0.10, 0.16], [1, 1, 1, 0]);
   const benefitsOpacity = useTransform(smoothProgress, [0.10, 0.18, 0.26, 0.36], [0, 1, 1, 0]);
   const benefitsSlideX = useTransform(smoothProgress, [0.10, 0.22], [60, 0]);
-  const ingredientCarouselOpacity = useTransform(smoothProgress, [0.34, 0.42, 0.58, 0.66], [0, 1, 1, 0]);
-  const wheelRotate = useTransform(smoothProgress, [0.38, 0.62], [0, 360]);
-  const cultureOpacity = useTransform(smoothProgress, [0.54, 0.64, 0.74, 0.84], [0, 1, 1, 0]);
-  const cultureSlideX = useTransform(smoothProgress, [0.54, 0.68], [-60, 0]);
-  const flavorsOpacity = useTransform(smoothProgress, [0.78, 0.86, 0.94, 1], [0, 1, 1, 1]);
-  const flavorsScale = useTransform(smoothProgress, [0.78, 0.88], [0.96, 1]);
+  const ingredientCarouselOpacity = useTransform(smoothProgress, [0.28, 0.34, 0.52, 0.58], [0, 1, 1, 0]);
+  const cultureOpacity = useTransform(smoothProgress, [0.52, 0.62, 0.72, 0.82], [0, 1, 1, 0]);
+  const cultureSlideX = useTransform(smoothProgress, [0.52, 0.66], [-60, 0]);
+  const flavorsOpacity = useTransform(smoothProgress, [0.76, 0.84, 0.92, 1], [0, 1, 1, 1]);
+  const flavorsScale = useTransform(smoothProgress, [0.76, 0.86], [0.96, 1]);
 
-  // Ingredient carousel content box: smooth crossfade between titles over scroll
-  const carouselTitle1Opacity = useTransform(smoothProgress, [0.38, 0.42, 0.48, 0.52], [0, 1, 1, 0]);
-  const carouselTitle2Opacity = useTransform(smoothProgress, [0.48, 0.52, 0.58, 0.62], [0, 1, 1, 0]);
-  const carouselTitle3Opacity = useTransform(smoothProgress, [0.58, 0.62, 0.68, 0.72], [0, 1, 1, 0]);
+  // ——— Ingredient section: map global progress [0.30, 0.54] → [0, 1] for ~400vh of scroll ———
+  const ingredientSectionProgress = useTransform(smoothProgress, [0.30, 0.54], [0, 1]);
+  // Wheel rotation: 3 steps → 0°, 120°, 240° (scroll-driven, no time-based)
+  const wheelRotate = useTransform(ingredientSectionProgress, [0, 0.33, 0.66, 1], [0, 120, 240, 240]);
+  // Step opacities (smooth crossfade; each step holds then fades)
+  const step1Opacity = useTransform(ingredientSectionProgress, [0, 0.08, 0.28, 0.38], [0, 1, 1, 0]);
+  const step2Opacity = useTransform(ingredientSectionProgress, [0.25, 0.35, 0.58, 0.68], [0, 1, 1, 0]);
+  const step3Opacity = useTransform(ingredientSectionProgress, [0.55, 0.65, 0.88, 0.98], [0, 1, 1, 0]);
+  // Step background overlays (premium muted: deeper orange, golden orange, warm earthy)
+  const bgGingerOpacity = useTransform(ingredientSectionProgress, [0, 0.08, 0.28, 0.38], [0, 1, 1, 0]);
+  const bgTurmericOpacity = useTransform(ingredientSectionProgress, [0.25, 0.35, 0.58, 0.68], [0, 1, 1, 0]);
+  const bgTamarindOpacity = useTransform(ingredientSectionProgress, [0.55, 0.65, 0.88, 0.98], [0, 1, 1, 0]);
+  // Active circle highlight per step (scale/opacity)
+  const circle1Active = useTransform(ingredientSectionProgress, [0.05, 0.20, 0.35, 0.45], [0.6, 1.15, 1.15, 0.6]);
+  const circle2Active = useTransform(ingredientSectionProgress, [0.30, 0.45, 0.60, 0.72], [0.6, 1.15, 1.15, 0.6]);
+  const circle3Active = useTransform(ingredientSectionProgress, [0.58, 0.72, 0.88, 0.98], [0.6, 1.15, 1.15, 0.6]);
 
   return (
     <>
-      {/* Scroll wrapper: 1400vh — larger sections, less sensitive, cinematic pacing */}
-      <div ref={scrollRef} className="relative" style={{ height: '1400vh' }}>
+      {/* Scroll wrapper: 1700vh — ingredient wheel section ~400vh for slow 3-step storytelling */}
+      <div ref={scrollRef} className="relative" style={{ height: '1700vh' }}>
         {/* Sticky viewport */}
         <div className="sticky top-0 h-screen w-full overflow-hidden">
-          {/* Background */}
+          {/* Background base */}
           <motion.div
             style={{ backgroundColor: bgColor }}
             className="absolute inset-0 z-0"
           />
+          {/* Ingredient step backgrounds (crossfade; premium muted tones) */}
+          <motion.div style={{ opacity: bgGingerOpacity }} className="absolute inset-0 z-0 bg-[#B85C2E]/85" />
+          <motion.div style={{ opacity: bgTurmericOpacity }} className="absolute inset-0 z-0 bg-[#C99A6B]/80" />
+          <motion.div style={{ opacity: bgTamarindOpacity }} className="absolute inset-0 z-0 bg-[#8B6914]/75" />
           <motion.div
             style={{ opacity: bgImageOpacity }}
             className="absolute inset-0 z-0"
@@ -95,7 +109,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             <img
               src={demoJivaBottle}
               alt="Jamu Jiva"
-              className="w-[95%] min-w-[600px] max-w-[1100px] h-auto object-contain drop-shadow-2xl"
+              className="w-[68%] min-w-[380px] max-w-[720px] h-auto object-contain drop-shadow-2xl"
             />
           </motion.div>
 
@@ -167,40 +181,61 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             </div>
           </motion.div>
 
-          {/* ——— Ingredient Carousel: sticky wheel + content box (Our Ingredients / Our Edge / Crafted Daily) ——— */}
+          {/* ——— Ingredient Carousel: Our Edge — 3 steps (Ginger → Turmeric → Tamarind), wheel anchored to bottle top ——— */}
           <motion.div
             style={{ opacity: ingredientCarouselOpacity }}
-            className="absolute inset-0 z-[8] flex flex-col items-center justify-center pointer-events-none"
+            className="absolute inset-0 z-[8] flex flex-col items-center justify-end pointer-events-none"
           >
-            <div className="flex flex-col items-center gap-12 md:gap-16 w-full max-w-2xl px-8">
-              <div className="relative h-24 flex items-center justify-center">
-                <motion.p style={{ opacity: carouselTitle1Opacity }} className="absolute font-serif text-2xl md:text-3xl font-semibold text-white/95 text-center">
-                  Our Ingredients
-                </motion.p>
-                <motion.p style={{ opacity: carouselTitle2Opacity }} className="absolute font-serif text-2xl md:text-3xl font-semibold text-white/95 text-center">
-                  Our Edge
-                </motion.p>
-                <motion.p style={{ opacity: carouselTitle3Opacity }} className="absolute font-serif text-2xl md:text-3xl font-semibold text-white/95 text-center">
-                  Crafted Daily
-                </motion.p>
+            <div className="flex flex-col items-center gap-6 md:gap-8 w-full max-w-xl px-8 pb-[37vh]">
+              {/* Title: moved down for balance with wheel + bottle */}
+              <p className="font-serif text-xl md:text-2xl font-semibold text-white/95 text-center">
+                Our Edge
+              </p>
+              {/* Step labels + short descriptions (fade per step) */}
+              <div className="relative h-20 flex items-center justify-center min-h-[5rem]">
+                <motion.div style={{ opacity: step1Opacity }} className="absolute text-center">
+                  <p className="font-serif text-lg font-semibold text-white/95">Ginger</p>
+                  <p className="text-white/80 text-sm font-medium mt-1 max-w-[280px] leading-relaxed">
+                    Cold-pressed from Central Java. Sustained focus without the jitters.
+                  </p>
+                </motion.div>
+                <motion.div style={{ opacity: step2Opacity }} className="absolute text-center">
+                  <p className="font-serif text-lg font-semibold text-white/95">Turmeric</p>
+                  <p className="text-white/80 text-sm font-medium mt-1 max-w-[280px] leading-relaxed">
+                    Pure curcumin and natural anti-inflammatories for the modern routine.
+                  </p>
+                </motion.div>
+                <motion.div style={{ opacity: step3Opacity }} className="absolute text-center">
+                  <p className="font-serif text-lg font-semibold text-white/95">Tamarind</p>
+                  <p className="text-white/80 text-sm font-medium mt-1 max-w-[280px] leading-relaxed">
+                    A touch of warmth and balance. Crafted daily, small-batch.
+                  </p>
+                </motion.div>
               </div>
+              {/* Wheel: center aligns with bottle lid/rim; scroll-driven rotation 0° → 120° → 240° */}
               <motion.div
                 style={{ rotate: wheelRotate }}
-                className="relative w-48 h-48 md:w-56 md:h-56 rounded-full border-2 border-white/30 flex items-center justify-center"
+                className="relative w-44 h-44 md:w-52 md:h-52 rounded-full border-2 border-white/25 flex items-center justify-center flex-shrink-0"
               >
-                <div className="absolute inset-0 rounded-full border-2 border-white/20 -m-4" />
-                {['Turmeric', 'Ginger', 'Long Pepper'].map((label, i) => {
+                <div className="absolute inset-0 rounded-full border-2 border-white/15 -m-3" />
+                {[
+                  { label: 'Ginger', letter: 'G', scale: circle1Active },
+                  { label: 'Turmeric', letter: 'T', scale: circle2Active },
+                  { label: 'Tamarind', letter: 'A', scale: circle3Active },
+                ].map((item, i) => {
                   const angle = (i * 120) - 90;
                   return (
-                    <div
-                      key={label}
-                      className="absolute w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/15 backdrop-blur-sm border border-white/30 flex items-center justify-center font-serif font-bold text-white/90 text-xs uppercase"
+                    <motion.div
+                      key={item.label}
                       style={{
-                        transform: `rotate(${angle}deg) translateY(-5.5rem) rotate(${-angle}deg)`,
+                        scale: item.scale,
+                        position: 'absolute',
+                        transform: `rotate(${angle}deg) translateY(-4.75rem) rotate(${-angle}deg)`,
                       }}
+                      className="w-11 h-11 md:w-12 md:h-12 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center font-serif font-bold text-white/95 text-xs uppercase"
                     >
-                      {label.slice(0, 1)}
-                    </div>
+                      {item.letter}
+                    </motion.div>
                   );
                 })}
               </motion.div>

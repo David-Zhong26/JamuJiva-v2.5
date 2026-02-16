@@ -45,7 +45,7 @@ const PosterCanvas: React.FC<PosterCanvasProps> = ({
   // Initial: opacity 0, scale 0.8, centered
   // On scroll: fades in, scales to match background bottle, moves slightly down, comes in front of text
   const bottleOpacity = useTransform(smoothProgress, [0, 0.18], [0, 1]);
-  const bottleScale = useTransform(smoothProgress, [0, 0.25, 0.6], [0.8, 1, 1.35]);
+  const bottleScale = useTransform(smoothProgress, [0, 0.6], [0.98, 1.06]);
   const bottleY = useTransform(smoothProgress, [0, 0.2, 0.6], [0, 15, 35]);
   const bottleZIndex = useTransform(smoothProgress, [0.32, 0.45], [5, 30]);
 
@@ -147,7 +147,7 @@ const PosterCanvas: React.FC<PosterCanvasProps> = ({
         <img
           src={demoJivaBottle}
           alt="Jamu Jiva Bottle"
-          className="w-[200%] min-w-[1500px] max-w-[2000px] h-auto object-contain drop-shadow-2xl"
+          className="w-[400%] min-w-[3000px] max-w-[4000px] h-auto object-contain drop-shadow-2xl"
         />
       </motion.div>
     </div>
