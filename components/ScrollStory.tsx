@@ -53,7 +53,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   const heroOpacity = useTransform(smoothProgress, [0, 0.04, 0.10, 0.16], [1, 1, 1, 0]);
   const benefitsOpacity = useTransform(smoothProgress, [0.10, 0.18, 0.26, 0.36], [0, 1, 1, 0]);
   const benefitsSlideX = useTransform(smoothProgress, [0.10, 0.22], [60, 0]);
-  const ingredientCarouselOpacity = useTransform(smoothProgress, [0.26, 0.32, 0.62, 0.68], [0, 1, 1, 0]);
+  const ingredientCarouselOpacity = useTransform(smoothProgress, [0.42, 0.48, 0.62, 0.68], [0, 1, 1, 0]);
   const cultureOpacity = useTransform(smoothProgress, [0.58, 0.66, 0.74, 0.84], [0, 1, 1, 0]);
   const cultureSlideX = useTransform(smoothProgress, [0.58, 0.70], [-60, 0]);
   const flavorsOpacity = useTransform(smoothProgress, [0.78, 0.85, 0.92, 1], [0, 1, 1, 1]);
@@ -90,7 +90,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   return (
     <>
       {/* Scroll wrapper: 1500vh — shorter so Flavors/CTA section scroll length is reduced */}
-      <div ref={scrollRef} className="relative" style={{ height: '2000vh' }}>
+      <div ref={scrollRef} className="relative" style={{ height: '1600vh' }}>
         {/* Sticky viewport */}
         <div className="sticky top-0 h-screen w-full overflow-hidden">
           {/* Background base */}
@@ -128,7 +128,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             <img
               src={demoJivaBottle}
               alt="Jamu Jiva"
-              className="w-[90%] min-w-[1500px] max-w-[1600px] h-auto object-contain drop-shadow-2xl"
+              className="w-[70%] min-w-[800px] max-w-[900px] h-auto object-contain drop-shadow-2xl"
             />
           </motion.div>
 
@@ -324,8 +324,8 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
         </div>
       </div>
 
-      {/* FAQ Accordion */}
-      <section className="py-24 px-6 bg-[#F5F2ED]">
+      {/* FAQ Accordion — shorter gap from BE THE FIRST TO SIP */}
+      <section className="pt-12 pb-24 px-6 bg-[#F5F2ED]">
         <div className="max-w-2xl mx-auto">
           <h2 className="font-serif text-3xl md:text-4xl font-black text-[#2D4F3E] mb-10 text-center">
             Quick answers
