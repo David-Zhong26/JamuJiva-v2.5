@@ -70,7 +70,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   const wheelRotate = useTransform(
     rotationProgress,
     [0, 0.08, 0.28, 0.32, 0.52, 0.56, 0.82, 1],
-    [0, 120, 120, 240, 240, 360, 360, 360]
+    [-8, 112, 112, 232, 232, 352, 352, 352]
   );
   const wheelRotateInverse = useTransform(wheelRotate, (v) => -v);
   // Each step: long hold (flat 1), short transition. Ginger → Turmeric → Tamarind each “stops”.
@@ -128,7 +128,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             <img
               src={demoJivaBottle}
               alt="Jamu Jiva"
-              className="w-[70%] min-w-[800px] max-w-[900px] h-auto object-contain drop-shadow-2xl"
+              className="w-[90%] min-w-[800px] max-w-[900px] h-auto object-contain drop-shadow-2xl"
             />
           </motion.div>
 
