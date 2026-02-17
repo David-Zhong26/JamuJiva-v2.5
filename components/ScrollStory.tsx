@@ -28,16 +28,16 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
 
   // ——— Bottle: smaller; no rotation; scroll-controlled slide from left to bottom ———
   const bottleOpacity = useTransform(smoothProgress, [0, 0.05, 0.14, 0.42, 0.58, 0.78, 0.86, 1], [1, 1, 1, 1, 1, 1, 0, 0]);
-  const bottleScale = useTransform(smoothProgress, [0, 0.08, 0.14, 0.28, 0.42, 0.58, 0.78, 1], [0.9, 1.05, 0.9, 1.05, 1, 1.05, 0.9, 0.85]);
+  const bottleScale = useTransform(smoothProgress, [0, 0.08, 0.14, 0.28, 0.42, 0.58, 0.78, 1], [0.9, 1, 0.9, 1.05, 1, 1.05, 0.9, 0.85]);
   const bottleX = useTransform(
     smoothProgress,
     [0, 0.08, 0.14, 0.28, 0.42, 0.62, 0.72, 0.80, 1],
-    [260, 260, -220, -220, 0, 0, 320, 320, 320]
+    [270, 270, -220, -220, -100, 0, 320, 320, 320]
   );
   const bottleY = useTransform(
     smoothProgress,
     [0, 0.14, 0.28, 0.42, 0.52, 0.62, 0.72, 0.80, 1],
-    [80, 80, 20, 340, 500, 500, 80, 20, 80]
+    [80, 80, 20, 340, 430, 430, 80, 20, 80]
   );
   const bottleZIndex = useTransform(smoothProgress, [0, 0.08, 0.14, 0.42, 0.58, 0.78, 1], [5, 30, 30, 18, 15, 10, 5]);
 
@@ -54,10 +54,10 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   const benefitsOpacity = useTransform(smoothProgress, [0.10, 0.18, 0.26, 0.36], [0, 1, 1, 0]);
   const benefitsSlideX = useTransform(smoothProgress, [0.10, 0.22], [60, 0]);
   const ingredientCarouselOpacity = useTransform(smoothProgress, [0.42, 0.48, 0.62, 0.68], [0, 1, 1, 0]);
-  const cultureOpacity = useTransform(smoothProgress, [0.58, 0.66, 0.74, 0.84], [0, 1, 1, 0]);
-  const cultureSlideX = useTransform(smoothProgress, [0.58, 0.70], [-60, 0]);
-  const flavorsOpacity = useTransform(smoothProgress, [0.74, 0.80, 0.86, 0.90], [0, 1, 1, 1]);
-  const flavorsScale = useTransform(smoothProgress, [0.74, 0.82], [0.98, 1]);
+  const cultureOpacity = useTransform(smoothProgress, [0.70, 0.76, 0.84, 0.92], [0, 1, 1, 0]);
+  const cultureSlideX = useTransform(smoothProgress, [0.70, 0.80], [-60, 0]);
+  const flavorsOpacity = useTransform(smoothProgress, [0.86, 0.92, 0.98, 1], [0, 1, 1, 1]);
+  const flavorsScale = useTransform(smoothProgress, [0.86, 0.96], [0.98, 1]);
 
   // ——— Ingredient section: wheel rotation starts only AFTER bottle settles (bottleY/bottleScale complete by 0.42) ———
   const bottleSettleProgress = 0.42;
@@ -135,7 +135,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
           {/* ——— Hero content (0.00–0.25) ——— */}
           <motion.div
             style={{ opacity: heroOpacity }}
-            className="absolute inset-0 z-10 flex flex-col justify-between py-12 md:py-20 pl-16 pr-8 md:pl-24 md:pr-16 pointer-events-none"
+            className="absolute inset-0 z-10 flex flex-col justify-between py-12 md:py-20 pl-20 pr-8 md:pl-28 md:pr-16 pointer-events-none"
           >
             <div />
             <div className="max-w-4xl space-y-8">
@@ -183,7 +183,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
           {/* ——— Benefits (0.25–0.45) ——— */}
           <motion.div
             style={{ opacity: benefitsOpacity, x: benefitsSlideX }}
-            className="absolute inset-0 z-[8] flex items-center justify-end pr-4 md:pr-10 pl-20 pointer-events-none"
+            className="absolute inset-0 z-[8] flex items-center justify-end pr-4 md:pr-10 pl-12 pointer-events-none"
           >
             <div className="max-w-lg text-right">
               <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4 block">
@@ -205,7 +205,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             style={{ opacity: ingredientCarouselOpacity }}
             className="absolute inset-0 z-[8] flex flex-col items-center justify-end pointer-events-none"
           >
-            <div className="flex flex-col items-center text-center w-full max-w-xl px-8 pb-[14vh]">
+            <div className="flex flex-col items-center text-center w-full max-w-xl px-8 pb-[20vh]">
               <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4">
                 Our Edge
               </span>
@@ -269,7 +269,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
           {/* ——— Culture / Story (0.65–0.80) ——— */}
           <motion.div
             style={{ opacity: cultureOpacity, x: cultureSlideX }}
-            className="absolute inset-0 z-[8] flex items-center pl-16 md:pl-32 pr-20 pointer-events-none"
+            className="absolute inset-0 z-[8] flex items-center pl-24 md:pl-40 pr-20 pointer-events-none"
           >
             <div className="max-w-lg">
               <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4 block">
