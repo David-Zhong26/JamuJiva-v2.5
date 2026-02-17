@@ -28,11 +28,11 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
 
   // ——— Bottle: smaller; no rotation; scroll-controlled slide from left to bottom ———
   const bottleOpacity = useTransform(smoothProgress, [0, 0.03, 0.14, 0.42, 0.58, 0.78, 0.86, 1], [1, 1, 1, 1, 1, 1, 0, 0]);
-  const bottleScale = useTransform(smoothProgress, [0, 0, 0.14, 0.28, 0.42, 0.58, 0.78, 1], [0.95, 1.05, 0.95, 1, 0.95, 1, 0.9, 1]);
+  const bottleScale = useTransform(smoothProgress, [0, 0.05, 0.14, 0.28, 0.42, 0.58, 0.78, 1], [0.95, 1.05, 0.95, 1, 0.95, 1, 0.9, 1]);
   const bottleX = useTransform(
     smoothProgress,
     [0, 0.08, 0.14, 0.28, 0.42, 0.62, 0.72, 0.80, 1],
-    [320, 320, -100, -200, 0, 0, 320, 320, 320]
+    [320, 320, -200, -200, 0, 0, 320, 320, 320]
   );
   const bottleY = useTransform(
     smoothProgress,
@@ -183,7 +183,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
           {/* ——— Benefits (0.25–0.45) ——— */}
           <motion.div
             style={{ opacity: benefitsOpacity, x: benefitsSlideX }}
-            className="absolute inset-0 z-[8] flex items-center justify-end pr-20 md:pr-26 pl-40 pointer-events-none"
+            className="absolute inset-0 z-[8] flex items-center justify-end pr-40 md:pr-36 pl-60 pointer-events-none"
           >
             <div className="max-w-lg text-right">
               <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4 block">
@@ -207,7 +207,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
           >
             <div className="flex flex-col items-center text-center w-full max-w-xl px-8 pb-[26vh]">
               <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4">
-                Our Edge
+                Natural Sourced Ingredients
               </span>
               <div className="relative min-h-[11rem] w-full flex flex-col items-center">
                 <motion.div style={{ opacity: step1Opacity }} className="absolute inset-0 flex flex-col items-center text-center">
@@ -269,7 +269,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
           {/* ——— Culture / Story (0.65–0.80) ——— */}
           <motion.div
             style={{ opacity: cultureOpacity, x: cultureSlideX }}
-            className="absolute inset-0 z-[8] flex items-center pl-35 md:pl-52 pr-28 pointer-events-none"
+            className="absolute inset-0 z-[8] flex items-center pl-45 md:pl-62 pr-28 pointer-events-none"
           >
             <div className="max-w-lg">
               <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4 block">
