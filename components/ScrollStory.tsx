@@ -32,7 +32,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   const bottleX = useTransform(
     smoothProgress,
     [0, 0.08, 0.14, 0.28, 0.42, 0.62, 0.72, 0.80, 1],
-    [320, 320, -200, -200, 0, 0, 320, 320, 320]
+    [320, 320, -100, -200, 0, 0, 320, 320, 320]
   );
   const bottleY = useTransform(
     smoothProgress,
@@ -205,7 +205,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             style={{ opacity: ingredientCarouselOpacity }}
             className="absolute inset-0 z-[8] flex flex-col items-center justify-end pointer-events-none"
           >
-            <div className="flex flex-col items-center text-center w-full max-w-xl px-8 pb-[24vh]">
+            <div className="flex flex-col items-center text-center w-full max-w-xl px-8 pb-[26vh]">
               <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4">
                 Our Edge
               </span>
@@ -269,7 +269,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
           {/* ——— Culture / Story (0.65–0.80) ——— */}
           <motion.div
             style={{ opacity: cultureOpacity, x: cultureSlideX }}
-            className="absolute inset-0 z-[8] flex items-center pl-32 md:pl-48 pr-24 pointer-events-none"
+            className="absolute inset-0 z-[8] flex items-center pl-35 md:pl-52 pr-28 pointer-events-none"
           >
             <div className="max-w-lg">
               <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4 block">
