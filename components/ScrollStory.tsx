@@ -205,7 +205,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             style={{ opacity: ingredientCarouselOpacity }}
             className="absolute inset-0 z-[8] flex flex-col items-center justify-end pointer-events-none"
           >
-            <div className="flex flex-col items-center text-center w-full max-w-xl px-8 pb-[26vh]">
+            <div className="flex flex-col items-center text-center w-full max-w-xl px-8 pb-[14vh]">
               <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4">
                 Our Edge
               </span>
