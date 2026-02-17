@@ -32,12 +32,12 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   const bottleX = useTransform(
     smoothProgress,
     [0, 0.08, 0.14, 0.28, 0.42, 0.62, 0.72, 0.80, 1],
-    [300, 300, -200, -200, 0, 0, 320, 320, 320]
+    [320, 320, -200, -200, 0, 0, 320, 320, 320]
   );
   const bottleY = useTransform(
     smoothProgress,
     [0, 0.14, 0.28, 0.42, 0.52, 0.62, 0.72, 0.80, 1],
-    [100, 100, 20, 430, 430, 430, 80, 20, 80]
+    [50, 50, 20, 430, 430, 430, 80, 20, 80]
   );
   const bottleZIndex = useTransform(smoothProgress, [0, 0.08, 0.14, 0.42, 0.58, 0.78, 1], [5, 30, 30, 18, 15, 10, 5]);
 
@@ -183,7 +183,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
           {/* ——— Benefits (0.25–0.45) ——— */}
           <motion.div
             style={{ opacity: benefitsOpacity, x: benefitsSlideX }}
-            className="absolute inset-0 z-[8] flex items-center justify-end pr-10 md:pr-16 pl-20 pointer-events-none"
+            className="absolute inset-0 z-[8] flex items-center justify-end pr-20 md:pr-26 pl-40 pointer-events-none"
           >
             <div className="max-w-lg text-right">
               <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4 block">
@@ -238,7 +238,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
               {/* Wheel centered, positioned at bottle (low pb so it sits at lid/rim) */}
               <motion.div
                 style={{ rotate: wheelRotate }}
-                className="relative w-44 h-44 md:w-52 md:h-52 rounded-full flex items-center justify-center flex-shrink-0 mt-1"
+                className="relative w-44 h-44 md:w-52 md:h-52 rounded-full flex items-center justify-center flex-shrink-0 mt-0"
               >
                 <div className="absolute inset-0 rounded-full border-2 border-white/30" />
                 <div className="absolute inset-0 rounded-full border border-white/20 m-4" />
