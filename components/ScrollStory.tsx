@@ -28,16 +28,16 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
 
   // ——— Bottle: smaller; no rotation; scroll-controlled slide from left to bottom ———
   const bottleOpacity = useTransform(smoothProgress, [0, 0.05, 0.14, 0.42, 0.58, 0.78, 0.86, 1], [1, 1, 1, 1, 1, 1, 0.2, 0]);
-  const bottleScale = useTransform(smoothProgress, [0, 0.08, 0.14, 0.28, 0.42, 0.58, 0.78, 1], [0.9, 1.05, 1.2, 1.2, 0.86, 0.72, 0.68, 0.64]);
+  const bottleScale = useTransform(smoothProgress, [0, 0.08, 0.14, 0.28, 0.42, 0.58, 0.78, 1], [0.9, 1.05, 0.86, 0.9, 1.1, 1.05, 0.75, 0.8]);
   const bottleX = useTransform(
     smoothProgress,
     [0, 0.08, 0.14, 0.28, 0.42, 0.62, 0.72, 0.80, 1],
-    [160, 160, -220, -220, 0, 0, 320, 320, 320]
+    [200, 200, -220, -220, 0, 0, 320, 320, 320]
   );
   const bottleY = useTransform(
     smoothProgress,
     [0, 0.14, 0.28, 0.42, 0.52, 0.62, 0.72, 0.80, 1],
-    [0, 0, 0, 340, 340, 340, 0, 0, 0]
+    [80, 80, 0, 340, 340, 340, 0, 0, 0]
   );
   const bottleZIndex = useTransform(smoothProgress, [0, 0.08, 0.14, 0.42, 0.58, 0.78, 1], [5, 30, 30, 18, 15, 10, 5]);
 
