@@ -70,7 +70,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   const wheelRotate = useTransform(
     rotationProgress,
     [0, 0.08, 0.28, 0.32, 0.52, 0.56, 0.82, 1],
-    [-33, 87, 87, 207, 207, 327, 327, 327]
+    [-30, 90, 90, 210, 210, 330, 330, 330]
   );
   const wheelRotateInverse = useTransform(wheelRotate, (v) => -v);
   // Each step: long hold (flat 1), short transition. Ginger → Turmeric → Tamarind each “stops”.
