@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
-import ScrollStory from './components/ScrollStory';
+import StorefrontLanding from './components/StorefrontLanding';
 import Footer from './components/Footer';
 import { motion, useScroll, useSpring } from "framer-motion";
 
@@ -31,7 +31,7 @@ const App: React.FC = () => {
       />
       <Navbar />
       <main className="pt-0">
-        <ScrollStory email={email} setEmail={setEmail} onJoin={handleJoin} joined={joined} />
+        <StorefrontLanding email={email} setEmail={setEmail} onJoin={handleJoin} joined={joined} />
       </main>
       <Footer />
     </div>
