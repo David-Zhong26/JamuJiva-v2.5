@@ -149,35 +149,13 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
               </h1>
               <div className="pt-4 flex items-center gap-4 text-[#E5C76B]/90 font-medium tracking-widest text-xs uppercase">
                 <span className="w-12 h-px bg-[#E5C76B]/70" />
-                Scroll to explore
-                <motion.div animate={{ y: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}>
-                  <ChevronDown className="w-4 h-4 inline" />
-                </motion.div>
+                Shop
+                <span className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-white/15 border border-white/20 text-white/95 font-black text-[10px] tracking-widest uppercase">
+                  SHOP
+                </span>
               </div>
             </div>
-            <div className="pointer-events-auto">
-              {!joined ? (
-                <form onSubmit={onJoin} className="flex p-2 bg-white/20 backdrop-blur-xl rounded-full border border-white/30 max-w-md">
-                  <input
-                    type="email"
-                    placeholder="Join the drop..."
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1 bg-transparent px-6 py-3 focus:outline-none placeholder-white/70 font-semibold text-white"
-                  />
-                  <button
-                    type="submit"
-                    className="bg-white text-[#F47C3E] px-8 py-3 rounded-full font-black hover:bg-[#F9D067] hover:text-[#2D4F3E] transition-all flex items-center gap-2"
-                  >
-                    ACCESS <Send className="w-4 h-4" />
-                  </button>
-                </form>
-              ) : (
-                <div className="bg-[#2D4F3E] border border-white/30 px-8 py-4 rounded-full font-black text-white">
-                  YOU'RE ON THE LIST
-                </div>
-              )}
-            </div>
+            <div />
           </motion.div>
 
           {/* ——— Benefits (0.25–0.45) ——— */}
