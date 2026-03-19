@@ -23,43 +23,25 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
 
   const smoothProgress = useTransform(scrollYProgress, (v) => easeInOutCubic(v));
 
-  // ——— Section boundaries: 1500vh total (shorter tail so Flavors/CTA section scroll length is reduced) ———
-  // Hero | Benefits | Bottle slide | Ingredient 3-step (Ginger/Turmeric/Tamarind) | Tradition | Flavors
+  // ——— Bottle: static (no movement). Visible only in hero range. ———
+  const bottleOpacity = useTransform(smoothProgress, (v) => (v < 0.18 ? 1 : 0));
 
-  // ——— Bottle: smaller; no rotation; scroll-controlled slide from left to bottom ———
-  const bottleOpacity = useTransform(smoothProgress, [0, 0.03, 0.14, 0.42, 0.58, 0.78, 0.86, 1], [1, 1, 1, 1, 1, 1, 0, 0]);
-  const bottleScale = useTransform(smoothProgress, [0, 0.05, 0.14, 0.28, 0.42, 0.58, 0.78, 1], [0.95, 1.05, 0.95, 1, 0.95, 1, 0.9, 1]);
-  const bottleX = useTransform(
-    smoothProgress,
-    [0, 0.08, 0.14, 0.28, 0.42, 0.62, 0.72, 0.80, 1],
-    [320, 320, -200, -200, 0, 0, 320, 320, 320]
-  );
-  const bottleY = useTransform(
-    smoothProgress,
-    [0, 0.14, 0.28, 0.42, 0.52, 0.62, 0.72, 0.80, 1],
-    [50, 50, 20, 430, 430, 430, 80, 20, 80]
-  );
-  const bottleZIndex = useTransform(smoothProgress, [0, 0.08, 0.14, 0.42, 0.58, 0.78, 1], [5, 30, 30, 18, 15, 10, 5]);
+  // ——— Background: step-based, no transitions ———
+  const bgImageOpacity = useTransform(smoothProgress, (v) => (v < 0.18 ? 1 : v < 0.22 ? 0.2 : 0));
+  const bgColor = useTransform(smoothProgress, (v) => {
+    if (v < 0.54) return '#2D4F3E';
+    if (v < 0.80) return '#2D4F3E';
+    return '#F5F2ED';
+  });
 
-  // ——— Background (base); ingredient step overlays applied separately ———
-  const bgImageOpacity = useTransform(smoothProgress, [0, 0.14, 0.22], [1, 0.2, 0]);
-  const bgColor = useTransform(
-    smoothProgress,
-    [0, 0.14, 0.28, 0.30, 0.54, 0.60, 0.78, 0.86, 1],
-    ['#2D4F3E', '#2D4F3E', '#2D4F3E', '#2D4F3E', '#2D4F3E', '#2D4F3E', '#2D4F3E', '#F5F2ED', '#F5F2ED']
-  );
+  // ——— Section opacities: step-based, no transitions ———
+  const heroOpacity = useTransform(smoothProgress, (v) => (v < 0.14 ? 1 : 0));
+  const benefitsOpacity = useTransform(smoothProgress, (v) => (v >= 0.10 && v < 0.38 ? 1 : 0));
+  const ingredientCarouselOpacity = useTransform(smoothProgress, (v) => (v >= 0.40 && v < 0.68 ? 1 : 0));
+  const cultureOpacity = useTransform(smoothProgress, (v) => (v >= 0.66 && v < 0.90 ? 1 : 0));
+  const flavorsOpacity = useTransform(smoothProgress, (v) => (v >= 0.86 ? 1 : 0));
 
-  // ——— Section content opacities ———
-  const heroOpacity = useTransform(smoothProgress, [0, 0.04, 0.10, 0.16], [1, 1, 1, 0]);
-  const benefitsOpacity = useTransform(smoothProgress, [0.10, 0.18, 0.26, 0.36], [0, 1, 1, 0]);
-  const benefitsSlideX = useTransform(smoothProgress, [0.10, 0.22], [60, 0]);
-  const ingredientCarouselOpacity = useTransform(smoothProgress, [0.42, 0.48, 0.62, 0.68], [0, 1, 1, 0]);
-  const cultureOpacity = useTransform(smoothProgress, [0.70, 0.76, 0.84, 0.92], [0, 1, 1, 0]);
-  const cultureSlideX = useTransform(smoothProgress, [0.70, 0.80], [-60, 0]);
-  const flavorsOpacity = useTransform(smoothProgress, [0.86, 0.92, 0.98, 1], [0, 1, 1, 1]);
-  const flavorsScale = useTransform(smoothProgress, [0.86, 0.96], [0.98, 1]);
-
-  // ——— Ingredient section: wheel rotation starts only AFTER bottle settles (bottleY/bottleScale complete by 0.42) ———
+  // ——— Ingredient section: wheel rotation (spin section unchanged) ———
   const bottleSettleProgress = 0.42;
   // Rotation [0.42, 0.62]: more scroll for wheel; TAMARIND finishes at 0.62, then transition starts
   const rotationProgress = useTransform(smoothProgress, (v) => {
@@ -114,14 +96,14 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             <div className="absolute inset-0 bg-gradient-to-t from-[#2D4F3E]/90 via-transparent to-black/20" />
           </motion.div>
 
-          {/* ——— Bottle layer: no spin; scroll-controlled slide left → bottom (lower half visible) ——— */}
+          {/* ——— Bottle layer: static (no movement); visible in hero only ——— */}
           <motion.div
             style={{
-              x: bottleX,
-              y: bottleY,
-              scale: bottleScale,
+              x: 140,
+              y: 50,
+              scale: 0.95,
               opacity: bottleOpacity,
-              zIndex: bottleZIndex,
+              zIndex: 20,
             }}
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
           >
@@ -182,7 +164,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
 
           {/* ——— Benefits (0.25–0.45) ——— */}
           <motion.div
-            style={{ opacity: benefitsOpacity, x: benefitsSlideX }}
+            style={{ opacity: benefitsOpacity }}
             className="absolute inset-0 z-[8] flex items-center justify-end pr-40 md:pr-36 pl-60 pointer-events-none"
           >
             <div className="max-w-lg text-right">
@@ -268,7 +250,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
 
           {/* ——— Culture / Story (0.65–0.80) ——— */}
           <motion.div
-            style={{ opacity: cultureOpacity, x: cultureSlideX }}
+            style={{ opacity: cultureOpacity }}
             className="absolute inset-0 z-[8] flex items-center pl-35 md:pl-52 pr-48 pointer-events-none"
           >
             <div className="max-w-lg">
@@ -286,7 +268,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
 
           {/* ——— Flavors + CTA (0.80–1.00) ——— */}
           <motion.div
-            style={{ opacity: flavorsOpacity, scale: flavorsScale }}
+            style={{ opacity: flavorsOpacity }}
             className="absolute inset-0 z-[8] flex flex-col items-center justify-center px-8 pointer-events-auto"
           >
             <span className="text-[#F47C3E] font-black tracking-widest uppercase text-sm mb-4">
