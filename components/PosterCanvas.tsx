@@ -1,7 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Send, ChevronDown } from 'lucide-react';
-import demoJivaBottle from '../materials/demo jiva removed.png';
 
 interface PosterCanvasProps {
   sectionRef: React.RefObject<HTMLElement>;
@@ -37,17 +36,8 @@ const PosterCanvas: React.FC<PosterCanvasProps> = ({
   const imageScale = useTransform(smoothProgress, [0, 0.8, 1], [1, 1.15, 1.25]);
   const bgOpacity = useTransform(smoothProgress, [0.5, 0.85, 1], [1, 0.6, 0]);
 
-  // Text: subtle parallax, fades as bottle covers it
   const textY = useTransform(smoothProgress, [0, 1], [0, 80]);
   const textOpacity = useTransform(smoothProgress, [0, 0.5, 0.9, 1], [1, 1, 0.4, 0]);
-
-  // Bottle: the main storyline element
-  // Initial: opacity 0, scale 0.8, centered
-  // On scroll: fades in, scales to match background bottle, moves slightly down, comes in front of text
-  const bottleOpacity = useTransform(smoothProgress, [0, 0.18], [0, 1]);
-  const bottleScale = useTransform(smoothProgress, [0, 0.6], [0.98, 1.06]);
-  const bottleY = useTransform(smoothProgress, [0, 0.2, 0.6], [0, 15, 35]);
-  const bottleZIndex = useTransform(smoothProgress, [0.32, 0.45], [5, 30]);
 
   return (
     <div 
@@ -133,23 +123,6 @@ const PosterCanvas: React.FC<PosterCanvasProps> = ({
         </div>
       </div>
       </div>
-
-      {/* Bottle - main storyline: fades in, scales up, moves down, comes in front of text */}
-      <motion.div
-        style={{
-          scale: bottleScale,
-          y: bottleY,
-          opacity: bottleOpacity,
-          zIndex: bottleZIndex
-        }}
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-      >
-        <img
-          src={demoJivaBottle}
-          alt="Jamu Jiva Bottle"
-          className="w-[100%] min-w-[1000px] max-w-【1200px] h-auto object-contain drop-shadow-2xl"
-        />
-      </motion.div>
     </div>
   );
 };

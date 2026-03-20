@@ -1,7 +1,5 @@
-
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
-import bottleImage from '../materials/demo jiva removed.png';
 
 interface CalloutProps {
   title: string;
@@ -158,12 +156,8 @@ const ProductDive: React.FC = () => {
           }}
           className="relative z-20 w-[280px] md:w-[400px] aspect-[1/2] flex items-center justify-center"
         >
-          <div className="w-full h-full relative">
-            <img 
-              src={bottleImage} 
-              alt="Jamu Jiva Signature Bottle"
-              className="w-full h-full object-contain rounded-[2.5rem] shadow-2xl drop-shadow-2xl"
-            />
+          <div className="w-full h-full relative flex items-center justify-center rounded-[2.5rem] bg-[#2D4F3E] shadow-2xl drop-shadow-2xl">
+            <span className="font-serif text-2xl md:text-4xl font-black text-white/90">JAMU JIVA</span>
             <div className="absolute inset-0 rounded-[2.5rem] bg-gradient-to-tr from-black/10 to-transparent"></div>
           </div>
         </motion.div>

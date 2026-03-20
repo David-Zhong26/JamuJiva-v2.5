@@ -3,7 +3,6 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Send, ChevronDown, ChevronUp, ChevronDown as ChevronDownIcon } from 'lucide-react';
 import backgroundImg from '../materials/background.jpg';
 import background2Img from '../materials/background 2.png';
-import demoJivaBottle from '../materials/demo jiva removed.png';
 
 const HERO_BG_INTERVAL_MS = 4000;
 
@@ -31,9 +30,6 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   });
 
   const smoothProgress = useTransform(scrollYProgress, (v) => easeInOutCubic(v));
-
-  // ——— Bottle: static (no movement). Visible only in hero range. ———
-  const bottleOpacity = useTransform(smoothProgress, (v) => (v < 0.18 ? 1 : 0));
 
   // ——— Background: step-based, no transitions ———
   const bgImageOpacity = useTransform(smoothProgress, (v) => (v < 0.18 ? 1 : v < 0.22 ? 0.2 : 0));
@@ -116,24 +112,6 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
               transition={{ duration: 0.8 }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#2D4F3E]/90 via-transparent to-black/20" />
-          </motion.div>
-
-          {/* ——— Bottle layer: static (no movement); visible in hero only ——— */}
-          <motion.div
-            style={{
-              x: 140,
-              y: 50,
-              scale: 0.95,
-              opacity: bottleOpacity,
-              zIndex: 20,
-            }}
-            className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          >
-            <img
-              src={demoJivaBottle}
-              alt="Jamu Jiva"
-              className="w-[90%] min-w-[800px] max-w-[900px] h-auto object-contain drop-shadow-2xl"
-            />
           </motion.div>
 
           {/* ——— Hero content (0.00–0.25) ——— */}
