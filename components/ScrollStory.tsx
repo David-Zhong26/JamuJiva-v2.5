@@ -1,8 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Send, ChevronDown, ChevronUp, ChevronDown as ChevronDownIcon } from 'lucide-react';
-import demoJiva from '../materials/demo jiva.jpg';
+import backgroundImg from '../materials/background.jpg';
+import background2Img from '../materials/background 2.png';
 import demoJivaBottle from '../materials/demo jiva removed.png';
+
+const HERO_BG_INTERVAL_MS = 4000;
 
 const easeInOutCubic = (t: number) =>
   t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -16,6 +19,12 @@ interface ScrollStoryProps {
 
 const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, joined }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [heroBgIndex, setHeroBgIndex] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => setHeroBgIndex((i) => (i + 1) % 2), HERO_BG_INTERVAL_MS);
+    return () => clearInterval(t);
+  }, []);
   const { scrollYProgress } = useScroll({
     target: scrollRef,
     offset: ['start start', 'end end'],
@@ -88,10 +97,23 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             style={{ opacity: bgImageOpacity }}
             className="absolute inset-0 z-0"
           >
-            <img
-              src={demoJiva}
+            <motion.img
+              key="bg0"
+              src={backgroundImg}
               alt=""
-              className="w-full h-full object-cover"
+              className="absolute inset-0 w-full h-full object-cover"
+              initial={false}
+              animate={{ opacity: heroBgIndex === 0 ? 1 : 0 }}
+              transition={{ duration: 0.8 }}
+            />
+            <motion.img
+              key="bg1"
+              src={background2Img}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover"
+              initial={false}
+              animate={{ opacity: heroBgIndex === 1 ? 1 : 0 }}
+              transition={{ duration: 0.8 }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#2D4F3E]/90 via-transparent to-black/20" />
           </motion.div>
@@ -119,15 +141,12 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             style={{ opacity: heroOpacity }}
             className="absolute inset-0 z-10 flex flex-col justify-between py-12 md:py-20 pl-24 pr-12 md:pl-32 md:pr-20 pointer-events-none"
           >
-            <div />
-            <div className="max-w-4xl space-y-8">
-              <div className="bg-white/15 backdrop-blur-sm inline-block px-4 py-2 rounded-full text-white/95 font-medium text-xs tracking-wider">
-                HERITAGE MEETS HUSTLE
-              </div>
-              <h1 className="font-serif text-[clamp(1.9rem,7vw,5.5rem)] font-bold leading-[1.25] text-white/95 tracking-tight">
-                DRINK THE <br />
-                <span className="text-[#E5C76B]">LIFE YOU</span> <br />
-                DESERVE
+            <div className="bg-white/15 backdrop-blur-sm inline-block w-fit px-4 py-2 rounded-full text-white/95 font-medium text-xs tracking-wider">
+              HERITAGE MEETS HUSTLE
+            </div>
+            <div className="absolute bottom-28 left-0 pl-24 md:pl-32">
+              <h1 className="font-serif text-[clamp(1.75rem,5vw,4rem)] font-bold leading-tight text-white/95 tracking-tight">
+                DRINK THE <span className="text-[#E5C76B]">LIFE YOU</span> DESERVE
               </h1>
               <div className="pt-4 flex items-center gap-4 text-[#E5C76B]/90 font-medium tracking-widest text-xs uppercase">
                 <span className="w-12 h-px bg-[#E5C76B]/70" />
