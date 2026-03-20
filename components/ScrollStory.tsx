@@ -6,6 +6,9 @@ import background2Img from '../materials/background 2.png';
 
 const HERO_BG_INTERVAL_MS = 4000;
 
+const BENEFITS_MARQUEE =
+  '100% Natural • Indonesian Herbal Blend • No Additives • Gluten Free • Real Ingredients Only';
+
 const easeInOutCubic = (t: number) =>
   t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
@@ -204,8 +207,33 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
       {/* ——— Benefits ——— */}
       <section
         id="benefits"
-        className="min-h-screen bg-[#2D4F3E] flex items-center justify-end pr-10 md:pr-36 pl-8 md:pl-60 py-20"
+        className="min-h-screen bg-[#2D4F3E] flex flex-col"
       >
+        {/* Scrolling announcement bar — warm gold on brand green section for contrast */}
+        <div
+          className="w-full shrink-0 overflow-hidden border-y-2 border-[#2D4F3E] bg-[#F9D067] py-3.5 md:py-4 shadow-[0_6px_28px_rgba(0,0,0,0.22)]"
+          aria-hidden
+        >
+          <div className="jj-benefits-marquee-track flex w-max">
+            {[0, 1].map((copy) => (
+              <span
+                key={copy}
+                className="inline-flex shrink-0 items-center whitespace-nowrap pl-10 pr-6 md:pl-16 md:pr-10 font-black text-[#1e3d30] text-xs sm:text-sm md:text-base uppercase tracking-[0.12em] md:tracking-[0.18em]"
+              >
+                {BENEFITS_MARQUEE}
+                <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
+                {BENEFITS_MARQUEE}
+                <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
+                {BENEFITS_MARQUEE}
+                <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
+                {BENEFITS_MARQUEE}
+                <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-1 items-center justify-end pr-10 md:pr-36 pl-8 md:pl-60 py-16 md:py-20">
         <div className="max-w-lg text-right">
           <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4 block">
             The Modern Elixir
@@ -218,6 +246,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
             <p>Metabolism-igniting, sustained focus. No jitters.</p>
             <p>Curcumin and natural anti-inflammatories for the modern nomad.</p>
           </div>
+        </div>
         </div>
       </section>
 

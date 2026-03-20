@@ -43,6 +43,36 @@
         html {
             scroll-behavior: smooth;
         }
+        /* Benefits section — infinite horizontal marquee */
+        @keyframes jj-benefits-marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .jj-benefits-marquee-track {
+            animation: jj-benefits-marquee 55s linear infinite;
+            will-change: transform;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .jj-benefits-marquee-track {
+                animation: none;
+                transform: none;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+                max-width: 100%;
+                row-gap: 0.5rem;
+            }
+            .jj-benefits-marquee-track > span {
+                white-space: normal;
+                text-align: center;
+                justify-content: center;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            .jj-benefits-marquee-track > span:last-child {
+                display: none;
+            }
+        }
     </style>
 <script type="importmap">
 {
