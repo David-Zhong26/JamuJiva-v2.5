@@ -1,11 +1,15 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { Send, ChevronDown, ChevronUp, ChevronDown as ChevronDownIcon, ChevronLeft, ChevronRight } from 'lucide-react';
 import backgroundImg from '../materials/background.jpg';
 import background2Img from '../materials/background 2.png';
 import demoJivaBottle from '../materials/demo jiva.png';
 import modelMint from '../materials/model mint.png';
 import modelGinger from '../materials/model ginger.png';
+import ginger1 from '../materials/ginger 1.png';
+import ginger2 from '../materials/ginger 2.png';
+import mint1 from '../materials/mint 1.png';
+import mint2 from '../materials/mint 2.png';
 
 const HERO_BG_INTERVAL_MS = 4000;
 
@@ -15,10 +19,16 @@ const BENEFITS_MARQUEE =
 const PRODUCT_DRINKS = [
   {
     name: 'Bali Gold',
-    eyebrow: 'Turmeric-forward daily glow',
+    eyebrow: 'Ginger-rooted daily glow',
     description: 'A bright, grounding Jamu blend with golden spice warmth and clean natural energy.',
     word: 'gold',
     background: 'from-[#F3E7BE] via-[#F6EFD5] to-[#EBD9A1]',
+    accent: '#A76D2A',
+    elements: [
+      { src: modelGinger, className: 'left-[-2%] top-[8%] w-[13rem] md:w-[17rem] lg:w-[19rem] rotate-[-14deg]' },
+      { src: ginger1, className: 'left-[8%] bottom-[14%] w-[9rem] md:w-[12rem] lg:w-[14rem] rotate-[8deg]' },
+      { src: ginger2, className: 'right-[4%] top-[14%] w-[10rem] md:w-[13rem] lg:w-[15rem] rotate-[14deg]' },
+    ],
   },
   {
     name: 'Mint Reset',
@@ -26,15 +36,49 @@ const PRODUCT_DRINKS = [
     description: 'Fresh mint notes meet a light herbal finish for an easy, refreshing ritual.',
     word: 'mint',
     background: 'from-[#DCE9D5] via-[#EEF4E6] to-[#C7D9B4]',
-  },
-  {
-    name: 'Ginger Spark',
-    eyebrow: 'Warm root-powered lift',
-    description: 'A bolder ginger-led profile with real spice, clean ingredients, and no additives.',
-    word: 'ginger',
-    background: 'from-[#EBC79D] via-[#F6E4C8] to-[#DDA45F]',
+    accent: '#2D6A4F',
+    elements: [
+      { src: modelMint, className: 'left-[-1%] top-[10%] w-[12rem] md:w-[16rem] lg:w-[18rem] rotate-[-10deg]' },
+      { src: mint1, className: 'left-[10%] bottom-[12%] w-[8rem] md:w-[10rem] lg:w-[12rem] rotate-[10deg]' },
+      { src: mint2, className: 'right-[5%] top-[16%] w-[8rem] md:w-[11rem] lg:w-[13rem] rotate-[18deg]' },
+    ],
   },
 ] as const;
+
+const organicEase: [number, number, number, number] = [0.4, 0, 0.2, 1];
+
+const floatingElementVariants = {
+  initial: ({ direction }: { direction: 1 | -1; index: number }) => ({
+    y: direction === 1 ? -140 : 140,
+    opacity: 0,
+    filter: 'blur(12px)',
+    scale: 0.9,
+    rotate: direction === 1 ? -8 : 8,
+  }),
+  animate: ({ index }: { direction: 1 | -1; index: number }) => ({
+    y: [0, -8, 0],
+    opacity: 1,
+    filter: 'blur(0px)',
+    scale: 1,
+    rotate: 0,
+    transition: {
+      duration: 0.85,
+      ease: organicEase,
+      delay: index * 0.08,
+    },
+  }),
+  exit: ({ direction }: { direction: 1 | -1; index: number }) => ({
+    y: direction === 1 ? 160 : -160,
+    opacity: 0,
+    filter: 'blur(10px)',
+    scale: 0.92,
+    rotate: direction === 1 ? 8 : -8,
+    transition: {
+      duration: 0.7,
+      ease: organicEase,
+    },
+  }),
+};
 
 const easeInOutCubic = (t: number) =>
   t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
@@ -154,12 +198,29 @@ const IngredientWheelSection: React.FC = () => {
 const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, joined }) => {
   const [heroBgIndex, setHeroBgIndex] = useState(0);
   const [selectedDrinkIndex, setSelectedDrinkIndex] = useState(0);
+  const [drinkDirection, setDrinkDirection] = useState<1 | -1>(1);
   const selectedDrink = PRODUCT_DRINKS[selectedDrinkIndex];
 
   useEffect(() => {
     const t = setInterval(() => setHeroBgIndex((i) => (i + 1) % 2), HERO_BG_INTERVAL_MS);
     return () => clearInterval(t);
   }, []);
+
+  const showPreviousDrink = () => {
+    setDrinkDirection(-1);
+    setSelectedDrinkIndex((i) => (i - 1 + PRODUCT_DRINKS.length) % PRODUCT_DRINKS.length);
+  };
+
+  const showNextDrink = () => {
+    setDrinkDirection(1);
+    setSelectedDrinkIndex((i) => (i + 1) % PRODUCT_DRINKS.length);
+  };
+
+  const showDrinkAtIndex = (index: number) => {
+    if (index === selectedDrinkIndex) return;
+    setDrinkDirection(index > selectedDrinkIndex ? 1 : -1);
+    setSelectedDrinkIndex(index);
+  };
 
   return (
     <>
@@ -269,7 +330,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
           <button
             type="button"
             aria-label="Previous product drink"
-            onClick={() => setSelectedDrinkIndex((i) => (i - 1 + PRODUCT_DRINKS.length) % PRODUCT_DRINKS.length)}
+            onClick={showPreviousDrink}
             className="absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full border border-[#2D4F3E]/15 bg-white/85 text-[#2D4F3E] shadow-lg backdrop-blur hover:bg-white transition-colors"
           >
             <ChevronLeft className="h-6 w-6" />
@@ -278,81 +339,123 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
           <button
             type="button"
             aria-label="Next product drink"
-            onClick={() => setSelectedDrinkIndex((i) => (i + 1) % PRODUCT_DRINKS.length)}
+            onClick={showNextDrink}
             className="absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full border border-[#2D4F3E]/15 bg-white/85 text-[#2D4F3E] shadow-lg backdrop-blur hover:bg-white transition-colors"
           >
             <ChevronRight className="h-6 w-6" />
           </button>
 
           <div className="relative z-10 flex min-h-[calc(100vh-8rem)] w-full max-w-7xl items-center justify-center overflow-hidden rounded-[2rem] border border-white/50 bg-white/20 px-6 py-12 shadow-[0_20px_80px_rgba(45,79,62,0.12)] backdrop-blur-sm md:px-12">
-            <img
-              src={modelMint}
-              alt=""
-              className="pointer-events-none absolute left-[-4%] top-[16%] hidden w-[16rem] max-w-[24vw] opacity-90 md:block"
-            />
-            <img
-              src={modelGinger}
-              alt=""
-              className="pointer-events-none absolute right-[-2%] top-[18%] hidden w-[17rem] max-w-[25vw] opacity-90 md:block"
-            />
-
-            <div className="pointer-events-none absolute inset-x-0 bottom-[19%] z-0 text-center font-serif text-[20vw] font-black uppercase tracking-[-0.08em] text-[#A76D2A]/20 md:text-[16vw]">
-              {selectedDrink.word}
-            </div>
-
-            <div className="relative z-10 grid w-full items-center gap-8 md:grid-cols-[1fr_auto_1fr]">
-              <div className="hidden md:block" />
-
+            <AnimatePresence mode="wait" custom={drinkDirection}>
               <motion.div
                 key={selectedDrink.name}
-                initial={{ opacity: 0, y: 18, scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.35, ease: 'easeOut' }}
-                className="mx-auto flex flex-col items-center"
+                className="absolute inset-0"
+                custom={drinkDirection}
+                initial={{ opacity: 1 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 1 }}
               >
-                <img
-                  src={demoJivaBottle}
-                  alt={selectedDrink.name}
-                  className="relative z-10 h-auto w-[13rem] md:w-[18rem] object-contain drop-shadow-[0_18px_40px_rgba(45,79,62,0.18)]"
-                />
-                <div className="mt-6 inline-flex items-center rounded-full border border-[#2D4F3E]/20 bg-white/90 px-6 py-3 text-sm font-black text-[#2D4F3E] shadow-md">
-                  Shop now
-                </div>
+                {selectedDrink.elements.map((element, index) => (
+                  <motion.img
+                    key={`${selectedDrink.name}-${element.src}`}
+                    src={element.src}
+                    alt=""
+                    custom={{ direction: drinkDirection, index }}
+                    variants={floatingElementVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    className={`pointer-events-none absolute ${element.className}`}
+                  />
+                ))}
               </motion.div>
+            </AnimatePresence>
 
+            <AnimatePresence mode="wait" custom={drinkDirection}>
               <motion.div
-                key={`${selectedDrink.name}-text`}
-                initial={{ opacity: 0, y: 16 }}
+                key={`${selectedDrink.name}-word`}
+                custom={drinkDirection}
+                initial={{ opacity: 0, y: drinkDirection === 1 ? -80 : 80 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35, ease: 'easeOut' }}
-                className="text-center md:text-left"
+                exit={{ opacity: 0, y: drinkDirection === 1 ? 80 : -80 }}
+                transition={{ duration: 0.75, ease: organicEase }}
+                className="pointer-events-none absolute inset-x-0 bottom-[14%] z-0 text-center font-serif text-[24vw] font-black uppercase tracking-[-0.08em] text-[#A76D2A]/20 md:text-[18vw]"
               >
-                <span className="mb-3 block text-xs font-black uppercase tracking-[0.22em] text-[#2D4F3E]/70">
-                  Product Selection
-                </span>
-                <h2 className="font-serif text-4xl font-black leading-none text-[#A76D2A] md:text-6xl">
-                  {selectedDrink.name}
-                </h2>
-                <p className="mt-4 text-sm font-black uppercase tracking-[0.18em] text-[#2D4F3E]/70">
-                  {selectedDrink.eyebrow}
-                </p>
-                <p className="mx-auto mt-5 max-w-md text-base leading-relaxed text-[#2D4F3E]/80 md:mx-0 md:text-lg">
-                  {selectedDrink.description}
-                </p>
-                <div className="mt-8 flex items-center justify-center gap-3 md:justify-start">
-                  {PRODUCT_DRINKS.map((drink, index) => (
-                    <button
-                      key={drink.name}
-                      type="button"
-                      aria-label={`Show ${drink.name}`}
-                      onClick={() => setSelectedDrinkIndex(index)}
-                      className={`h-2.5 rounded-full transition-all ${
-                        index === selectedDrinkIndex ? 'w-10 bg-[#2D4F3E]' : 'w-2.5 bg-[#2D4F3E]/25 hover:bg-[#2D4F3E]/45'
-                      }`}
-                    />
-                  ))}
-                </div>
+                {selectedDrink.word}
               </motion.div>
+            </AnimatePresence>
+
+            <div className="relative z-10 grid w-full items-center gap-8 md:grid-cols-[0.9fr_auto_1fr]">
+              <div className="hidden md:block" />
+
+              <AnimatePresence mode="wait" custom={drinkDirection}>
+                <motion.div
+                  key={`${selectedDrink.name}-product`}
+                  custom={drinkDirection}
+                  initial={{ opacity: 0, scale: 0.92, rotate: drinkDirection === 1 ? -4 : 4, y: 20 }}
+                  animate={{
+                    opacity: 1,
+                    scale: [1, 1.07, 1],
+                    rotate: [0, drinkDirection === 1 ? 4 : -4, 0],
+                    y: [18, -8, 0],
+                  }}
+                  exit={{
+                    opacity: 0,
+                    scale: 0.96,
+                    rotate: drinkDirection === 1 ? 5 : -5,
+                    y: drinkDirection === 1 ? 36 : -36,
+                  }}
+                  transition={{ duration: 0.9, ease: organicEase }}
+                  className="mx-auto flex flex-col items-center"
+                >
+                  <img
+                    src={demoJivaBottle}
+                    alt={selectedDrink.name}
+                    className="relative z-10 h-auto w-[24rem] max-w-none md:w-[34rem] lg:w-[40rem] object-contain drop-shadow-[0_28px_60px_rgba(45,79,62,0.2)]"
+                  />
+                  <div className="mt-6 inline-flex items-center rounded-full border border-[#2D4F3E]/20 bg-white/90 px-6 py-3 text-sm font-black text-[#2D4F3E] shadow-md">
+                    Shop now
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+
+              <AnimatePresence mode="wait" custom={drinkDirection}>
+                <motion.div
+                  key={`${selectedDrink.name}-text`}
+                  custom={drinkDirection}
+                  initial={{ opacity: 0, y: drinkDirection === 1 ? -40 : 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: drinkDirection === 1 ? 40 : -40 }}
+                  transition={{ duration: 0.75, ease: organicEase }}
+                  className="text-center md:text-left"
+                >
+                  <span className="mb-3 block text-xs font-black uppercase tracking-[0.22em] text-[#2D4F3E]/70">
+                    Product Selection
+                  </span>
+                  <h2 className="font-serif text-4xl font-black leading-none md:text-6xl" style={{ color: selectedDrink.accent }}>
+                    {selectedDrink.name}
+                  </h2>
+                  <p className="mt-4 text-sm font-black uppercase tracking-[0.18em] text-[#2D4F3E]/70">
+                    {selectedDrink.eyebrow}
+                  </p>
+                  <p className="mx-auto mt-5 max-w-md text-base leading-relaxed text-[#2D4F3E]/80 md:mx-0 md:text-lg">
+                    {selectedDrink.description}
+                  </p>
+                  <div className="mt-8 flex items-center justify-center gap-3 md:justify-start">
+                    {PRODUCT_DRINKS.map((drink, index) => (
+                      <button
+                        key={drink.name}
+                        type="button"
+                        aria-label={`Show ${drink.name}`}
+                        onClick={() => showDrinkAtIndex(index)}
+                        className={`h-2.5 rounded-full transition-all ${
+                          index === selectedDrinkIndex ? 'w-10 bg-[#2D4F3E]' : 'w-2.5 bg-[#2D4F3E]/25 hover:bg-[#2D4F3E]/45'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
           </div>
         </div>
