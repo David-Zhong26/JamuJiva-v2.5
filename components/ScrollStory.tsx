@@ -49,11 +49,11 @@ const organicEase: [number, number, number, number] = [0.4, 0, 0.2, 1];
 
 const floatingElementVariants = {
   initial: ({ direction }: { direction: 1 | -1; index: number }) => ({
-    y: direction === 1 ? -140 : 140,
+    y: direction === 1 ? 140 : -140,
     opacity: 0,
     filter: 'blur(12px)',
     scale: 0.9,
-    rotate: direction === 1 ? -8 : 8,
+    rotate: direction === 1 ? 8 : -8,
   }),
   animate: ({ index }: { direction: 1 | -1; index: number }) => ({
     y: [0, -8, 0],
@@ -375,7 +375,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
               <motion.div
                 key={`${selectedDrink.name}-word`}
                 custom={drinkDirection}
-                initial={{ opacity: 0, y: drinkDirection === 1 ? -80 : 80 }}
+                initial={{ opacity: 0, y: drinkDirection === 1 ? 80 : -80 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: drinkDirection === 1 ? 80 : -80 }}
                 transition={{ duration: 0.75, ease: organicEase }}
@@ -392,7 +392,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
                 <motion.div
                   key={`${selectedDrink.name}-product`}
                   custom={drinkDirection}
-                  initial={{ opacity: 0, scale: 0.92, rotate: drinkDirection === 1 ? -4 : 4, y: 20 }}
+                initial={{ opacity: 0, scale: 0.92, rotate: drinkDirection === 1 ? 4 : -4, y: drinkDirection === 1 ? 28 : -28 }}
                   animate={{
                     opacity: 1,
                     scale: [1, 1.07, 1],
@@ -411,7 +411,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
                   <img
                     src={demoJivaBottle}
                     alt={selectedDrink.name}
-                    className="relative z-10 h-auto w-[24rem] max-w-none md:w-[34rem] lg:w-[40rem] object-contain drop-shadow-[0_28px_60px_rgba(45,79,62,0.2)]"
+                    className="relative z-10 h-auto w-[32rem] max-w-none md:w-[46rem] lg:w-[58rem] object-contain drop-shadow-[0_28px_60px_rgba(45,79,62,0.2)]"
                   />
                   <div className="mt-6 inline-flex items-center rounded-full border border-[#2D4F3E]/20 bg-white/90 px-6 py-3 text-sm font-black text-[#2D4F3E] shadow-md">
                     Shop now
@@ -423,7 +423,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
                 <motion.div
                   key={`${selectedDrink.name}-text`}
                   custom={drinkDirection}
-                  initial={{ opacity: 0, y: drinkDirection === 1 ? -40 : 40 }}
+                initial={{ opacity: 0, y: drinkDirection === 1 ? 40 : -40 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: drinkDirection === 1 ? 40 : -40 }}
                   transition={{ duration: 0.75, ease: organicEase }}
