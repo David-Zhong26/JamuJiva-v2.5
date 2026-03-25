@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
-import { Send, ChevronDown, ChevronUp, ChevronDown as ChevronDownIcon, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Send, ChevronDown, ChevronUp, ChevronDown as ChevronDownIcon, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import backgroundImg from '../materials/background.jpg';
 import background2Img from '../materials/background 2.png';
 import demoJivaBottle from '../materials/demo jiva.png';
@@ -199,6 +199,10 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
   const [heroBgIndex, setHeroBgIndex] = useState(0);
   const [selectedDrinkIndex, setSelectedDrinkIndex] = useState(0);
   const [drinkDirection, setDrinkDirection] = useState<1 | -1>(1);
+  const [isMailingListOpen, setIsMailingListOpen] = useState(false);
+  const [mailingListEmail, setMailingListEmail] = useState('');
+  const [mailingListInterests, setMailingListInterests] = useState<string[]>([]);
+  const [mailingListSubmitted, setMailingListSubmitted] = useState(false);
   const selectedDrink = PRODUCT_DRINKS[selectedDrinkIndex];
 
   useEffect(() => {
@@ -220,6 +224,31 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
     if (index === selectedDrinkIndex) return;
     setDrinkDirection(index > selectedDrinkIndex ? 1 : -1);
     setSelectedDrinkIndex(index);
+  };
+
+  const openMailingListModal = () => {
+    setIsMailingListOpen(true);
+    setMailingListSubmitted(false);
+    setMailingListEmail('');
+    setMailingListInterests([]);
+  };
+
+  const closeMailingListModal = () => {
+    setIsMailingListOpen(false);
+  };
+
+  const handleMailingListSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!mailingListEmail.trim() || mailingListInterests.length === 0) return;
+    setMailingListSubmitted(true);
+  };
+
+  const toggleMailingListInterest = (productName: string) => {
+    setMailingListInterests((current) =>
+      current.includes(productName)
+        ? current.filter((name) => name !== productName)
+        : [...current, productName]
+    );
   };
 
   return (
@@ -413,9 +442,13 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
                     alt={selectedDrink.name}
                     className="relative z-10 h-auto w-[32rem] max-w-none md:w-[46rem] lg:w-[58rem] object-contain drop-shadow-[0_28px_60px_rgba(45,79,62,0.2)]"
                   />
-                  <div className="mt-6 inline-flex items-center rounded-full border border-[#2D4F3E]/20 bg-white/90 px-6 py-3 text-sm font-black text-[#2D4F3E] shadow-md">
+                  <button
+                    type="button"
+                    onClick={openMailingListModal}
+                    className="mt-6 inline-flex items-center rounded-full border border-[#2D4F3E]/20 bg-white/90 px-6 py-3 text-sm font-black text-[#2D4F3E] shadow-md transition-colors hover:bg-white"
+                  >
                     Shop now
-                  </div>
+                  </button>
                 </motion.div>
               </AnimatePresence>
 
@@ -527,6 +560,127 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
           <FAQAccordion />
         </div>
       </section>
+
+      <AnimatePresence>
+        {isMailingListOpen ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25, ease: 'easeOut' }}
+            className="fixed inset-0 z-[80] flex items-center justify-center bg-[#2D4F3E]/45 p-4 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 24, scale: 0.96 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+              className="relative w-full max-w-md rounded-[2rem] bg-[#F5F2ED] p-8 shadow-[0_24px_80px_rgba(0,0,0,0.24)]"
+            >
+              <button
+                type="button"
+                aria-label="Close mailing list modal"
+                onClick={closeMailingListModal}
+                className="absolute right-5 top-5 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#2D4F3E]/10 bg-white text-[#2D4F3E] transition-colors hover:bg-[#F9D067]"
+              >
+                <X className="h-4 w-4" />
+              </button>
+
+              {!mailingListSubmitted ? (
+                <>
+                  <span className="mb-3 block text-xs font-black uppercase tracking-[0.22em] text-[#F47C3E]">
+                    Join The Mailing List
+                  </span>
+                  <h3 className="font-serif text-3xl font-black leading-tight text-[#2D4F3E]">
+                    Be the first to hear about the next drop.
+                  </h3>
+                  <p className="mt-4 text-base leading-relaxed text-[#2D4F3E]/75">
+                    Enter your email and we&apos;ll keep you posted on launches, restocks, and special releases.
+                  </p>
+
+                  <form onSubmit={handleMailingListSubmit} className="mt-8 space-y-4">
+                    <input
+                      type="email"
+                      placeholder="Enter your email"
+                      value={mailingListEmail}
+                      onChange={(e) => setMailingListEmail(e.target.value)}
+                      required
+                      className="w-full rounded-full border border-[#2D4F3E]/15 bg-white px-6 py-4 text-[#2D4F3E] outline-none transition-colors placeholder:text-[#2D4F3E]/40 focus:border-[#2D4F3E]"
+                    />
+                    <div className="rounded-[1.5rem] border border-[#2D4F3E]/10 bg-white/70 p-5">
+                      <p className="text-sm font-black uppercase tracking-[0.16em] text-[#2D4F3E]">
+                        Which products are you interested in?
+                      </p>
+                      <p className="mt-2 text-sm leading-relaxed text-[#2D4F3E]/65">
+                        Select what you&apos;d like to hear about so we can send exclusive deals when we manufacture it.
+                      </p>
+                      <div className="mt-4 space-y-3">
+                        {PRODUCT_DRINKS.map((drink) => {
+                          const isChecked = mailingListInterests.includes(drink.name);
+                          return (
+                            <label
+                              key={drink.name}
+                              className={`flex cursor-pointer items-center justify-between rounded-2xl border px-4 py-3 transition-colors ${
+                                isChecked
+                                  ? 'border-[#2D4F3E] bg-[#F9D067]/35'
+                                  : 'border-[#2D4F3E]/10 bg-white hover:border-[#2D4F3E]/25'
+                              }`}
+                            >
+                              <div>
+                                <span className="block font-black text-[#2D4F3E]">{drink.name}</span>
+                                <span className="block text-sm text-[#2D4F3E]/65">{drink.eyebrow}</span>
+                              </div>
+                              <input
+                                type="checkbox"
+                                checked={isChecked}
+                                onChange={() => toggleMailingListInterest(drink.name)}
+                                className="h-5 w-5 rounded border-[#2D4F3E]/30 text-[#2D4F3E] focus:ring-[#2D4F3E]"
+                              />
+                            </label>
+                          );
+                        })}
+                      </div>
+                      {mailingListInterests.length === 0 ? (
+                        <p className="mt-3 text-xs font-medium text-[#F47C3E]">
+                          Select at least one product.
+                        </p>
+                      ) : null}
+                    </div>
+                    <button
+                      type="submit"
+                      className="flex w-full items-center justify-center rounded-full bg-[#2D4F3E] px-6 py-4 font-black uppercase tracking-[0.16em] text-white transition-colors hover:bg-[#F47C3E]"
+                    >
+                      Confirm Signup
+                    </button>
+                  </form>
+                </>
+              ) : (
+                <div className="py-8 text-center">
+                  <span className="mb-3 block text-xs font-black uppercase tracking-[0.22em] text-[#F47C3E]">
+                    You&apos;re In
+                  </span>
+                  <h3 className="font-serif text-3xl font-black leading-tight text-[#2D4F3E]">
+                    Congratulations, you&apos;re on the list.
+                  </h3>
+                  <p className="mt-4 text-base leading-relaxed text-[#2D4F3E]/75">
+                    We&apos;ll let you know when the next product drop is ready.
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-[#2D4F3E]/70">
+                    Interested in: <span className="font-black text-[#2D4F3E]">{mailingListInterests.join(', ')}</span>
+                  </p>
+                  <button
+                    type="button"
+                    onClick={closeMailingListModal}
+                    className="mt-8 inline-flex items-center justify-center rounded-full bg-[#F47C3E] px-8 py-4 font-black uppercase tracking-[0.16em] text-white transition-colors hover:bg-[#2D4F3E]"
+                  >
+                    Close
+                  </button>
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </>
   );
 };
