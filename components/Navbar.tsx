@@ -21,39 +21,39 @@ const Navbar: React.FC = () => {
       animate={{ y: 0 }}
       className="fixed top-0 right-0 z-50 w-full"
     >
-      <motion.div className="ml-auto w-[92%] md:w-[88%] lg:w-[84%]">
-        <motion.div
-          style={{
-            backgroundColor: shellBackground,
-            borderColor: shellBorder,
-          }}
-          className="border-b px-6 md:px-10 py-4 backdrop-blur-xl flex justify-between items-center transition-colors"
-        >
-          <div className="flex items-center">
+      <motion.div
+        style={{
+          backgroundColor: shellBackground,
+          borderColor: shellBorder,
+        }}
+        className="w-full border-b px-6 md:px-10 py-4 transition-colors"
+      >
+        <div className="flex items-center justify-between gap-6">
           <motion.span style={{ color: navTextColor }} className="font-serif text-2xl font-black tracking-tighter">
             JAMU JIVA
           </motion.span>
-          </div>
-        
-          <motion.div style={{ color: navTextColor }} className="hidden md:flex space-x-10 font-bold text-xs uppercase tracking-widest">
-            <a href="#benefits" className="hover:text-[#F47C3E] transition-colors">Benefits</a>
-            <a href="#ingredients" className="hover:text-[#F47C3E] transition-colors">Ingredients</a>
-            <a href="#story" className="hover:text-[#F47C3E] transition-colors">Culture</a>
-            <a href="#waitlist" className="hover:text-[#F47C3E] transition-colors">Drops</a>
-          </motion.div>
 
-          <motion.a 
-            href="#waitlist" 
-            style={{
-              backgroundColor: buttonBackground,
-              color: buttonTextColor,
-              borderColor: buttonBorder,
-            }}
-            className="px-6 py-2.5 rounded-full font-black text-xs border hover:bg-[#F47C3E] transition-all"
-          >
-            JOIN THE LIST
-          </motion.a>
-        </motion.div>
+          <div className="ml-auto flex items-center gap-6 md:gap-10">
+            <motion.div style={{ color: navTextColor }} className="hidden md:flex items-center space-x-10 font-bold text-xs uppercase tracking-widest">
+              <a href="#benefits" className="hover:text-[#F47C3E] transition-colors">Benefits</a>
+              <a href="#ingredients" className="hover:text-[#F47C3E] transition-colors">Ingredients</a>
+              <a href="#story" className="hover:text-[#F47C3E] transition-colors">Culture</a>
+              <a href="#waitlist" className="hover:text-[#F47C3E] transition-colors">Drops</a>
+            </motion.div>
+
+            <motion.a 
+              href="#waitlist" 
+              style={{
+                backgroundColor: buttonBackground,
+                color: buttonTextColor,
+                borderColor: buttonBorder,
+              }}
+              className="px-6 py-2.5 rounded-full font-black text-xs border hover:bg-[#F47C3E] transition-all"
+            >
+              JOIN THE LIST
+            </motion.a>
+          </div>
+        </div>
       </motion.div>
     </motion.nav>
   );
