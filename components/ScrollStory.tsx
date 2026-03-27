@@ -330,7 +330,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
       >
         {/* Scrolling announcement bar — warm gold on brand green section for contrast */}
         <div
-          className="w-full shrink-0 overflow-hidden border-y-2 border-[#2D4F3E] bg-[#F9D067] py-3.5 md:py-4 shadow-[0_6px_28px_rgba(0,0,0,0.22)]"
+          className="w-full shrink-0 overflow-hidden border-y-2 border-[#2D4F3E] bg-[#F5F2ED] py-3.5 md:py-4 shadow-[0_6px_28px_rgba(0,0,0,0.22)]"
           aria-hidden
         >
           <div className="jj-benefits-marquee-track flex w-max">
