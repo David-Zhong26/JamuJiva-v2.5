@@ -4,10 +4,11 @@ import { motion, useMotionTemplate, useScroll, useTransform } from 'framer-motio
 
 const Navbar: React.FC = () => {
   const { scrollY } = useScroll();
-  const shellOpacity = useTransform(scrollY, [0, 80], [0, 0.96]);
-  const shellBorderOpacity = useTransform(scrollY, [0, 80], [0, 0.12]);
-  const shellShadowOpacity = useTransform(scrollY, [0, 80], [0, 0.16]);
-  const textProgress = useTransform(scrollY, [0, 80], [0, 1]);
+  const shellOpacity = useTransform(scrollY, [0, 30, 90], [0, 0, 0.96]);
+  const shellBorderOpacity = useTransform(scrollY, [0, 30, 90], [0, 0, 0.12]);
+  const shellShadowOpacity = useTransform(scrollY, [0, 30, 90], [0, 0, 0.16]);
+  const textProgress = useTransform(scrollY, [0, 30, 90], [0, 0, 1]);
+  const navOpacity = useTransform(scrollY, [0, 20, 50], [0, 0, 1]);
 
   const shellBackground = useMotionTemplate`rgba(245, 242, 237, ${shellOpacity})`;
   const shellBorder = useMotionTemplate`rgba(45, 79, 62, ${shellBorderOpacity})`;
@@ -21,7 +22,8 @@ const Navbar: React.FC = () => {
     <motion.nav 
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className="fixed top-0 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-5xl pt-0"
+      style={{ opacity: navOpacity }}
+      className="fixed top-0 left-0 right-0 z-50"
     >
       <motion.div
         style={{
@@ -29,7 +31,7 @@ const Navbar: React.FC = () => {
           borderColor: shellBorder,
           boxShadow: shellShadow,
         }}
-        className="border px-8 py-4 rounded-full backdrop-blur-xl flex justify-between items-center transition-colors"
+        className="border-b px-6 md:px-10 py-4 backdrop-blur-xl flex justify-between items-center transition-colors"
       >
         <div className="flex items-center">
           <motion.span style={{ color: navTextColor }} className="font-serif text-2xl font-black tracking-tighter">
