@@ -499,16 +499,16 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
       {/* ——— Culture ——— */}
       <section
         id="story"
-        className="min-h-screen bg-[#2D4F3E] flex items-center pl-8 md:pl-24 lg:pl-52 pr-8 md:pr-48 py-20"
+        className="min-h-screen bg-[#F8D667] flex items-center pl-8 md:pl-24 lg:pl-52 pr-8 md:pr-48 py-20"
       >
         <div className="max-w-lg">
-          <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4 block">
+          <span className="text-[#A76D2A] font-black tracking-widest uppercase text-sm mb-4 block">
             The Origin Story
           </span>
-          <h2 className="font-serif text-4xl md:text-6xl font-black text-white leading-tight mb-6">
+          <h2 className="font-serif text-4xl md:text-6xl font-black text-[#2D4F3E] leading-tight mb-6">
             ROOTED IN <span className="text-[#F47C3E]">TRADITION.</span>
           </h2>
-          <p className="text-white/90 font-medium text-lg leading-relaxed">
+          <p className="text-[#2D4F3E]/85 font-medium text-lg leading-relaxed">
             In the misty mornings of Solo, the Mbok Jamu begins her ritual. Jamu Jiva was born to bring this act of care to NYC and LA—a lifestyle of intentional vitality.
           </p>
         </div>
@@ -517,7 +517,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
       {/* ——— Flavors + CTA ——— */}
       <section
         id="waitlist"
-        className="min-h-screen bg-[#F5F2ED] flex flex-col items-center justify-center px-8 py-20"
+        className="min-h-screen bg-[#F8D667] flex flex-col items-center justify-center px-8 py-20"
       >
         <span className="text-[#F47C3E] font-black tracking-widest uppercase text-sm mb-4">
           The First Drop
@@ -552,7 +552,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
         )}
       </section>
 
-      <section className="pt-12 pb-24 px-6 bg-[#F5F2ED]">
+      <section className="pt-12 pb-24 px-6 bg-[#F8D667]">
         <div className="max-w-2xl mx-auto">
           <h2 className="font-serif text-3xl md:text-4xl font-black text-[#2D4F3E] mb-10 text-center">
             Quick answers
