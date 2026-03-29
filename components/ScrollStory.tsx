@@ -22,8 +22,8 @@ const PRODUCT_DRINKS = [
     eyebrow: 'Ginger-rooted daily glow',
     description: 'A bright, grounding Jamu blend with golden spice warmth and clean natural energy.',
     word: 'gold',
-    background: 'from-[#F3E7BE] via-[#F6EFD5] to-[#EBD9A1]',
-    accent: '#A76D2A',
+    background: 'from-[#EB9C35] via-[#F0B154] to-[#E7A243]',
+    accent: '#8A4F12',
     elements: [
       { src: modelGinger, className: 'left-[-2%] top-[8%] w-[13rem] md:w-[17rem] lg:w-[19rem] rotate-[-14deg]' },
       { src: ginger1, className: 'left-[8%] bottom-[14%] w-[9rem] md:w-[12rem] lg:w-[14rem] rotate-[8deg]' },
@@ -35,8 +35,8 @@ const PRODUCT_DRINKS = [
     eyebrow: 'Cooling herbal clarity',
     description: 'Fresh mint notes meet a light herbal finish for an easy, refreshing ritual.',
     word: 'mint',
-    background: 'from-[#DCE9D5] via-[#EEF4E6] to-[#C7D9B4]',
-    accent: '#2D6A4F',
+    background: 'from-[#4E7145] via-[#648858] to-[#567A4A]',
+    accent: '#EAF2D8',
     elements: [
       { src: modelMint, className: 'left-[-1%] top-[10%] w-[12rem] md:w-[16rem] lg:w-[18rem] rotate-[-10deg]' },
       { src: mint1, className: 'left-[10%] bottom-[12%] w-[8rem] md:w-[10rem] lg:w-[12rem] rotate-[10deg]' },
