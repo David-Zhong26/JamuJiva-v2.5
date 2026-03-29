@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Send, ChevronDown, ChevronUp, ChevronDown as ChevronDownIcon, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import backgroundImg from '../materials/background.jpg';
 import background2Img from '../materials/background 2.png';
@@ -80,9 +80,6 @@ const floatingElementVariants = {
   }),
 };
 
-const easeInOutCubic = (t: number) =>
-  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
 interface ScrollStoryProps {
   email: string;
   setEmail: (email: string) => void;
@@ -90,110 +87,41 @@ interface ScrollStoryProps {
   joined: boolean;
 }
 
-/** Sticky wheel section: scroll through this tall block drives Ginger → Turmeric → Tamarind. */
-const IngredientWheelSection: React.FC = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end end'],
-  });
-
-  const rotationProgress = useTransform(scrollYProgress, (v) => easeInOutCubic(v));
-
-  const wheelRotate = useTransform(
-    rotationProgress,
-    [0, 0.08, 0.28, 0.32, 0.52, 0.56, 0.82, 1],
-    [-30, 90, 90, 210, 210, 330, 330, 330]
-  );
-  const wheelRotateInverse = useTransform(wheelRotate, (v) => -v);
-  const step1Opacity = useTransform(rotationProgress, [0, 0.04, 0.26, 0.36], [0, 1, 1, 0]);
-  const step2Opacity = useTransform(rotationProgress, [0.28, 0.38, 0.64, 0.74], [0, 1, 1, 0]);
-  const step3Opacity = useTransform(rotationProgress, [0.66, 0.76, 0.98, 1], [0, 1, 1, 0]);
-  const bgGingerOpacity = useTransform(rotationProgress, [0, 0.04, 0.26, 0.36], [0, 1, 1, 0]);
-  const bgTurmericOpacity = useTransform(rotationProgress, [0.28, 0.38, 0.64, 0.74], [0, 1, 1, 0]);
-  const bgTamarindOpacity = useTransform(rotationProgress, [0.66, 0.76, 0.98, 1], [0, 1, 1, 0]);
-  const circle1Active = useTransform(rotationProgress, [0.02, 0.16, 0.3, 0.4], [0.65, 1.2, 1.2, 0.65]);
-  const circle2Active = useTransform(rotationProgress, [0.3, 0.44, 0.68, 0.78], [0.65, 1.2, 1.2, 0.65]);
-  const circle3Active = useTransform(rotationProgress, [0.68, 0.8, 0.96, 1], [0.65, 1.2, 1.2, 0.65]);
-  const node1Opacity = useTransform(rotationProgress, [0, 0.08, 0.28, 0.38], [0.45, 1, 1, 0.45]);
-  const node2Opacity = useTransform(rotationProgress, [0.26, 0.36, 0.62, 0.72], [0.45, 1, 1, 0.45]);
-  const node3Opacity = useTransform(rotationProgress, [0.64, 0.74, 0.96, 1], [0.45, 1, 1, 0.45]);
-
-  return (
-    <section
-      ref={sectionRef}
-      id="ingredients"
-      className="relative bg-[#2D4F3E]"
-      style={{ height: '420vh' }}
-      aria-label="Our ingredients"
-    >
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-end pb-[12vh] md:pb-[18vh]">
-        <motion.div style={{ opacity: bgGingerOpacity }} className="absolute inset-0 z-0 bg-[#B85C2E]/85 pointer-events-none" />
-        <motion.div style={{ opacity: bgTurmericOpacity }} className="absolute inset-0 z-0 bg-[#C99A6B]/80 pointer-events-none" />
-        <motion.div style={{ opacity: bgTamarindOpacity }} className="absolute inset-0 z-0 bg-[#8B6914]/75 pointer-events-none" />
-
-        <div className="relative z-[8] flex flex-col items-center text-center w-full max-w-xl px-8 pointer-events-none">
-          <span className="text-[#F9D067] font-black tracking-widest uppercase text-sm mb-4">
-            Natural Sourced Ingredients
+const IngredientsSection: React.FC = () => (
+  <section
+    id="ingredients"
+    className="min-h-screen bg-[#F5F2ED] flex items-center justify-center px-8 py-20"
+  >
+    <div className="max-w-5xl w-full grid gap-8 md:grid-cols-3">
+      {[
+        {
+          title: 'GINGER',
+          text: 'Cold-pressed from Central Java. Bright spice, clean energy, and no jittery crash.',
+        },
+        {
+          title: 'TURMERIC',
+          text: 'Pure curcumin and natural anti-inflammatories for a grounding daily ritual.',
+        },
+        {
+          title: 'TAMARIND',
+          text: 'A warm, balancing finish that rounds out the blend with depth and character.',
+        },
+      ].map((item) => (
+        <div key={item.title} className="rounded-[2rem] border border-[#2D4F3E]/10 bg-white px-8 py-10 text-center shadow-sm">
+          <span className="text-[#A76D2A] font-black tracking-widest uppercase text-sm block mb-4">
+            Natural Ingredient
           </span>
-          <div className="relative min-h-[11rem] w-full flex flex-col items-center">
-            <motion.div style={{ opacity: step1Opacity }} className="absolute inset-0 flex flex-col items-center text-center">
-              <h2 className="font-serif text-4xl md:text-6xl font-black text-white leading-tight mb-6">
-                <span className="text-[#F47C3E]">GINGER.</span>
-              </h2>
-              <p className="text-white/90 font-medium text-lg leading-relaxed max-w-lg">
-                Cold-pressed from Central Java. Sustained focus without the jitters.
-              </p>
-            </motion.div>
-            <motion.div style={{ opacity: step2Opacity }} className="absolute inset-0 flex flex-col items-center text-center">
-              <h2 className="font-serif text-4xl md:text-6xl font-black text-white leading-tight mb-6">
-                <span className="text-[#F47C3E]">TURMERIC.</span>
-              </h2>
-              <p className="text-white/90 font-medium text-lg leading-relaxed max-w-lg">
-                Pure curcumin and natural anti-inflammatories for the modern routine.
-              </p>
-            </motion.div>
-            <motion.div style={{ opacity: step3Opacity }} className="absolute inset-0 flex flex-col items-center text-center">
-              <h2 className="font-serif text-4xl md:text-6xl font-black text-white leading-tight mb-6">
-                <span className="text-[#F47C3E]">TAMARIND.</span>
-              </h2>
-              <p className="text-white/90 font-medium text-lg leading-relaxed max-w-lg">
-                A touch of warmth and balance. Crafted daily, small-batch.
-              </p>
-            </motion.div>
-          </div>
-          <motion.div
-            style={{ rotate: wheelRotate }}
-            className="relative w-44 h-44 md:w-52 md:h-52 rounded-full flex items-center justify-center flex-shrink-0 mt-4"
-          >
-            <div className="absolute inset-0 rounded-full border-2 border-white/30" />
-            <div className="absolute inset-0 rounded-full border border-white/20 m-4" />
-            {[
-              { label: 'Ginger', letter: 'G', scale: circle1Active, opacity: node1Opacity, angle: -90 },
-              { label: 'Turmeric', letter: 'T', scale: circle2Active, opacity: node2Opacity, angle: 150 },
-              { label: 'Tamarind', letter: 'A', scale: circle3Active, opacity: node3Opacity, angle: 30 },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="absolute w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center left-1/2 top-1/2"
-                style={{
-                  transform: `translate(-50%, -50%) rotate(${item.angle}deg) translateY(-5.5rem) rotate(${-item.angle}deg)`,
-                }}
-              >
-                <motion.div
-                  style={{ scale: item.scale, opacity: item.opacity, rotate: wheelRotateInverse }}
-                  className="w-full h-full rounded-full bg-white/25 backdrop-blur-sm border border-white/35 flex items-center justify-center font-serif font-bold text-white/95 text-xs uppercase shadow-lg"
-                >
-                  {item.letter}
-                </motion.div>
-              </div>
-            ))}
-          </motion.div>
+          <h3 className="font-serif text-3xl md:text-4xl font-black text-[#2D4F3E] mb-4">
+            {item.title}
+          </h3>
+          <p className="text-[#2D4F3E]/75 font-medium leading-relaxed">
+            {item.text}
+          </p>
         </div>
-      </div>
-    </section>
-  );
-};
+      ))}
+    </div>
+  </section>
+);
 
 const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, joined }) => {
   const [heroBgIndex, setHeroBgIndex] = useState(0);
@@ -494,7 +422,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
         </div>
       </section>
 
-      <IngredientWheelSection />
+      <IngredientsSection />
 
       {/* ——— Culture ——— */}
       <section
