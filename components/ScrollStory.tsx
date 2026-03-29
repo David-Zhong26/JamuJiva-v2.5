@@ -90,7 +90,7 @@ interface ScrollStoryProps {
 const IngredientsSection: React.FC = () => (
   <section
     id="ingredients"
-    className="min-h-screen bg-[#F5F2ED] flex items-center justify-center px-8 py-20"
+    className="min-h-screen bg-[#E5C76B] flex items-center justify-center px-8 py-20"
   >
     <div className="max-w-5xl w-full grid gap-8 md:grid-cols-3">
       {[

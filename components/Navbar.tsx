@@ -5,11 +5,9 @@ import { motion, useMotionTemplate, useScroll, useTransform } from 'framer-motio
 const Navbar: React.FC = () => {
   const { scrollY } = useScroll();
   const shellOpacity = useTransform(scrollY, [0, 80], [0, 0.96]);
-  const shellBorderOpacity = useTransform(scrollY, [0, 80], [0, 0.12]);
   const textProgress = useTransform(scrollY, [0, 80], [0, 1]);
 
-  const shellBackground = useMotionTemplate`rgba(245, 242, 237, ${shellOpacity})`;
-  const shellBorder = useMotionTemplate`rgba(45, 79, 62, ${shellBorderOpacity})`;
+  const shellBackground = useMotionTemplate`rgba(229, 199, 107, ${shellOpacity})`;
   const navTextColor = useTransform(textProgress, [0, 1], ['#FFFFFF', '#2D4F3E']);
   const buttonBackground = useTransform(textProgress, [0, 1], ['rgba(255,255,255,0.12)', '#2D4F3E']);
   const buttonTextColor = useTransform(textProgress, [0, 1], ['#FFFFFF', '#FFFFFF']);
@@ -24,9 +22,8 @@ const Navbar: React.FC = () => {
       <motion.div
         style={{
           backgroundColor: shellBackground,
-          borderColor: shellBorder,
         }}
-        className="w-full border-b px-6 md:px-10 py-4 transition-colors"
+        className="w-full px-6 md:px-10 py-4 transition-colors"
       >
         <div className="flex items-center justify-between gap-6">
           <motion.span style={{ color: navTextColor }} className="font-serif text-2xl font-black tracking-tighter">
