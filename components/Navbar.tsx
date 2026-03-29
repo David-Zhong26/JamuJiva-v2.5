@@ -7,7 +7,7 @@ const Navbar: React.FC = () => {
   const shellOpacity = useTransform(scrollY, [0, 80], [0, 0.96]);
   const textProgress = useTransform(scrollY, [0, 80], [0, 1]);
 
-  const shellBackground = useMotionTemplate`rgba(229, 199, 107, ${shellOpacity})`;
+  const shellBackground = useMotionTemplate`rgba(245, 232, 202, ${shellOpacity})`;
   const navTextColor = useTransform(textProgress, [0, 1], ['#FFFFFF', '#2D4F3E']);
   const buttonBackground = useTransform(textProgress, [0, 1], ['rgba(255,255,255,0.12)', '#2D4F3E']);
   const buttonTextColor = useTransform(textProgress, [0, 1], ['#FFFFFF', '#FFFFFF']);
