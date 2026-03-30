@@ -225,27 +225,13 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
               </div>
             </div>
             <div className="pointer-events-auto">
-              {!joined ? (
-                <form onSubmit={onJoin} className="flex p-2 bg-white/20 backdrop-blur-xl rounded-full border border-white/30 max-w-md">
-                  <input
-                    type="email"
-                    placeholder="Join the drop..."
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="flex-1 bg-transparent px-6 py-3 focus:outline-none placeholder-white/70 font-semibold text-white"
-                  />
-                  <button
-                    type="submit"
-                    className="bg-white text-[#F47C3E] px-8 py-3 rounded-full font-black hover:bg-[#F9D067] hover:text-[#2D4F3E] transition-all flex items-center gap-2"
-                  >
-                    ACCESS <Send className="w-4 h-4" />
-                  </button>
-                </form>
-              ) : (
-                <div className="bg-[#2D4F3E] border border-white/30 px-8 py-4 rounded-full font-black text-white">
-                  YOU'RE ON THE LIST
-                </div>
-              )}
+              <button
+                type="button"
+                onClick={openMailingListModal}
+                className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-xl rounded-full border border-white/30 px-8 py-4 font-black text-white hover:bg-white/25 transition-all"
+              >
+                JOIN THE DROP <Send className="w-4 h-4" />
+              </button>
             </div>
           </div>
         </div>
