@@ -10,6 +10,7 @@ import ginger1 from '../materials/ginger 1.png';
 import ginger2 from '../materials/ginger 2.png';
 import mint1 from '../materials/mint 1.png';
 import mint2 from '../materials/mint 2.png';
+import { supabase } from '../supabase';
 
 const HERO_BG_INTERVAL_MS = 4000;
 
@@ -165,9 +166,48 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
     setIsMailingListOpen(false);
   };
 
-  const handleMailingListSubmit = (e: React.FormEvent) => {
+  const handleMailingListSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!mailingListEmail.trim() || mailingListInterests.length === 0) return;
+  
+    const cleanedEmail = mailingListEmail.trim().toLowerCase();
+  
+    if (!cleanedEmail) {
+      alert('Please enter your email.');
+      return;
+    }
+  
+    if (mailingListInterests.length === 0) {
+      alert('Please select at least one product.');
+      return;
+    }
+  
+    const flavorMap: Record<string, string> = {
+      'Bali Gold': 'bali_gold',
+      'Mint Reset': 'mint_reset',
+    };
+  
+    const mappedFlavors = mailingListInterests.map(
+      (name) => flavorMap[name] || name.toLowerCase().replace(/\s+/g, '_')
+    );
+  
+    const { error } = await supabase
+      .from('subscribers')
+      .insert([
+        {
+          email: cleanedEmail,
+          flavors: mappedFlavors,
+        },
+      ]);
+  
+    if (error) {
+      if (error.message.toLowerCase().includes('duplicate')) {
+        alert('This email is already on the list.');
+      } else {
+        alert(error.message);
+      }
+      return;
+    }
+  
     setMailingListSubmitted(true);
   };
 

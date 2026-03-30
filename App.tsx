@@ -18,22 +18,30 @@ const App: React.FC = () => {
 
   const handleJoin = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     const cleanedEmail = email.trim().toLowerCase();
-
+  
     if (!cleanedEmail) {
       alert('Please enter your email.');
       return;
     }
-
+  
     const { error } = await supabase
       .from('subscribers')
       .insert([{ email: cleanedEmail }]);
-
+  
     if (error) {
-      alert(error.message);
+      if (error.message.toLowerCase().includes('duplicate')) {
+        alert('This email is already on the list.');
+      } else {
+        alert(error.message);
+      }
       return;
     }
+  
+    setJoined(true);
+    setEmail('');
+  };
 
     setJoined(true);
     setEmail('');
