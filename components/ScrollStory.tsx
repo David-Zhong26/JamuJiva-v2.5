@@ -442,28 +442,13 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
         <p className="text-[#2D4F3E]/80 text-lg md:text-xl text-center max-w-2xl mb-10">
           Limited release of our seasonal "Bali Gold" brew. Only 5,000 cases.
         </p>
-        {!joined ? (
-          <form onSubmit={onJoin} className="flex flex-col sm:flex-row gap-4 max-w-xl w-full">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="flex-1 px-8 py-4 rounded-full border-2 border-[#2D4F3E]/20 bg-white focus:outline-none focus:border-[#2D4F3E] font-medium text-[#2D4F3E]"
-            />
-            <button
-              type="submit"
-              className="bg-[#2D4F3E] text-white px-10 py-4 rounded-full font-black hover:bg-[#F47C3E] transition-all"
-            >
-              SECURE ACCESS
-            </button>
-          </form>
-        ) : (
-          <div className="bg-[#2D4F3E] text-white px-10 py-6 rounded-3xl font-black text-xl shadow-xl">
-            YOU'RE IN. Check your inbox.
-          </div>
-        )}
+        <button
+          type="button"
+          onClick={openMailingListModal}
+          className="inline-flex items-center justify-center rounded-full bg-[#2D4F3E] px-10 py-4 font-black text-white hover:bg-[#F47C3E] transition-all"
+        >
+          SECURE ACCESS
+        </button>
       </section>
 
       <section className="pt-12 pb-24 px-6 bg-[#F5E8CA]">
