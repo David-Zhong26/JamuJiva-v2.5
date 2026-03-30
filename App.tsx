@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import ScrollStory from './components/ScrollStory';
 import Footer from './components/Footer';
 import { motion, useScroll, useSpring } from "framer-motion";
+import { supabase } from './supabase';
 
 const App: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -15,12 +16,27 @@ const App: React.FC = () => {
     restDelta: 0.001,
   });
 
-  const handleJoin = (e: React.FormEvent) => {
+  const handleJoin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      setJoined(true);
-      setEmail('');
+
+    const cleanedEmail = email.trim().toLowerCase();
+
+    if (!cleanedEmail) {
+      alert('Please enter your email.');
+      return;
     }
+
+    const { error } = await supabase
+      .from('subscribers')
+      .insert([{ email: cleanedEmail }]);
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    setJoined(true);
+    setEmail('');
   };
 
   return (
@@ -31,7 +47,12 @@ const App: React.FC = () => {
       />
       <Navbar />
       <main className="pt-0">
-        <ScrollStory email={email} setEmail={setEmail} onJoin={handleJoin} joined={joined} />
+        <ScrollStory
+          email={email}
+          setEmail={setEmail}
+          onJoin={handleJoin}
+          joined={joined}
+        />
       </main>
       <Footer />
     </div>
