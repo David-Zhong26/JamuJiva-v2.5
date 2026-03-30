@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import ScrollStory from './components/ScrollStory';
 import Footer from './components/Footer';
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { supabase } from './supabase';
 
 const App: React.FC = () => {
@@ -18,18 +18,18 @@ const App: React.FC = () => {
 
   const handleJoin = async (e: React.FormEvent) => {
     e.preventDefault();
-  
+
     const cleanedEmail = email.trim().toLowerCase();
-  
+
     if (!cleanedEmail) {
       alert('Please enter your email.');
       return;
     }
-  
+
     const { error } = await supabase
       .from('subscribers')
       .insert([{ email: cleanedEmail }]);
-  
+
     if (error) {
       if (error.message.toLowerCase().includes('duplicate')) {
         alert('This email is already on the list.');
@@ -38,10 +38,6 @@ const App: React.FC = () => {
       }
       return;
     }
-  
-    setJoined(true);
-    setEmail('');
-  };
 
     setJoined(true);
     setEmail('');
