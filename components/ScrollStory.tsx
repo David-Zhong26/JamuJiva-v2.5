@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { Send, ChevronDown, ChevronUp, ChevronDown as ChevronDownIcon, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import backgroundImg from '../materials/background.jpg';
 import background2Img from '../materials/background 2.png';
+import colanderImage from '../materials/colander.png';
 import demoJivaBottle from '../materials/demo jiva.png';
 import modelMint from '../materials/model mint.png';
 import modelGinger from '../materials/model ginger.png';
 import ginger1 from '../materials/ginger 1.png';
 import ginger2 from '../materials/ginger 2.png';
+import gingerSpinImage from '../materials/ginger spin.png';
 import mint1 from '../materials/mint 1.png';
 import mint2 from '../materials/mint 2.png';
 import { supabase } from '../supabase';
@@ -88,41 +90,120 @@ interface ScrollStoryProps {
   joined: boolean;
 }
 
-const IngredientsSection: React.FC = () => (
-  <section
-    id="ingredients"
-    className="min-h-screen bg-[#F5E8CA] flex items-center justify-center px-8 py-20"
-  >
-    <div className="max-w-5xl w-full grid gap-8 md:grid-cols-3">
-      {[
-        {
-          title: 'GINGER',
-          text: 'Cold-pressed from Central Java. Bright spice, clean energy, and no jittery crash.',
-        },
-        {
-          title: 'TURMERIC',
-          text: 'Pure curcumin and natural anti-inflammatories for a grounding daily ritual.',
-        },
-        {
-          title: 'TAMARIND',
-          text: 'A warm, balancing finish that rounds out the blend with depth and character.',
-        },
-      ].map((item) => (
-        <div key={item.title} className="rounded-[2rem] border border-[#2D4F3E]/10 bg-white px-8 py-10 text-center shadow-sm">
-          <span className="text-[#A76D2A] font-black tracking-widest uppercase text-sm block mb-4">
-            Natural Ingredient
+const IngredientsSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end end'],
+  });
+
+  const colanderRotate = useTransform(scrollYProgress, [0, 0.18, 0.30, 0.42], [0, 32, 100, 112]);
+  const colanderY = useTransform(scrollYProgress, [0, 0.4], [0, -24]);
+  const colanderX = useTransform(scrollYProgress, [0, 0.4], [0, 18]);
+
+  const gingerOpacity = useTransform(scrollYProgress, [0.22, 0.3, 0.95, 1], [0, 1, 1, 0]);
+  const gingerY = useTransform(
+    scrollYProgress,
+    [0.22, 0.34, 0.72, 0.9, 1],
+    [-180, 0, 0, 235, 290]
+  );
+  const gingerRotate = useTransform(scrollYProgress, [0.24, 0.72, 1], [0, 560, 940]);
+  const gingerScale = useTransform(scrollYProgress, [0.24, 0.86, 1], [0.72, 1, 0.82]);
+
+  const cupOpacity = useTransform(scrollYProgress, [0.7, 0.82], [0, 1]);
+  const cupScale = useTransform(scrollYProgress, [0.72, 0.9], [0.88, 1]);
+  const cupY = useTransform(scrollYProgress, [0.72, 0.9], [34, 0]);
+
+  const badge1Y = useTransform(scrollYProgress, [0, 1], [260, -360]);
+  const badge2Y = useTransform(scrollYProgress, [0, 1], [120, -440]);
+  const badge3Y = useTransform(scrollYProgress, [0, 1], [340, -300]);
+  const badge4Y = useTransform(scrollYProgress, [0, 1], [220, -420]);
+  const badgeOpacity = useTransform(scrollYProgress, [0.18, 0.32, 0.88, 1], [0, 0.65, 0.65, 0]);
+
+  const splashOpacity = useTransform(scrollYProgress, [0.88, 0.94, 1], [0, 1, 0]);
+  const splash1Y = useTransform(scrollYProgress, [0.88, 0.94, 1], [0, -42, -18]);
+  const splash2Y = useTransform(scrollYProgress, [0.88, 0.94, 1], [0, -58, -20]);
+  const splash3Y = useTransform(scrollYProgress, [0.88, 0.94, 1], [0, -36, -14]);
+
+  const benefitBadges = [
+    { label: 'Cold-Pressed', x: '8%', y: badge1Y },
+    { label: 'Natural Energy', x: '72%', y: badge2Y },
+    { label: 'No Additives', x: '18%', y: badge3Y },
+    { label: 'Root-Powered', x: '66%', y: badge4Y },
+  ];
+
+  return (
+    <section
+      ref={sectionRef}
+      id="ingredients"
+      className="relative bg-[#F5E8CA]"
+      style={{ height: '340vh' }}
+    >
+      <div className="sticky top-0 h-screen overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.55),transparent_45%)]" />
+
+        <div className="absolute left-8 top-24 z-10 md:left-14">
+          <span className="text-[#A76D2A] font-black tracking-widest uppercase text-sm block mb-3">
+            Ingredient Ritual
           </span>
-          <h3 className="font-serif text-3xl md:text-4xl font-black text-[#2D4F3E] mb-4">
-            {item.title}
-          </h3>
-          <p className="text-[#2D4F3E]/75 font-medium leading-relaxed">
-            {item.text}
-          </p>
+          <h2 className="font-serif text-4xl md:text-6xl font-black text-[#2D4F3E] max-w-xl leading-[0.95]">
+            Ginger drops into the blend.
+          </h2>
         </div>
-      ))}
-    </div>
-  </section>
-);
+
+        {benefitBadges.map((badge) => (
+          <motion.div
+            key={badge.label}
+            style={{ y: badge.y, opacity: badgeOpacity, left: badge.x }}
+            className="absolute top-[32%] z-0 rounded-full border border-[#2D4F3E]/12 bg-white/70 px-5 py-3 text-sm font-black uppercase tracking-[0.18em] text-[#2D4F3E]/70 backdrop-blur-sm"
+          >
+            {badge.label}
+          </motion.div>
+        ))}
+
+        <motion.img
+          src={colanderImage}
+          alt="Colander pouring ingredient"
+          style={{ rotate: colanderRotate, y: colanderY, x: colanderX }}
+          className="absolute left-1/2 top-[10%] z-20 w-40 -translate-x-1/2 origin-[55%_42%] md:w-52"
+        />
+
+        <motion.img
+          src={gingerSpinImage}
+          alt="Spinning ginger"
+          style={{ opacity: gingerOpacity, y: gingerY, rotate: gingerRotate, scale: gingerScale }}
+          className="absolute left-1/2 top-1/2 z-30 w-44 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_22px_35px_rgba(0,0,0,0.14)] md:w-56"
+        />
+
+        <motion.div
+          style={{ opacity: cupOpacity, scale: cupScale, y: cupY }}
+          className="absolute bottom-[11%] left-1/2 z-20 -translate-x-1/2"
+        >
+          <div className="relative h-40 w-28 rounded-b-[2.4rem] rounded-t-[1.2rem] border-[3px] border-[#2D4F3E]/25 bg-white/35 backdrop-blur-sm shadow-[0_18px_40px_rgba(45,79,62,0.12)]">
+            <div className="absolute bottom-0 left-1/2 h-[58%] w-[88%] -translate-x-1/2 rounded-b-[2rem] rounded-t-[1rem] bg-[linear-gradient(180deg,#EAA13B_0%,#D77D21_100%)]" />
+            <div className="absolute left-1/2 top-3 h-3 w-[84%] -translate-x-1/2 rounded-full bg-white/40" />
+            <div className="absolute inset-x-0 -bottom-4 mx-auto h-4 w-20 rounded-full bg-[#2D4F3E]/12 blur-md" />
+          </div>
+          <p className="mt-4 text-center text-sm font-black uppercase tracking-[0.2em] text-[#2D4F3E]/75">
+            Fresh Jamu
+          </p>
+        </motion.div>
+
+        {[
+          { x: '-2.25rem', y: splash1Y, size: 'h-4 w-4' },
+          { x: '0.25rem', y: splash2Y, size: 'h-5 w-5' },
+          { x: '2.7rem', y: splash3Y, size: 'h-3 w-3' },
+        ].map((drop, index) => (
+          <motion.div
+            key={index}
+            style={{ opacity: splashOpacity, y: drop.y, x: drop.x }}
+            className={`absolute bottom-[25%] left-1/2 z-40 rounded-full bg-[#D77D21] ${drop.size}`}
+          />
+        ))}
+      </div>
+    </section>
+  );
+};
 
 const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, joined }) => {
   const [heroBgIndex, setHeroBgIndex] = useState(0);
