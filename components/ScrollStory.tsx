@@ -4,6 +4,7 @@ import { Send, ChevronDown, ChevronUp, ChevronDown as ChevronDownIcon, ChevronLe
 import backgroundImg from '../materials/background.jpg';
 import background2Img from '../materials/background 2.png';
 import colanderImage from '../materials/colander.png';
+import cupImage from '../materials/cup.png';
 import demoJivaBottle from '../materials/demo jiva.png';
 import modelMint from '../materials/model mint.png';
 import modelGinger from '../materials/model ginger.png';
@@ -97,18 +98,17 @@ const IngredientsSection: React.FC = () => {
     offset: ['start start', 'end end'],
   });
 
-  const colanderRotate = useTransform(scrollYProgress, [0, 0.18, 0.30, 0.42], [0, 32, 100, 112]);
-  const colanderY = useTransform(scrollYProgress, [0, 0.4], [0, -24]);
-  const colanderX = useTransform(scrollYProgress, [0, 0.4], [0, 18]);
+  const colanderRotate = useTransform(scrollYProgress, [0, 0.18, 0.30, 0.38], [0, 32, 100, 112]);
+  const colanderY = useTransform(scrollYProgress, [0, 0.30, 0.42, 0.62, 1], [0, 0, 16, -120, -320]);
 
-  const gingerOpacity = useTransform(scrollYProgress, [0.22, 0.3, 0.95, 1], [0, 1, 1, 0]);
+  const gingerOpacity = useTransform(scrollYProgress, [0.24, 0.3, 0.95, 1], [0, 1, 1, 0]);
   const gingerY = useTransform(
     scrollYProgress,
-    [0.22, 0.34, 0.72, 0.9, 1],
-    [-180, 0, 0, 235, 290]
+    [0.24, 0.34, 0.76, 0.9, 1],
+    [-240, 0, 0, 235, 290]
   );
-  const gingerRotate = useTransform(scrollYProgress, [0.24, 0.72, 1], [0, 560, 940]);
-  const gingerScale = useTransform(scrollYProgress, [0.24, 0.86, 1], [0.72, 1, 0.82]);
+  const gingerRotate = useTransform(scrollYProgress, [0.24, 0.76, 1], [0, 560, 940]);
+  const gingerScale = useTransform(scrollYProgress, [0.24, 0.86, 1], [0.68, 1, 0.82]);
 
   const cupOpacity = useTransform(scrollYProgress, [0.7, 0.82], [0, 1]);
   const cupScale = useTransform(scrollYProgress, [0.72, 0.9], [0.88, 1]);
@@ -164,26 +164,26 @@ const IngredientsSection: React.FC = () => {
         <motion.img
           src={colanderImage}
           alt="Colander pouring ingredient"
-          style={{ rotate: colanderRotate, y: colanderY, x: colanderX }}
-          className="absolute left-1/2 top-[10%] z-20 w-40 -translate-x-1/2 origin-[55%_42%] md:w-52"
+          style={{ rotate: colanderRotate, y: colanderY }}
+          className="absolute left-1/2 top-[10%] z-30 w-40 -translate-x-1/2 origin-[55%_42%] md:w-52"
         />
 
         <motion.img
           src={gingerSpinImage}
           alt="Spinning ginger"
           style={{ opacity: gingerOpacity, y: gingerY, rotate: gingerRotate, scale: gingerScale }}
-          className="absolute left-1/2 top-1/2 z-30 w-44 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_22px_35px_rgba(0,0,0,0.14)] md:w-56"
+          className="absolute left-1/2 top-1/2 z-20 w-44 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_22px_35px_rgba(0,0,0,0.14)] md:w-56"
         />
 
         <motion.div
           style={{ opacity: cupOpacity, scale: cupScale, y: cupY }}
           className="absolute bottom-[11%] left-1/2 z-20 -translate-x-1/2"
         >
-          <div className="relative h-40 w-28 rounded-b-[2.4rem] rounded-t-[1.2rem] border-[3px] border-[#2D4F3E]/25 bg-white/35 backdrop-blur-sm shadow-[0_18px_40px_rgba(45,79,62,0.12)]">
-            <div className="absolute bottom-0 left-1/2 h-[58%] w-[88%] -translate-x-1/2 rounded-b-[2rem] rounded-t-[1rem] bg-[linear-gradient(180deg,#EAA13B_0%,#D77D21_100%)]" />
-            <div className="absolute left-1/2 top-3 h-3 w-[84%] -translate-x-1/2 rounded-full bg-white/40" />
-            <div className="absolute inset-x-0 -bottom-4 mx-auto h-4 w-20 rounded-full bg-[#2D4F3E]/12 blur-md" />
-          </div>
+          <img
+            src={cupImage}
+            alt="Cup of jamu"
+            className="relative z-10 w-28 h-auto drop-shadow-[0_18px_30px_rgba(45,79,62,0.15)] md:w-32"
+          />
           <p className="mt-4 text-center text-sm font-black uppercase tracking-[0.2em] text-[#2D4F3E]/75">
             Fresh Jamu
           </p>
