@@ -95,7 +95,7 @@ const IngredientsSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start start', 'end end'],
+    offset: ['start end', 'end end'],
   });
 
   const colanderRotate = useTransform(scrollYProgress, [0, 0.18, 0.30, 0.38], [0, 32, 100, 112]);
@@ -172,17 +172,17 @@ const IngredientsSection: React.FC = () => {
           src={gingerSpinImage}
           alt="Spinning ginger"
           style={{ opacity: gingerOpacity, y: gingerY, rotate: gingerRotate, scale: gingerScale }}
-          className="absolute left-1/2 top-1/2 z-20 w-44 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_22px_35px_rgba(0,0,0,0.14)] md:w-56"
+          className="absolute left-1/2 top-1/2 z-20 w-32 -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_22px_35px_rgba(0,0,0,0.14)] md:w-40"
         />
 
         <motion.div
           style={{ opacity: cupOpacity, scale: cupScale, y: cupY }}
-          className="absolute bottom-[11%] left-1/2 z-20 -translate-x-1/2"
+          className="absolute bottom-[8%] left-1/2 z-20 -translate-x-1/2"
         >
           <img
             src={cupImage}
             alt="Cup of jamu"
-            className="relative z-10 w-28 h-auto drop-shadow-[0_18px_30px_rgba(45,79,62,0.15)] md:w-32"
+            className="relative z-10 w-48 h-auto drop-shadow-[0_22px_36px_rgba(45,79,62,0.15)] md:w-60"
           />
           <p className="mt-4 text-center text-sm font-black uppercase tracking-[0.2em] text-[#2D4F3E]/75">
             Fresh Jamu
@@ -197,7 +197,7 @@ const IngredientsSection: React.FC = () => {
           <motion.div
             key={index}
             style={{ opacity: splashOpacity, y: drop.y, x: drop.x }}
-            className={`absolute bottom-[25%] left-1/2 z-40 rounded-full bg-[#D77D21] ${drop.size}`}
+            className={`absolute bottom-[31%] left-1/2 z-40 rounded-full bg-[#D77D21] ${drop.size}`}
           />
         ))}
       </div>
