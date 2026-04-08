@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
-import { Send, ChevronDown, ChevronUp, ChevronDown as ChevronDownIcon, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { Send, ChevronDown, ChevronUp, ChevronDown as ChevronDownIcon, X } from 'lucide-react';
 import backgroundImg from '../materials/background.jpg';
 import background2Img from '../materials/background 2.png';
 import colanderImage from '../materials/colander.png';
@@ -49,47 +49,135 @@ const PRODUCT_DRINKS = [
   },
 ] as const;
 
-const organicEase: [number, number, number, number] = [0.4, 0, 0.2, 1];
-
-const floatingElementVariants = {
-  initial: ({ direction }: { direction: 1 | -1; index: number }) => ({
-    y: direction === 1 ? 140 : -140,
-    opacity: 0,
-    filter: 'blur(12px)',
-    scale: 0.9,
-    rotate: direction === 1 ? 8 : -8,
-  }),
-  animate: ({ index }: { direction: 1 | -1; index: number }) => ({
-    y: [0, -8, 0],
-    opacity: 1,
-    filter: 'blur(0px)',
-    scale: 1,
-    rotate: 0,
-    transition: {
-      duration: 0.85,
-      ease: organicEase,
-      delay: index * 0.08,
-    },
-  }),
-  exit: ({ direction }: { direction: 1 | -1; index: number }) => ({
-    y: direction === 1 ? 160 : -160,
-    opacity: 0,
-    filter: 'blur(10px)',
-    scale: 0.92,
-    rotate: direction === 1 ? 8 : -8,
-    transition: {
-      duration: 0.7,
-      ease: organicEase,
-    },
-  }),
-};
-
 interface ScrollStoryProps {
   email: string;
   setEmail: (email: string) => void;
   onJoin: (e: React.FormEvent) => void;
   joined: boolean;
 }
+
+interface ProductRevealSectionProps {
+  onOpenMailingListModal: () => void;
+}
+
+const ProductRevealSection: React.FC<ProductRevealSectionProps> = ({ onOpenMailingListModal }) => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end end'],
+  });
+
+  const revealProgress = useTransform(scrollYProgress, [0.12, 0.82], [0, 100]);
+  const mintClipPath = useTransform(revealProgress, (v) => `inset(0 0 0 ${100 - v}%)`);
+  const dividerLeft = useTransform(revealProgress, (v) => `${100 - v}%`);
+  const dividerOpacity = useTransform(scrollYProgress, [0.08, 0.12, 0.9, 1], [0, 1, 1, 0]);
+
+  const ginger = PRODUCT_DRINKS[0];
+  const mint = PRODUCT_DRINKS[1];
+
+  const renderFlavorLayer = (
+    flavor: (typeof PRODUCT_DRINKS)[number],
+    isMint = false
+  ) => (
+    <div
+      className={`absolute inset-0 ${isMint ? 'text-[#F5F2ED]' : 'text-white'}`}
+      style={{
+        background: isMint
+          ? 'linear-gradient(135deg, #4E7145 0%, #648858 45%, #567A4A 100%)'
+          : 'linear-gradient(135deg, #EB9C35 0%, #F0B154 45%, #E7A243 100%)',
+      }}
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.14),transparent_52%)]" />
+      <div className="relative z-10 flex h-full items-center px-8 py-12 md:px-14">
+        <div className="grid w-full items-center gap-8 md:grid-cols-[1fr_auto_1fr]">
+          <div className="text-left">
+            <h2 className="font-serif text-5xl md:text-7xl font-black leading-[0.9] uppercase">
+              {flavor.name === 'Mint Reset' ? 'MINT' : 'GINGER'}
+            </h2>
+            <p className="mt-5 text-sm md:text-base font-black uppercase tracking-[0.2em] opacity-90">
+              {flavor.eyebrow}
+            </p>
+          </div>
+
+          <div className="relative mx-auto flex items-center justify-center">
+            <img
+              src={demoJivaBottle}
+              alt={flavor.name}
+              className="relative z-10 h-auto w-[22rem] max-w-none object-contain drop-shadow-[0_24px_60px_rgba(0,0,0,0.22)] md:w-[28rem] lg:w-[32rem]"
+            />
+          </div>
+
+          <div className="max-w-sm text-left justify-self-end">
+            <p className="text-base md:text-lg leading-relaxed opacity-95">
+              {flavor.description}
+            </p>
+            <button
+              type="button"
+              onClick={onOpenMailingListModal}
+              className={`mt-8 inline-flex items-center justify-center rounded-full px-8 py-4 font-black uppercase tracking-[0.14em] transition-all ${
+                isMint
+                  ? 'border border-[#F5F2ED]/35 bg-[#F5F2ED] text-[#2D4F3E] hover:bg-white'
+                  : 'border border-white/35 bg-white text-[#2D4F3E] hover:bg-[#F5F2ED]'
+              }`}
+            >
+              Shop now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <section
+      ref={sectionRef}
+      id="benefits"
+      className="relative bg-[#F5F2ED]"
+      style={{ height: '220vh' }}
+    >
+      <div
+        className="w-full shrink-0 overflow-hidden border-y-2 border-[#2D4F3E] bg-[#F9D067] py-3.5 md:py-4 shadow-[0_6px_28px_rgba(0,0,0,0.22)]"
+        aria-hidden
+      >
+        <div className="jj-benefits-marquee-track flex w-max">
+          {[0, 1].map((copy) => (
+            <span
+              key={copy}
+              className="inline-flex shrink-0 items-center whitespace-nowrap pl-10 pr-6 md:pl-16 md:pr-10 font-black text-[#1e3d30] text-xs sm:text-sm md:text-base uppercase tracking-[0.12em] md:tracking-[0.18em]"
+            >
+              {BENEFITS_MARQUEE}
+              <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
+              {BENEFITS_MARQUEE}
+              <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
+              {BENEFITS_MARQUEE}
+              <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
+              {BENEFITS_MARQUEE}
+              <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="sticky top-0 h-screen overflow-hidden">
+        <div className="absolute inset-0">
+          {renderFlavorLayer(ginger)}
+        </div>
+
+        <motion.div
+          style={{ clipPath: mintClipPath }}
+          className="absolute inset-0"
+        >
+          {renderFlavorLayer(mint, true)}
+        </motion.div>
+
+        <motion.div
+          style={{ left: dividerLeft, opacity: dividerOpacity }}
+          className="absolute top-0 z-30 h-full w-[2px] -translate-x-1/2 bg-white/80 shadow-[0_0_0_1px_rgba(45,79,62,0.15),0_0_22px_rgba(255,255,255,0.35)]"
+        />
+      </div>
+    </section>
+  );
+};
 
 const IngredientsSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -207,34 +295,15 @@ const IngredientsSection: React.FC = () => {
 
 const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, joined }) => {
   const [heroBgIndex, setHeroBgIndex] = useState(0);
-  const [selectedDrinkIndex, setSelectedDrinkIndex] = useState(0);
-  const [drinkDirection, setDrinkDirection] = useState<1 | -1>(1);
   const [isMailingListOpen, setIsMailingListOpen] = useState(false);
   const [mailingListEmail, setMailingListEmail] = useState('');
   const [mailingListInterests, setMailingListInterests] = useState<string[]>([]);
   const [mailingListSubmitted, setMailingListSubmitted] = useState(false);
-  const selectedDrink = PRODUCT_DRINKS[selectedDrinkIndex];
 
   useEffect(() => {
     const t = setInterval(() => setHeroBgIndex((i) => (i + 1) % 2), HERO_BG_INTERVAL_MS);
     return () => clearInterval(t);
   }, []);
-
-  const showPreviousDrink = () => {
-    setDrinkDirection(-1);
-    setSelectedDrinkIndex((i) => (i - 1 + PRODUCT_DRINKS.length) % PRODUCT_DRINKS.length);
-  };
-
-  const showNextDrink = () => {
-    setDrinkDirection(1);
-    setSelectedDrinkIndex((i) => (i + 1) % PRODUCT_DRINKS.length);
-  };
-
-  const showDrinkAtIndex = (index: number) => {
-    if (index === selectedDrinkIndex) return;
-    setDrinkDirection(index > selectedDrinkIndex ? 1 : -1);
-    setSelectedDrinkIndex(index);
-  };
 
   const openMailingListModal = () => {
     setIsMailingListOpen(true);
@@ -358,176 +427,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
         </div>
       </section>
 
-      {/* ——— Benefits ——— */}
-      <section
-        id="benefits"
-        className="min-h-screen bg-[#F5F2ED] flex flex-col"
-      >
-        {/* Scrolling announcement bar — warm gold on brand green section for contrast */}
-        <div
-          className="w-full shrink-0 overflow-hidden border-y-2 border-[#2D4F3E] bg-[#F9D067] py-3.5 md:py-4 shadow-[0_6px_28px_rgba(0,0,0,0.22)]"
-          aria-hidden
-        >
-          <div className="jj-benefits-marquee-track flex w-max">
-            {[0, 1].map((copy) => (
-              <span
-                key={copy}
-                className="inline-flex shrink-0 items-center whitespace-nowrap pl-10 pr-6 md:pl-16 md:pr-10 font-black text-[#1e3d30] text-xs sm:text-sm md:text-base uppercase tracking-[0.12em] md:tracking-[0.18em]"
-              >
-                {BENEFITS_MARQUEE}
-                <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
-                {BENEFITS_MARQUEE}
-                <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
-                {BENEFITS_MARQUEE}
-                <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
-                {BENEFITS_MARQUEE}
-                <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
-              </span>
-            ))}
-          </div>
-        </div>
-
-        <div className="relative flex flex-1 items-center justify-center px-6 py-10 md:px-10 md:py-14">
-          <div className={`absolute inset-0 bg-gradient-to-br ${selectedDrink.background}`} />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.28),transparent_56%)]" />
-
-          <button
-            type="button"
-            aria-label="Previous product drink"
-            onClick={showPreviousDrink}
-            className="absolute left-4 md:left-8 top-1/2 z-20 -translate-y-1/2 inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full border border-[#2D4F3E]/15 bg-white/85 text-[#2D4F3E] shadow-lg backdrop-blur hover:bg-white transition-colors"
-          >
-            <ChevronLeft className="h-6 w-6" />
-          </button>
-
-          <button
-            type="button"
-            aria-label="Next product drink"
-            onClick={showNextDrink}
-            className="absolute right-4 md:right-8 top-1/2 z-20 -translate-y-1/2 inline-flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-full border border-[#2D4F3E]/15 bg-white/85 text-[#2D4F3E] shadow-lg backdrop-blur hover:bg-white transition-colors"
-          >
-            <ChevronRight className="h-6 w-6" />
-          </button>
-
-          <div className="relative z-10 flex min-h-[calc(100vh-8rem)] w-full max-w-7xl items-center justify-center overflow-hidden rounded-[2rem] border border-white/50 bg-white/20 px-6 py-12 shadow-[0_20px_80px_rgba(45,79,62,0.12)] backdrop-blur-sm md:px-12">
-            <AnimatePresence mode="wait" custom={drinkDirection}>
-              <motion.div
-                key={selectedDrink.name}
-                className="absolute inset-0"
-                custom={drinkDirection}
-                initial={{ opacity: 1 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 1 }}
-              >
-                {selectedDrink.elements.map((element, index) => (
-                  <motion.img
-                    key={`${selectedDrink.name}-${element.src}`}
-                    src={element.src}
-                    alt=""
-                    custom={{ direction: drinkDirection, index }}
-                    variants={floatingElementVariants}
-                    initial="initial"
-                    animate="animate"
-                    exit="exit"
-                    className={`pointer-events-none absolute ${element.className}`}
-                  />
-                ))}
-              </motion.div>
-            </AnimatePresence>
-
-            <AnimatePresence mode="wait" custom={drinkDirection}>
-              <motion.div
-                key={`${selectedDrink.name}-word`}
-                custom={drinkDirection}
-                initial={{ opacity: 0, y: drinkDirection === 1 ? 80 : -80 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: drinkDirection === 1 ? 80 : -80 }}
-                transition={{ duration: 0.75, ease: organicEase }}
-                className="pointer-events-none absolute inset-x-0 bottom-[14%] z-0 text-center font-serif text-[24vw] font-black uppercase tracking-[-0.08em] text-[#A76D2A]/20 md:text-[18vw]"
-              >
-                {selectedDrink.word}
-              </motion.div>
-            </AnimatePresence>
-
-            <div className="relative z-10 grid w-full items-center gap-8 md:grid-cols-[0.9fr_auto_1fr]">
-              <div className="hidden md:block" />
-
-              <AnimatePresence mode="wait" custom={drinkDirection}>
-                <motion.div
-                  key={`${selectedDrink.name}-product`}
-                  custom={drinkDirection}
-                initial={{ opacity: 0, scale: 0.92, rotate: drinkDirection === 1 ? 4 : -4, y: drinkDirection === 1 ? 28 : -28 }}
-                  animate={{
-                    opacity: 1,
-                    scale: [1, 1.07, 1],
-                    rotate: [0, drinkDirection === 1 ? 4 : -4, 0],
-                    y: [18, -8, 0],
-                  }}
-                  exit={{
-                    opacity: 0,
-                    scale: 0.96,
-                    rotate: drinkDirection === 1 ? 5 : -5,
-                    y: drinkDirection === 1 ? 36 : -36,
-                  }}
-                  transition={{ duration: 0.9, ease: organicEase }}
-                  className="mx-auto flex flex-col items-center"
-                >
-                  <img
-                    src={demoJivaBottle}
-                    alt={selectedDrink.name}
-                    className="relative z-10 h-auto w-[32rem] max-w-none md:w-[46rem] lg:w-[58rem] object-contain drop-shadow-[0_28px_60px_rgba(45,79,62,0.2)]"
-                  />
-                  <button
-                    type="button"
-                    onClick={openMailingListModal}
-                    className="mt-6 inline-flex items-center rounded-full border border-[#2D4F3E]/20 bg-white/90 px-6 py-3 text-sm font-black text-[#2D4F3E] shadow-md transition-colors hover:bg-white"
-                  >
-                    Shop now
-                  </button>
-                </motion.div>
-              </AnimatePresence>
-
-              <AnimatePresence mode="wait" custom={drinkDirection}>
-                <motion.div
-                  key={`${selectedDrink.name}-text`}
-                  custom={drinkDirection}
-                initial={{ opacity: 0, y: drinkDirection === 1 ? 40 : -40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: drinkDirection === 1 ? 40 : -40 }}
-                  transition={{ duration: 0.75, ease: organicEase }}
-                  className="text-center md:text-left"
-                >
-                  <span className="mb-3 block text-xs font-black uppercase tracking-[0.22em] text-[#2D4F3E]/70">
-                    Product Selection
-                  </span>
-                  <h2 className="font-serif text-4xl font-black leading-none md:text-6xl" style={{ color: selectedDrink.accent }}>
-                    {selectedDrink.name}
-                  </h2>
-                  <p className="mt-4 text-sm font-black uppercase tracking-[0.18em] text-[#2D4F3E]/70">
-                    {selectedDrink.eyebrow}
-                  </p>
-                  <p className="mx-auto mt-5 max-w-md text-base leading-relaxed text-[#2D4F3E]/80 md:mx-0 md:text-lg">
-                    {selectedDrink.description}
-                  </p>
-                  <div className="mt-8 flex items-center justify-center gap-3 md:justify-start">
-                    {PRODUCT_DRINKS.map((drink, index) => (
-                      <button
-                        key={drink.name}
-                        type="button"
-                        aria-label={`Show ${drink.name}`}
-                        onClick={() => showDrinkAtIndex(index)}
-                        className={`h-2.5 rounded-full transition-all ${
-                          index === selectedDrinkIndex ? 'w-10 bg-[#2D4F3E]' : 'w-2.5 bg-[#2D4F3E]/25 hover:bg-[#2D4F3E]/45'
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ProductRevealSection onOpenMailingListModal={openMailingListModal} />
 
       <IngredientsSection />
 
