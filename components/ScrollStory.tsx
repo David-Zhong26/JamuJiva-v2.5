@@ -68,6 +68,7 @@ const ProductRevealSection: React.FC<ProductRevealSectionProps> = ({ onOpenMaili
   });
 
   const revealProgress = useTransform(scrollYProgress, [0.12, 0.82], [0, 100]);
+  const gingerClipPath = useTransform(revealProgress, (v) => `inset(0 ${v}% 0 0)`);
   const mintClipPath = useTransform(revealProgress, (v) => `inset(0 0 0 ${100 - v}%)`);
   const dividerLeft = useTransform(revealProgress, (v) => `${100 - v}%`);
   const dividerOpacity = useTransform(scrollYProgress, [0.08, 0.12, 0.9, 1], [0, 1, 1, 0]);
@@ -160,7 +161,9 @@ const ProductRevealSection: React.FC<ProductRevealSectionProps> = ({ onOpenMaili
 
       <div className="sticky top-0 h-screen overflow-hidden">
         <div className="absolute inset-0">
-          {renderFlavorLayer(ginger)}
+          <motion.div style={{ clipPath: gingerClipPath }} className="absolute inset-0">
+            {renderFlavorLayer(ginger)}
+          </motion.div>
         </div>
 
         <motion.div
