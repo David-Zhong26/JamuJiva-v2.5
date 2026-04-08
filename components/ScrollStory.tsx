@@ -68,8 +68,8 @@ const ProductRevealSection: React.FC<ProductRevealSectionProps> = ({ onOpenMaili
   });
 
   const revealProgress = useTransform(scrollYProgress, [0.12, 0.82], [0, 100]);
-  const gingerClipPath = useTransform(revealProgress, (v) => `inset(0 ${v}% 0 0)`);
-  const mintClipPath = useTransform(revealProgress, (v) => `inset(0 0 0 ${100 - v}%)`);
+  const gingerWidth = useTransform(revealProgress, (v) => `${100 - v}%`);
+  const mintWidth = useTransform(revealProgress, (v) => `${v}%`);
   const dividerLeft = useTransform(revealProgress, (v) => `${100 - v}%`);
   const dividerOpacity = useTransform(scrollYProgress, [0.08, 0.12, 0.9, 1], [0, 1, 1, 0]);
 
@@ -160,17 +160,22 @@ const ProductRevealSection: React.FC<ProductRevealSectionProps> = ({ onOpenMaili
       </div>
 
       <div className="sticky top-0 h-screen overflow-hidden">
-        <div className="absolute inset-0">
-          <motion.div style={{ clipPath: gingerClipPath }} className="absolute inset-0">
+        <motion.div
+          style={{ width: gingerWidth }}
+          className="absolute inset-y-0 left-0 overflow-hidden"
+        >
+          <div className="absolute inset-y-0 left-0 w-screen">
             {renderFlavorLayer(ginger)}
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
 
         <motion.div
-          style={{ clipPath: mintClipPath }}
-          className="absolute inset-0"
+          style={{ width: mintWidth }}
+          className="absolute inset-y-0 right-0 overflow-hidden"
         >
-          {renderFlavorLayer(mint, true)}
+          <div className="absolute inset-y-0 right-0 w-screen">
+            {renderFlavorLayer(mint, true)}
+          </div>
         </motion.div>
 
         <motion.div
