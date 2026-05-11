@@ -3,13 +3,22 @@ import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 import { Send, ChevronDown, ChevronUp, ChevronDown as ChevronDownIcon, X } from 'lucide-react';
 import backgroundImg from '../materials/background.jpg';
 import background2Img from '../materials/background 2.png';
-import demoJivaBottle from '../materials/demo jiva.png';
+import background3Img from '../materials/background 3.png';
+import background4Img from '../materials/background 4.png';
+import demoJivaBottle from '../materials/demo jiva can.png';
 import DailyRitualSection from './DailyRitualSection';
 import FlavorShopSection from './FlavorShopSection';
 import { PRODUCT_DRINKS } from '../constants/productDrinks';
 import { supabase } from '../supabase';
 
 const HERO_BG_INTERVAL_MS = 4000;
+
+const HERO_BACKGROUNDS = [
+  backgroundImg,
+  background2Img,
+  background3Img,
+  background4Img,
+] as const;
 
 const BENEFITS_MARQUEE =
   '100% Natural • Indonesian Herbal Blend • No Additives • Gluten Free • Real Ingredients Only';
@@ -112,7 +121,10 @@ const ScrollStory: React.FC = () => {
   const [mailingListSubmitted, setMailingListSubmitted] = useState(false);
 
   useEffect(() => {
-    const t = setInterval(() => setHeroBgIndex((i) => (i + 1) % 2), HERO_BG_INTERVAL_MS);
+    const t = setInterval(
+      () => setHeroBgIndex((i) => (i + 1) % HERO_BACKGROUNDS.length),
+      HERO_BG_INTERVAL_MS
+    );
     return () => clearInterval(t);
   }, []);
 
@@ -189,22 +201,17 @@ const ScrollStory: React.FC = () => {
       >
         <div className="absolute inset-0 z-0 bg-[#2D4F3E]" />
         <div className="absolute inset-0 z-0">
-          <motion.img
-            src={backgroundImg}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-            initial={false}
-            animate={{ opacity: heroBgIndex === 0 ? 1 : 0 }}
-            transition={{ duration: 0.8 }}
-          />
-          <motion.img
-            src={background2Img}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-            initial={false}
-            animate={{ opacity: heroBgIndex === 1 ? 1 : 0 }}
-            transition={{ duration: 0.8 }}
-          />
+          {HERO_BACKGROUNDS.map((src, index) => (
+            <motion.img
+              key={index}
+              src={src}
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover"
+              initial={false}
+              animate={{ opacity: heroBgIndex === index ? 1 : 0 }}
+              transition={{ duration: 0.8 }}
+            />
+          ))}
           <div className="absolute inset-0 bg-gradient-to-t from-[#2D4F3E]/90 via-transparent to-black/20" />
         </div>
 

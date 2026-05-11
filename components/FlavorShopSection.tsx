@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import demoJivaBottle from '../materials/demo jiva.png';
+import demoJivaBottle from '../materials/demo jiva can.png';
 import { PRODUCT_DRINKS, type ProductDrink } from '../constants/productDrinks';
 
 interface FlavorShopSectionProps {
