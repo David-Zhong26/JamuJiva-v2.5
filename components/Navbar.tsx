@@ -1,14 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown, Menu, X } from 'lucide-react';
+import { useMailingList } from '../contexts/MailingListContext';
 
 const CULTURE_LINKS = [
-  { label: 'Build your ritual', href: '#ritual' },
-  { label: 'Origin story', href: '#story' },
-  { label: 'Quick answers', href: '#faq' },
+  { label: 'Build your ritual', to: '/#ritual' },
+  { label: 'Origin story', to: '/#story' },
+  { label: 'Quick answers', to: '/#faq' },
 ];
 
 const Navbar: React.FC = () => {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+  const { openMailingList } = useMailingList();
+
   const { scrollY } = useScroll();
   const shellOpacity = useTransform(scrollY, [0, 80], [0, 0.96]);
   const textProgress = useTransform(scrollY, [0, 80], [0, 1]);
@@ -61,8 +67,16 @@ const Navbar: React.FC = () => {
     setMobileCultureOpen(false);
   };
 
-  const linkClass =
+  const linkClassHero =
     'font-bold text-xs uppercase tracking-widest transition-colors hover:text-[#F47C3E]';
+  const linkClassSolid =
+    'font-bold text-xs uppercase tracking-widest text-[#2D4F3E] transition-colors hover:text-[#F47C3E]';
+
+  const shellClass =
+    'w-full px-6 md:px-10 py-4 transition-colors backdrop-blur-[2px]';
+  const shellStyle = isHome
+    ? { backgroundColor: shellBackground }
+    : { backgroundColor: 'rgba(245, 242, 237, 0.97)' };
 
   return (
     <motion.nav
@@ -70,96 +84,187 @@ const Navbar: React.FC = () => {
       animate={{ y: 0 }}
       className="fixed top-0 right-0 z-50 w-full"
     >
-      <motion.div
-        style={{ backgroundColor: shellBackground }}
-        className="w-full px-6 md:px-10 py-4 transition-colors backdrop-blur-[2px]"
-      >
+      <motion.div style={shellStyle} className={`${shellClass} ${!isHome ? 'border-b border-[#2D4F3E]/10' : ''}`}>
         <div className="flex items-center justify-between gap-6">
-          <a href="#hero" onClick={closeAll} className="shrink-0">
-            <motion.span style={{ color: navTextColor }} className="font-serif text-2xl font-black tracking-tighter">
-              JAMU JIVA
-            </motion.span>
-          </a>
+          <Link to="/" onClick={closeAll} className="shrink-0">
+            {isHome ? (
+              <motion.span style={{ color: navTextColor }} className="font-serif text-2xl font-black tracking-tighter">
+                JAMU JIVA
+              </motion.span>
+            ) : (
+              <span className="font-serif text-2xl font-black tracking-tighter text-[#2D4F3E]">JAMU JIVA</span>
+            )}
+          </Link>
 
           <div className="ml-auto flex items-center gap-4 md:gap-10">
-            <motion.div
-              style={{ color: navTextColor }}
-              className="hidden md:flex items-center gap-10 font-bold text-xs uppercase tracking-widest"
+            <div
+              style={{ color: isHome ? undefined : '#2D4F3E' }}
+              className={`hidden md:flex items-center gap-10 ${isHome ? '' : 'text-[#2D4F3E]'}`}
             >
-              <a href="#benefits" className={linkClass}>
-                Benefits
-              </a>
-              <a href="#shop" className={linkClass}>
-                Ingredients
-              </a>
-              <div
-                className="relative"
-                onMouseEnter={openCultureMenu}
-                onMouseLeave={scheduleCloseCultureMenu}
-              >
-                <button
-                  type="button"
-                  aria-expanded={cultureOpen}
-                  aria-haspopup="true"
-                  className="inline-flex cursor-default items-center gap-1 bg-transparent font-bold text-xs uppercase tracking-widest transition-colors hover:text-[#F47C3E]"
-                >
-                  <motion.span style={{ color: navTextColor }} className="inline-flex items-center gap-1">
-                    Culture
-                    <ChevronDown className={`h-3 w-3 shrink-0 transition-transform ${cultureOpen ? 'rotate-180' : ''}`} />
-                  </motion.span>
-                </button>
-                <AnimatePresence>
-                  {cultureOpen ? (
-                    <motion.div
-                      initial={{ opacity: 0, y: -4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -4 }}
-                      transition={{ duration: 0.18, ease: 'easeOut' }}
-                      className="absolute right-0 top-full z-[60] mt-2 min-w-[13rem] rounded-lg border border-[#2D4F3E] bg-[#F5E8CA] py-2 shadow-[0_14px_40px_rgba(45,79,62,0.12)]"
-                      onMouseEnter={openCultureMenu}
-                      onMouseLeave={scheduleCloseCultureMenu}
+              {isHome ? (
+                <>
+                  <motion.div style={{ color: navTextColor }} className="flex items-center gap-10">
+                    <Link to="/#benefits" className={linkClassHero}>
+                      Benefits
+                    </Link>
+                    <Link to="/shop" className={linkClassHero} onClick={closeAll}>
+                      Ingredients
+                    </Link>
+                  </motion.div>
+                  <div
+                    className="relative"
+                    onMouseEnter={openCultureMenu}
+                    onMouseLeave={scheduleCloseCultureMenu}
+                  >
+                    <button
+                      type="button"
+                      aria-expanded={cultureOpen}
+                      aria-haspopup="true"
+                      className="inline-flex cursor-default items-center gap-1 bg-transparent font-bold text-xs uppercase tracking-widest transition-colors hover:text-[#F47C3E]"
                     >
-                      {CULTURE_LINKS.map((item) => (
-                        <a
-                          key={item.href}
-                          href={item.href}
-                          onClick={closeAll}
-                          className="block px-5 py-2.5 font-bold text-xs uppercase tracking-widest text-[#2D4F3E] transition-colors hover:bg-[#F9D067]/45 hover:text-[#1e3d30]"
+                      <motion.span style={{ color: navTextColor }} className="inline-flex items-center gap-1">
+                        Culture
+                        <ChevronDown
+                          className={`h-3 w-3 shrink-0 transition-transform ${cultureOpen ? 'rotate-180' : ''}`}
+                        />
+                      </motion.span>
+                    </button>
+                    <AnimatePresence>
+                      {cultureOpen ? (
+                        <motion.div
+                          initial={{ opacity: 0, y: -4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -4 }}
+                          transition={{ duration: 0.18, ease: 'easeOut' }}
+                          className="absolute right-0 top-full z-[60] mt-2 min-w-[13rem] rounded-lg border border-[#2D4F3E] bg-[#F5E8CA] py-2 shadow-[0_14px_40px_rgba(45,79,62,0.12)]"
+                          onMouseEnter={openCultureMenu}
+                          onMouseLeave={scheduleCloseCultureMenu}
                         >
-                          {item.label}
-                        </a>
-                      ))}
-                    </motion.div>
-                  ) : null}
-                </AnimatePresence>
-              </div>
-              <a href="#waitlist" className={linkClass}>
-                Drops
-              </a>
-            </motion.div>
+                          {CULTURE_LINKS.map((item) => (
+                            <Link
+                              key={item.to}
+                              to={item.to}
+                              onClick={closeAll}
+                              className="block px-5 py-2.5 font-bold text-xs uppercase tracking-widest text-[#2D4F3E] transition-colors hover:bg-[#F9D067]/45 hover:text-[#1e3d30]"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      ) : null}
+                    </AnimatePresence>
+                  </div>
+                  <motion.div style={{ color: navTextColor }}>
+                    <Link to="/#waitlist" className={linkClassHero}>
+                      Drops
+                    </Link>
+                  </motion.div>
+                </>
+              ) : (
+                <>
+                  <Link to="/#benefits" className={linkClassSolid}>
+                    Benefits
+                  </Link>
+                  <Link to="/shop" className={linkClassSolid} onClick={closeAll}>
+                    Ingredients
+                  </Link>
+                  <div
+                    className="relative"
+                    onMouseEnter={openCultureMenu}
+                    onMouseLeave={scheduleCloseCultureMenu}
+                  >
+                    <button
+                      type="button"
+                      aria-expanded={cultureOpen}
+                      aria-haspopup="true"
+                      className="inline-flex cursor-default items-center gap-1 bg-transparent font-bold text-xs uppercase tracking-widest text-[#2D4F3E] transition-colors hover:text-[#F47C3E]"
+                    >
+                      Culture
+                      <ChevronDown
+                        className={`h-3 w-3 shrink-0 transition-transform ${cultureOpen ? 'rotate-180' : ''}`}
+                      />
+                    </button>
+                    <AnimatePresence>
+                      {cultureOpen ? (
+                        <motion.div
+                          initial={{ opacity: 0, y: -4 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -4 }}
+                          transition={{ duration: 0.18, ease: 'easeOut' }}
+                          className="absolute right-0 top-full z-[60] mt-2 min-w-[13rem] rounded-lg border border-[#2D4F3E] bg-[#F5E8CA] py-2 shadow-[0_14px_40px_rgba(45,79,62,0.12)]"
+                          onMouseEnter={openCultureMenu}
+                          onMouseLeave={scheduleCloseCultureMenu}
+                        >
+                          {CULTURE_LINKS.map((item) => (
+                            <Link
+                              key={item.to}
+                              to={item.to}
+                              onClick={closeAll}
+                              className="block px-5 py-2.5 font-bold text-xs uppercase tracking-widest text-[#2D4F3E] transition-colors hover:bg-[#F9D067]/45 hover:text-[#1e3d30]"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      ) : null}
+                    </AnimatePresence>
+                  </div>
+                  <Link to="/#waitlist" className={linkClassSolid}>
+                    Drops
+                  </Link>
+                </>
+              )}
+            </div>
 
-            <motion.button
-              type="button"
-              style={{ borderColor: mobileIconBorder, color: navTextColor }}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border bg-transparent md:hidden"
-              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-              onClick={() => setMobileOpen((v) => !v)}
-            >
-              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </motion.button>
+            {isHome ? (
+              <motion.button
+                type="button"
+                style={{ borderColor: mobileIconBorder, color: navTextColor }}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border bg-transparent md:hidden"
+                aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+                onClick={() => setMobileOpen((v) => !v)}
+              >
+                {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </motion.button>
+            ) : (
+              <button
+                type="button"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#2D4F3E]/25 text-[#2D4F3E] md:hidden"
+                aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+                onClick={() => setMobileOpen((v) => !v)}
+              >
+                {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
+            )}
 
-            <motion.a
-              href="#waitlist"
-              onClick={closeAll}
-              style={{
-                backgroundColor: buttonBackground,
-                color: buttonTextColor,
-                borderColor: buttonBorder,
-              }}
-              className="hidden md:inline-flex items-center justify-center rounded-full border px-6 py-2.5 font-black text-xs transition-all hover:bg-[#F47C3E] hover:border-[#F47C3E]"
-            >
-              JOIN THE LIST
-            </motion.a>
+            {isHome ? (
+              <motion.button
+                type="button"
+                onClick={() => {
+                  closeAll();
+                  openMailingList();
+                }}
+                style={{
+                  backgroundColor: buttonBackground,
+                  color: buttonTextColor,
+                  borderColor: buttonBorder,
+                }}
+                className="hidden md:inline-flex items-center justify-center rounded-full border px-6 py-2.5 font-black text-xs transition-all hover:bg-[#F47C3E] hover:border-[#F47C3E]"
+              >
+                JOIN THE LIST
+              </motion.button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  closeAll();
+                  openMailingList();
+                }}
+                className="hidden rounded-full border border-[#2D4F3E] bg-[#2D4F3E] px-6 py-2.5 font-black text-xs text-white transition-all hover:bg-[#F47C3E] hover:border-[#F47C3E] md:inline-flex md:items-center md:justify-center"
+              >
+                JOIN THE LIST
+              </button>
+            )}
           </div>
         </div>
       </motion.div>
@@ -193,12 +298,12 @@ const Navbar: React.FC = () => {
                 </button>
               </div>
               <nav className="flex flex-col gap-1 font-bold text-xs uppercase tracking-widest text-[#2D4F3E]">
-                <a href="#benefits" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
+                <Link to="/#benefits" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
                   Benefits
-                </a>
-                <a href="#shop" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
+                </Link>
+                <Link to="/shop" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
                   Ingredients
-                </a>
+                </Link>
                 <button
                   type="button"
                   onClick={() => setMobileCultureOpen((v) => !v)}
@@ -210,28 +315,31 @@ const Navbar: React.FC = () => {
                 {mobileCultureOpen ? (
                   <div className="ml-2 border-l border-[#2D4F3E]/15 pl-3">
                     {CULTURE_LINKS.map((item) => (
-                      <a
-                        key={item.href}
-                        href={item.href}
+                      <Link
+                        key={item.to}
+                        to={item.to}
                         onClick={closeAll}
                         className="block py-2.5 text-[0.7rem] text-[#2D4F3E]/90 hover:text-[#F47C3E]"
                       >
                         {item.label}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 ) : null}
-                <a href="#waitlist" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
+                <Link to="/#waitlist" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
                   Drops
-                </a>
+                </Link>
               </nav>
-              <a
-                href="#waitlist"
-                onClick={closeAll}
+              <button
+                type="button"
+                onClick={() => {
+                  closeAll();
+                  openMailingList();
+                }}
                 className="mt-auto inline-flex w-full items-center justify-center rounded-full bg-[#2D4F3E] py-3.5 font-black text-xs text-white"
               >
                 JOIN THE LIST
-              </a>
+              </button>
             </motion.div>
           </motion.div>
         ) : null}
