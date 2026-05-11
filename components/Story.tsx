@@ -1,7 +1,7 @@
 
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import demoJiva from '../materials/demo jiva.jpg';
+import demoJivaCan from '../materials/demo jiva can.png';
 
 const Story: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -46,13 +46,13 @@ const Story: React.FC = () => {
             style={{ opacity: img1Opacity }}
             className="absolute inset-0 bg-cover bg-center"
           >
-            <img src={demoJiva} alt="Jamu Story" className="w-full h-full object-cover" />
+            <img src={demoJivaCan} alt="Jamu Story" className="w-full h-full object-cover" />
           </motion.div>
           <motion.div 
             style={{ opacity: img2Opacity, scale: img2Scale }}
             className="absolute inset-0 bg-cover bg-center"
           >
-            <img src={demoJiva} alt="Jamu Story" className="w-full h-full object-cover" />
+            <img src={demoJivaCan} alt="Jamu Story" className="w-full h-full object-cover" />
           </motion.div>
           <div className="absolute inset-0 bg-black/20" />
         </div>
