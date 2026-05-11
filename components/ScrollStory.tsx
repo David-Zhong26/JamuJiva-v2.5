@@ -28,6 +28,11 @@ const PRODUCT_DRINKS = [
     word: 'gold',
     background: 'from-[#EB9C35] via-[#F0B154] to-[#E7A243]',
     accent: '#8A4F12',
+    textColor: '#FFF8EE',
+    bodyColor: 'rgba(255, 248, 238, 0.92)',
+    buttonBg: '#2D4F3E',
+    buttonText: '#F5E8CA',
+    buttonBorder: 'rgba(45, 79, 62, 0.24)',
     elements: [
       { src: modelGinger, className: 'left-[-2%] top-[8%] w-[13rem] md:w-[17rem] lg:w-[19rem] rotate-[-14deg]' },
       { src: ginger1, className: 'left-[8%] bottom-[14%] w-[9rem] md:w-[12rem] lg:w-[14rem] rotate-[8deg]' },
@@ -41,6 +46,11 @@ const PRODUCT_DRINKS = [
     word: 'mint',
     background: 'from-[#4E7145] via-[#648858] to-[#567A4A]',
     accent: '#EAF2D8',
+    textColor: '#F5F2ED',
+    bodyColor: 'rgba(245, 242, 237, 0.9)',
+    buttonBg: '#F5F2ED',
+    buttonText: '#2D4F3E',
+    buttonBorder: 'rgba(245, 242, 237, 0.35)',
     elements: [
       { src: modelMint, className: 'left-[-1%] top-[10%] w-[12rem] md:w-[16rem] lg:w-[18rem] rotate-[-10deg]' },
       { src: mint1, className: 'left-[10%] bottom-[12%] w-[8rem] md:w-[10rem] lg:w-[12rem] rotate-[10deg]' },
@@ -81,8 +91,9 @@ const ProductRevealSection: React.FC<ProductRevealSectionProps> = ({ onOpenMaili
     isMint = false
   ) => (
     <div
-      className={`absolute inset-0 ${isMint ? 'text-[#F5F2ED]' : 'text-white'}`}
+      className="absolute inset-0"
       style={{
+        color: flavor.textColor,
         background: isMint
           ? 'linear-gradient(135deg, #4E7145 0%, #648858 45%, #567A4A 100%)'
           : 'linear-gradient(135deg, #EB9C35 0%, #F0B154 45%, #E7A243 100%)',
@@ -95,7 +106,10 @@ const ProductRevealSection: React.FC<ProductRevealSectionProps> = ({ onOpenMaili
             <h2 className="font-serif text-5xl md:text-7xl font-black leading-[0.9] uppercase">
               {flavor.name === 'Mint Reset' ? 'MINT' : 'GINGER'}
             </h2>
-            <p className="mt-5 text-sm md:text-base font-black uppercase tracking-[0.2em] opacity-90">
+            <p
+              className="mt-5 text-sm md:text-base font-black uppercase tracking-[0.2em]"
+              style={{ color: flavor.bodyColor }}
+            >
               {flavor.eyebrow}
             </p>
           </div>
@@ -109,17 +123,21 @@ const ProductRevealSection: React.FC<ProductRevealSectionProps> = ({ onOpenMaili
           </div>
 
           <div className="max-w-sm text-left justify-self-end">
-            <p className="text-base md:text-lg leading-relaxed opacity-95">
+            <p
+              className="text-base md:text-lg leading-relaxed"
+              style={{ color: flavor.bodyColor }}
+            >
               {flavor.description}
             </p>
             <button
               type="button"
               onClick={onOpenMailingListModal}
-              className={`mt-8 inline-flex items-center justify-center rounded-full px-8 py-4 font-black uppercase tracking-[0.14em] transition-all ${
-                isMint
-                  ? 'border border-[#F5F2ED]/35 bg-[#F5F2ED] text-[#2D4F3E] hover:bg-white'
-                  : 'border border-white/35 bg-white text-[#2D4F3E] hover:bg-[#F5F2ED]'
-              }`}
+              style={{
+                backgroundColor: flavor.buttonBg,
+                color: flavor.buttonText,
+                borderColor: flavor.buttonBorder,
+              }}
+              className="mt-8 inline-flex items-center justify-center rounded-full border px-8 py-4 font-black uppercase tracking-[0.14em] transition-all hover:brightness-105"
             >
               Shop now
             </button>
