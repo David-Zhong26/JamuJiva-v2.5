@@ -68,7 +68,7 @@ const ProductRevealSection: React.FC = () => {
             <img
               src={demoJivaBottle}
               alt={flavor.name}
-              className="relative z-10 h-auto w-[22rem] max-w-none object-contain drop-shadow-[0_24px_60px_rgba(0,0,0,0.22)] md:w-[28rem] lg:w-[32rem]"
+              className="relative z-10 h-auto w-[22rem] max-w-none object-contain md:w-[28rem] lg:w-[32rem]"
             />
           </div>
 

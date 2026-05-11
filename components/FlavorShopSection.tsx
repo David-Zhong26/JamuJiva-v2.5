@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import demoJivaBottle from '../materials/demo jiva can.png';
 import { PRODUCT_DRINKS, type ProductDrink } from '../constants/productDrinks';
@@ -10,28 +11,24 @@ interface FlavorShopSectionProps {
 type PurchaseMode = 'once' | 'subscribe';
 
 const FlavorShopSection: React.FC<FlavorShopSectionProps> = ({ onOpenMailingListModal }) => {
+  const [searchParams] = useSearchParams();
   const [activeIndex, setActiveIndex] = useState(0);
   const [mode, setMode] = useState<PurchaseMode>('subscribe');
   const [frequency, setFrequency] = useState('Every 30 days');
 
   const drink: ProductDrink = PRODUCT_DRINKS[activeIndex] ?? PRODUCT_DRINKS[0];
 
+  useEffect(() => {
+    if (searchParams.get('pack') === 'case30') {
+      setMode('once');
+    }
+  }, [searchParams]);
+
   return (
     <section id="shop" className="relative border-y-2 border-[#2D4F3E] bg-[#F5E8CA] py-14 md:py-20">
       <div className="mx-auto max-w-6xl px-5 md:px-10">
         <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
           <div className="relative">
-            <div
-              className="pointer-events-none absolute left-1/2 top-[42%] h-[min(72vw,420px)] w-[min(72vw,420px)] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-90 blur-[72px]"
-              style={{
-                background:
-                  drink.slug === 'mint-reset'
-                    ? 'radial-gradient(circle, rgba(78,113,69,0.35) 0%, rgba(244,124,62,0.12) 55%, transparent 70%)'
-                    : 'radial-gradient(circle, rgba(235,156,53,0.45) 0%, rgba(244,124,62,0.14) 55%, transparent 72%)',
-              }}
-              aria-hidden
-            />
-
             <div className="relative flex min-h-[320px] items-center justify-center md:min-h-[420px]">
               <motion.img
                 key={drink.slug}
@@ -40,12 +37,18 @@ const FlavorShopSection: React.FC<FlavorShopSectionProps> = ({ onOpenMailingList
                 initial={{ opacity: 0, y: 10, scale: 0.985 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className="relative z-10 h-auto w-[min(78vw,22rem)] max-w-none object-contain drop-shadow-[0_28px_70px_rgba(0,0,0,0.18)] md:w-[min(42vw,28rem)]"
+                className="relative z-10 h-auto w-[min(78vw,22rem)] max-w-none object-contain md:w-[min(42vw,28rem)]"
               />
             </div>
           </div>
 
           <div className="relative z-10">
+            {searchParams.get('pack') === 'case30' ? (
+              <p className="mb-6 rounded-xl border border-[#2D4F3E]/25 bg-[#F9D067]/35 px-4 py-3 text-[0.7rem] font-bold uppercase leading-snug tracking-wide text-[#2D4F3E] md:text-xs">
+                Case pack (30 bottles): we&apos;ve highlighted{' '}
+                <span className="text-[#2D4F3E]">One-time purchase</span> below—pick your flavor, then add to cart.
+              </p>
+            ) : null}
             <p className="font-bold text-xs uppercase tracking-widest text-[#2D4F3E]/65">
               Select a flavor
             </p>
@@ -79,7 +82,7 @@ const FlavorShopSection: React.FC<FlavorShopSectionProps> = ({ onOpenMailingList
                       <img
                         src={item.thumb}
                         alt=""
-                        className="absolute inset-0 m-auto h-[88%] w-auto object-contain drop-shadow-md"
+                        className="absolute inset-0 m-auto h-[88%] w-auto object-contain"
                       />
                     </div>
                     <div className="border-t border-[#2D4F3E]/20 bg-[#F9D067]/35 px-3 py-2">
