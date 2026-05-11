@@ -1,16 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
-import { Send, ChevronDown, ChevronUp, X } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Send, ChevronDown, ChevronUp, ChevronDown as ChevronDownIcon, X } from 'lucide-react';
 import backgroundImg from '../materials/background.jpg';
 import background2Img from '../materials/background 2.png';
-import demoJivaCan from '../materials/demo jiva can.png';
-import modelMint from '../materials/model mint.png';
-import modelGinger from '../materials/model ginger.png';
-import ginger1 from '../materials/ginger 1.png';
-import ginger2 from '../materials/ginger 2.png';
-import mint1 from '../materials/mint 1.png';
-import mint2 from '../materials/mint 2.png';
 import DailyRitualSection from './DailyRitualSection';
+import FlavorShopSection from './FlavorShopSection';
+import { PRODUCT_DRINKS } from '../constants/productDrinks';
 import { supabase } from '../supabase';
 
 const HERO_BG_INTERVAL_MS = 4000;
@@ -18,338 +13,7 @@ const HERO_BG_INTERVAL_MS = 4000;
 const BENEFITS_MARQUEE =
   '100% Natural • Indonesian Herbal Blend • No Additives • Gluten Free • Real Ingredients Only';
 
-const PRODUCT_DRINKS = [
-  {
-    name: 'Bali Gold',
-    eyebrow: 'Ginger-rooted daily glow',
-    description: 'A bright, grounding Jamu blend with golden spice warmth and clean natural energy.',
-    word: 'gold',
-    background: 'from-[#EB9C35] via-[#F0B154] to-[#E7A243]',
-    accent: '#8A4F12',
-    textColor: '#FFF8EE',
-    bodyColor: 'rgba(255, 248, 238, 0.92)',
-    buttonBg: '#2D4F3E',
-    buttonText: '#F5E8CA',
-    buttonBorder: 'rgba(45, 79, 62, 0.24)',
-    elements: [
-      { src: modelGinger, className: 'left-[-2%] top-[8%] w-[13rem] md:w-[17rem] lg:w-[19rem] rotate-[-14deg]' },
-      { src: ginger1, className: 'left-[8%] bottom-[14%] w-[9rem] md:w-[12rem] lg:w-[14rem] rotate-[8deg]' },
-      { src: ginger2, className: 'right-[4%] top-[14%] w-[10rem] md:w-[13rem] lg:w-[15rem] rotate-[14deg]' },
-    ],
-  },
-  {
-    name: 'Mint Reset',
-    eyebrow: 'Cooling herbal clarity',
-    description: 'Fresh mint notes meet a light herbal finish for an easy, refreshing ritual.',
-    word: 'mint',
-    background: 'from-[#4E7145] via-[#648858] to-[#567A4A]',
-    accent: '#EAF2D8',
-    textColor: '#F5F2ED',
-    bodyColor: 'rgba(245, 242, 237, 0.9)',
-    buttonBg: '#F5F2ED',
-    buttonText: '#2D4F3E',
-    buttonBorder: 'rgba(245, 242, 237, 0.35)',
-    elements: [
-      { src: modelMint, className: 'left-[-1%] top-[10%] w-[12rem] md:w-[16rem] lg:w-[18rem] rotate-[-10deg]' },
-      { src: mint1, className: 'left-[10%] bottom-[12%] w-[8rem] md:w-[10rem] lg:w-[12rem] rotate-[10deg]' },
-      { src: mint2, className: 'right-[5%] top-[16%] w-[8rem] md:w-[11rem] lg:w-[13rem] rotate-[18deg]' },
-    ],
-  },
-] as const;
-
-interface ScrollStoryProps {
-  email: string;
-  setEmail: (email: string) => void;
-  onJoin: (e: React.FormEvent) => void;
-  joined: boolean;
-}
-
-interface ProductRevealSectionProps {
-  onOpenMailingListModal: () => void;
-}
-
-const ProductRevealSection: React.FC<ProductRevealSectionProps> = ({ onOpenMailingListModal }) => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end end'],
-  });
-
-  const revealProgress = useTransform(scrollYProgress, [0.12, 0.82], [0, 100]);
-  const gingerWidth = useTransform(revealProgress, (v) => `${100 - v}%`);
-  const mintWidth = useTransform(revealProgress, (v) => `${v}%`);
-  const dividerLeft = useTransform(revealProgress, (v) => `${100 - v}%`);
-  const dividerOpacity = useTransform(scrollYProgress, [0.08, 0.12, 0.9, 1], [0, 1, 1, 0]);
-
-  const [activeFromScroll, setActiveFromScroll] = useState<'ginger' | 'mint'>('ginger');
-  const [purchaseType, setPurchaseType] = useState<'once' | 'subscribe'>('subscribe');
-  const [thumbIndex, setThumbIndex] = useState<{ ginger: number; mint: number }>({ ginger: 0, mint: 0 });
-
-  useMotionValueEvent(revealProgress, 'change', (v) => {
-    setActiveFromScroll(v >= 50 ? 'mint' : 'ginger');
-  });
-
-  const ginger = PRODUCT_DRINKS[0];
-  const mint = PRODUCT_DRINKS[1];
-
-  const renderFlavorLayer = (
-    flavor: (typeof PRODUCT_DRINKS)[number],
-    isMint = false
-  ) => {
-    const panelKey = isMint ? 'mint' : 'ginger';
-    const isActivePanel = activeFromScroll === panelKey;
-    const thumbs = isMint
-      ? [demoJivaCan, modelMint, mint1]
-      : [demoJivaCan, modelGinger, ginger1];
-    const mainIdx = thumbIndex[panelKey];
-    const mainSrc = thumbs[mainIdx] ?? demoJivaCan;
-
-    return (
-      <div
-        className="absolute inset-0"
-        style={{
-          color: flavor.textColor,
-          background: isMint
-            ? 'linear-gradient(135deg, #4E7145 0%, #648858 45%, #567A4A 100%)'
-            : 'linear-gradient(135deg, #EB9C35 0%, #F0B154 45%, #E7A243 100%)',
-        }}
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.14),transparent_52%)]" />
-        <div className="relative z-10 flex h-full min-h-0 items-stretch overflow-y-auto px-4 py-8 md:items-center md:overflow-hidden md:px-8 md:py-10 lg:px-14">
-          <div className="mx-auto grid w-full max-w-6xl gap-8 md:grid-cols-2 md:items-center md:gap-10 lg:gap-14">
-            <div className="flex flex-col gap-4 md:flex-row md:gap-5">
-              <div className="order-2 flex flex-row justify-center gap-2 md:order-1 md:flex-col md:justify-start">
-                {thumbs.map((src, i) => (
-                  <button
-                    key={`${panelKey}-t-${i}`}
-                    type="button"
-                    onClick={() =>
-                      setThumbIndex((prev) => ({
-                        ...prev,
-                        [panelKey]: i,
-                      }))
-                    }
-                    className={`h-14 w-14 shrink-0 overflow-hidden rounded-xl border-2 bg-white/15 p-1 transition-all md:h-16 md:w-16 ${
-                      mainIdx === i ? 'border-white shadow-lg ring-2 ring-white/40' : 'border-white/25 opacity-80 hover:opacity-100'
-                    }`}
-                  >
-                    <img src={src} alt="" className="h-full w-full object-cover" />
-                  </button>
-                ))}
-              </div>
-              <div className="relative order-1 flex flex-1 items-center justify-center md:order-2">
-                <img
-                  src={mainSrc}
-                  alt={flavor.name}
-                  className="relative z-10 h-auto max-h-[min(52vh,28rem)] w-full max-w-[16rem] object-contain drop-shadow-[0_24px_60px_rgba(0,0,0,0.22)] sm:max-w-[18rem] md:max-h-[min(58vh,32rem)] md:max-w-[20rem] lg:max-w-[22rem]"
-                />
-                <div className="pointer-events-none absolute bottom-[8%] left-1/2 flex -translate-x-1/2 gap-1.5">
-                  {thumbs.map((_, i) => (
-                    <span
-                      key={`${panelKey}-d-${i}`}
-                      className={`h-1.5 w-1.5 rounded-full ${mainIdx === i ? 'bg-white' : 'bg-white/35'}`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="text-left">
-              <p className="font-condensed text-[11px] font-bold uppercase tracking-[0.22em] text-[#F47C3E] md:text-xs">
-                Herbal shot · Limited drop
-              </p>
-              <h2 className="mt-2 font-serif text-4xl font-black lowercase leading-[0.95] tracking-tight md:text-5xl lg:text-6xl">
-                {flavor.name === 'Mint Reset' ? 'mint reset' : 'bali gold'}
-              </h2>
-              <div className="mt-3 flex flex-wrap items-center gap-2">
-                <span className="text-[#F9D067]" aria-hidden>
-                  ★★★★★
-                </span>
-                <span className="font-condensed text-[11px] font-semibold uppercase tracking-[0.14em]" style={{ color: flavor.bodyColor }}>
-                  Early tasters · Join the list
-                </span>
-              </div>
-
-              <p className="mt-5 max-w-md text-sm leading-relaxed md:text-base" style={{ color: flavor.bodyColor }}>
-                {flavor.description}
-              </p>
-
-              <p className="font-condensed mt-8 text-[11px] font-bold uppercase tracking-[0.18em]" style={{ color: flavor.bodyColor }}>
-                Select an option
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {PRODUCT_DRINKS.map((d) => {
-                  const isGingerCard = d.name === 'Bali Gold';
-                  const selected =
-                    (isGingerCard && activeFromScroll === 'ginger') || (!isGingerCard && activeFromScroll === 'mint');
-                  return (
-                    <div
-                      key={d.name}
-                      className={`relative min-w-[5.5rem] flex-1 rounded-xl border-2 px-3 py-3 text-center transition-all md:min-w-[7rem] ${
-                        selected ? 'border-[#2D4F3E] bg-white/20 shadow-md' : 'border-white/25 bg-white/10 hover:border-white/45'
-                      }`}
-                    >
-                      {d.name === 'Bali Gold' ? (
-                        <span className="font-condensed absolute -top-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#2D4F3E] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#F9D067]">
-                          Flagship
-                        </span>
-                      ) : null}
-                      <span className="font-condensed block text-[10px] font-bold uppercase tracking-[0.12em]" style={{ color: flavor.bodyColor }}>
-                        {d.name}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className="mt-6 space-y-3">
-                <button
-                  type="button"
-                  onClick={() => setPurchaseType('once')}
-                  className={`flex w-full items-center justify-between gap-3 rounded-2xl border-2 px-4 py-3.5 text-left transition-all md:px-5 ${
-                    purchaseType === 'once'
-                      ? 'border-white/80 bg-white/15'
-                      : 'border-white/20 bg-white/5 hover:border-white/35'
-                  }`}
-                >
-                  <span className="flex items-center gap-3">
-                    <span
-                      className={`flex h-4 w-4 shrink-0 rounded-full border-2 ${
-                        purchaseType === 'once' ? 'border-white bg-white' : 'border-white/50'
-                      }`}
-                    />
-                    <span className="font-condensed text-xs font-semibold uppercase tracking-[0.12em]">One-time</span>
-                  </span>
-                  <span className="font-condensed text-sm font-bold">$48</span>
-                </button>
-
-                <div
-                  className={`rounded-2xl border-2 px-4 py-3.5 transition-all md:px-5 ${
-                    purchaseType === 'subscribe'
-                      ? 'border-[#F47C3E] bg-[#F47C3E]/15 shadow-[0_8px_28px_rgba(0,0,0,0.12)]'
-                      : 'border-white/20 bg-white/5'
-                  }`}
-                >
-                  <button
-                    type="button"
-                    onClick={() => setPurchaseType('subscribe')}
-                    className="flex w-full items-start justify-between gap-3 text-left"
-                  >
-                    <span className="flex items-start gap-3">
-                      <span
-                        className={`mt-0.5 flex h-4 w-4 shrink-0 rounded-full border-2 ${
-                          purchaseType === 'subscribe' ? 'border-[#F47C3E] bg-[#F47C3E]' : 'border-white/50'
-                        }`}
-                      />
-                      <span>
-                        <span className="font-condensed block text-xs font-semibold uppercase tracking-[0.12em]">Subscribe & save</span>
-                        <span className="mt-2 block text-xs leading-relaxed opacity-90" style={{ color: flavor.bodyColor }}>
-                          Free shipping on recurring orders · swap, skip, or cancel anytime
-                        </span>
-                      </span>
-                    </span>
-                    <span className="shrink-0 text-right font-condensed">
-                      <span className="text-xs line-through opacity-70">$48</span>
-                      <span className="ml-2 text-sm font-bold text-[#F47C3E]">$40</span>
-                    </span>
-                  </button>
-                  {purchaseType === 'subscribe' ? (
-                    <label className="font-condensed mt-4 flex items-center justify-between gap-3 border-t border-white/20 pt-4 text-[11px] font-semibold uppercase tracking-[0.12em]">
-                      <span>Frequency</span>
-                      <select className="rounded-lg border border-white/30 bg-white/90 px-2 py-1.5 text-[#2D4F3E] outline-none">
-                        <option>Every 30 days</option>
-                        <option>Every 45 days</option>
-                        <option>Every 60 days</option>
-                      </select>
-                    </label>
-                  ) : null}
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={onOpenMailingListModal}
-                style={{
-                  backgroundColor: flavor.buttonBg,
-                  color: flavor.buttonText,
-                  borderColor: flavor.buttonBorder,
-                }}
-                className="font-condensed mt-6 w-full rounded-full border py-4 text-xs font-bold uppercase tracking-[0.2em] transition-all hover:brightness-105 md:mt-8"
-              >
-                Add to cart
-              </button>
-
-              {!isActivePanel ? (
-                <p className="font-condensed mt-3 text-center text-[10px] uppercase tracking-[0.14em] opacity-80" style={{ color: flavor.bodyColor }}>
-                  Scroll to compare the other flavor
-                </p>
-              ) : null}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  return (
-    <section
-      ref={sectionRef}
-      id="benefits"
-      className="relative bg-[#F5F2ED]"
-      style={{ height: '220vh' }}
-    >
-      <div
-        className="w-full shrink-0 overflow-hidden border-y-2 border-[#2D4F3E] bg-[#F9D067] py-3.5 md:py-4 shadow-[0_6px_28px_rgba(0,0,0,0.22)]"
-        aria-hidden
-      >
-        <div className="jj-benefits-marquee-track flex w-max">
-          {[0, 1].map((copy) => (
-            <span
-              key={copy}
-              className="inline-flex shrink-0 items-center whitespace-nowrap pl-10 pr-6 md:pl-16 md:pr-10 font-black text-[#1e3d30] text-xs sm:text-sm md:text-base uppercase tracking-[0.12em] md:tracking-[0.18em]"
-            >
-              {BENEFITS_MARQUEE}
-              <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
-              {BENEFITS_MARQUEE}
-              <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
-              {BENEFITS_MARQUEE}
-              <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
-              {BENEFITS_MARQUEE}
-              <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <div className="sticky top-0 h-screen overflow-hidden">
-        <motion.div
-          style={{ width: gingerWidth }}
-          className="absolute inset-y-0 left-0 overflow-hidden"
-        >
-          <div className="absolute inset-y-0 left-0 w-screen">
-            {renderFlavorLayer(ginger)}
-          </div>
-        </motion.div>
-
-        <motion.div
-          style={{ width: mintWidth }}
-          className="absolute inset-y-0 right-0 overflow-hidden"
-        >
-          <div className="absolute inset-y-0 right-0 w-screen">
-            {renderFlavorLayer(mint, true)}
-          </div>
-        </motion.div>
-
-        <motion.div
-          style={{ left: dividerLeft, opacity: dividerOpacity }}
-          className="absolute top-0 z-30 h-full w-[2px] -translate-x-1/2 bg-white/80 shadow-[0_0_0_1px_rgba(45,79,62,0.15),0_0_22px_rgba(255,255,255,0.35)]"
-        />
-      </div>
-    </section>
-  );
-};
-
-const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, joined }) => {
+const ScrollStory: React.FC = () => {
   const [heroBgIndex, setHeroBgIndex] = useState(0);
   const [isMailingListOpen, setIsMailingListOpen] = useState(false);
   const [mailingListEmail, setMailingListEmail] = useState('');
@@ -483,7 +147,30 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
         </div>
       </section>
 
-      <ProductRevealSection onOpenMailingListModal={openMailingListModal} />
+      <div
+        className="w-full shrink-0 overflow-hidden border-y border-[#2D4F3E] bg-[#F9D067] py-3.5 md:py-4 shadow-[0_6px_28px_rgba(0,0,0,0.12)]"
+        aria-hidden
+      >
+        <div className="jj-benefits-marquee-track flex w-max">
+          {[0, 1].map((copy) => (
+            <span
+              key={copy}
+              className="inline-flex shrink-0 items-center whitespace-nowrap pl-10 pr-6 md:pl-16 md:pr-10 font-black text-[#1e3d30] text-xs sm:text-sm md:text-base uppercase tracking-[0.12em] md:tracking-[0.18em]"
+            >
+              {BENEFITS_MARQUEE}
+              <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
+              {BENEFITS_MARQUEE}
+              <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
+              {BENEFITS_MARQUEE}
+              <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
+              {BENEFITS_MARQUEE}
+              <span className="mx-8 md:mx-12 inline-block text-[#F47C3E]">•</span>
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <FlavorShopSection onOpenMailingListModal={openMailingListModal} />
 
       <DailyRitualSection />
 
@@ -528,7 +215,7 @@ const ScrollStory: React.FC<ScrollStoryProps> = ({ email, setEmail, onJoin, join
         </button>
       </section>
 
-      <section id="faq" className="scroll-mt-24 pt-12 pb-24 px-6 bg-[#F5E8CA]">
+      <section id="faq" className="pt-12 pb-24 px-6 bg-[#F5E8CA]">
         <div className="max-w-2xl mx-auto">
           <h2 className="font-serif text-3xl md:text-4xl font-black text-[#2D4F3E] mb-10 text-center">
             Quick answers
@@ -695,7 +382,7 @@ const FAQAccordion: React.FC = () => {
             {openIndex === i ? (
               <ChevronUp className="w-5 h-5 flex-shrink-0" />
             ) : (
-              <ChevronDown className="w-5 h-5 flex-shrink-0" />
+              <ChevronDownIcon className="w-5 h-5 flex-shrink-0" />
             )}
           </button>
           <motion.div
