@@ -17,7 +17,7 @@ const FlavorShopSection: React.FC<FlavorShopSectionProps> = ({ onOpenMailingList
   const drink: ProductDrink = PRODUCT_DRINKS[activeIndex] ?? PRODUCT_DRINKS[0];
 
   return (
-    <section id="benefits" className="relative border-y border-[#1a1a1a]/90 bg-[#F5F2ED] py-14 md:py-20">
+    <section id="shop" className="relative border-y-2 border-[#2D4F3E] bg-[#F5E8CA] py-14 md:py-20">
       <div className="mx-auto max-w-6xl px-5 md:px-10">
         <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
           <div className="relative">
@@ -46,13 +46,13 @@ const FlavorShopSection: React.FC<FlavorShopSectionProps> = ({ onOpenMailingList
           </div>
 
           <div className="relative z-10">
-            <p className="font-condensed text-[0.68rem] font-semibold uppercase tracking-[0.26em] text-[#1a1a1a]/55">
+            <p className="font-bold text-xs uppercase tracking-widest text-[#2D4F3E]/65">
               Select a flavor
             </p>
-            <h2 className="mt-2 font-serif text-4xl font-bold lowercase tracking-tight text-[#1a1a1a] md:text-5xl">
+            <h2 className="mt-2 font-serif text-4xl font-bold lowercase tracking-tight text-[#2D4F3E] md:text-5xl">
               {drink.shortLabel.toLowerCase()}
             </h2>
-            <p className="mt-3 max-w-md font-condensed text-sm font-medium uppercase leading-relaxed tracking-[0.12em] text-[#1a1a1a]/65">
+            <p className="mt-3 max-w-md text-sm font-bold uppercase leading-relaxed tracking-widest text-[#2D4F3E]/75">
               {drink.eyebrow}
             </p>
 
@@ -66,12 +66,12 @@ const FlavorShopSection: React.FC<FlavorShopSectionProps> = ({ onOpenMailingList
                     onClick={() => setActiveIndex(index)}
                     className={`relative flex min-w-[7.5rem] flex-col overflow-hidden rounded-xl border text-left transition-all duration-200 md:min-w-[8.5rem] ${
                       selected
-                        ? 'border-[#1a1a1a] shadow-[0_0_0_2px_#1a1a1a]'
-                        : 'border-[#1a1a1a]/35 hover:border-[#1a1a1a]/65'
+                        ? 'border-[#2D4F3E] shadow-[0_0_0_2px_#2D4F3E]'
+                        : 'border-[#2D4F3E]/30 hover:border-[#2D4F3E]/55'
                     }`}
                   >
                     {item.badge ? (
-                      <span className="absolute left-2 top-2 z-10 bg-[#1a1a1a] px-2 py-0.5 font-condensed text-[0.58rem] font-semibold uppercase tracking-[0.14em] text-white">
+                      <span className="absolute left-2 top-2 z-10 bg-[#2D4F3E] px-2 py-0.5 text-[0.58rem] font-black uppercase tracking-widest text-[#F9D067]">
                         {item.badge}
                       </span>
                     ) : null}
@@ -82,8 +82,8 @@ const FlavorShopSection: React.FC<FlavorShopSectionProps> = ({ onOpenMailingList
                         className="absolute inset-0 m-auto h-[88%] w-auto object-contain drop-shadow-md"
                       />
                     </div>
-                    <div className="border-t border-[#1a1a1a]/20 bg-[#FDFCF8] px-3 py-2">
-                      <span className="font-condensed text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#1a1a1a]">
+                    <div className="border-t border-[#2D4F3E]/20 bg-[#F9D067]/35 px-3 py-2">
+                      <span className="text-[0.65rem] font-black uppercase tracking-widest text-[#2D4F3E]">
                         {item.shortLabel}
                       </span>
                     </div>
@@ -92,7 +92,7 @@ const FlavorShopSection: React.FC<FlavorShopSectionProps> = ({ onOpenMailingList
               })}
             </div>
 
-            <p className="mt-8 text-base leading-relaxed text-[#1a1a1a]/78 md:text-[1.05rem]">
+            <p className="mt-8 text-base font-medium leading-relaxed text-[#2D4F3E]/85 md:text-[1.05rem]">
               {drink.description}
             </p>
 
@@ -102,23 +102,23 @@ const FlavorShopSection: React.FC<FlavorShopSectionProps> = ({ onOpenMailingList
                 onClick={() => setMode('once')}
                 className={`flex w-full items-center justify-between gap-4 rounded-xl border px-4 py-4 text-left transition-colors md:px-5 ${
                   mode === 'once'
-                    ? 'border-[#1a1a1a] bg-white'
-                    : 'border-[#1a1a1a]/35 bg-white/70 hover:border-[#1a1a1a]/55'
+                    ? 'border-[#2D4F3E] bg-[#F9EFD4]'
+                    : 'border-[#2D4F3E]/30 bg-[#F9D067]/20 hover:border-[#2D4F3E]/50'
                 }`}
               >
                 <span className="flex items-center gap-3">
                   <span
                     className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${
-                      mode === 'once' ? 'border-[#1a1a1a]' : 'border-[#1a1a1a]/35'
+                      mode === 'once' ? 'border-[#2D4F3E]' : 'border-[#2D4F3E]/35'
                     }`}
                   >
-                    {mode === 'once' ? <span className="h-2 w-2 rounded-full bg-[#1a1a1a]" /> : null}
+                    {mode === 'once' ? <span className="h-2 w-2 rounded-full bg-[#2D4F3E]" /> : null}
                   </span>
-                  <span className="font-condensed text-sm font-semibold uppercase tracking-[0.14em] text-[#1a1a1a]">
+                  <span className="text-xs font-black uppercase tracking-widest text-[#2D4F3E]">
                     One-time purchase
                   </span>
                 </span>
-                <span className="font-condensed text-sm font-semibold text-[#1a1a1a]">
+                <span className="text-sm font-black text-[#2D4F3E]">
                   ${drink.priceOneTime}
                 </span>
               </button>
@@ -128,42 +128,42 @@ const FlavorShopSection: React.FC<FlavorShopSectionProps> = ({ onOpenMailingList
                 onClick={() => setMode('subscribe')}
                 className={`flex w-full flex-col gap-4 rounded-xl border px-4 py-4 text-left transition-colors md:px-5 ${
                   mode === 'subscribe'
-                    ? 'border-[#1a1a1a] border-2 bg-[#fdecef]/55 shadow-[inset_0_1px_0_rgba(255,255,255,0.65)]'
-                    : 'border-[#1a1a1a]/35 bg-white/70 hover:border-[#1a1a1a]/55'
+                    ? 'border-2 border-[#2D4F3E] bg-[#F9D067]/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.25)]'
+                    : 'border-[#2D4F3E]/30 bg-[#F9EFD4]/60 hover:border-[#2D4F3E]/50'
                 }`}
               >
                 <div className="flex w-full items-start justify-between gap-4">
                   <span className="flex items-center gap-3">
                     <span
                       className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${
-                        mode === 'subscribe' ? 'border-[#1a1a1a]' : 'border-[#1a1a1a]/35'
+                        mode === 'subscribe' ? 'border-[#2D4F3E]' : 'border-[#2D4F3E]/35'
                       }`}
                     >
-                      {mode === 'subscribe' ? <span className="h-2 w-2 rounded-full bg-[#1a1a1a]" /> : null}
+                      {mode === 'subscribe' ? <span className="h-2 w-2 rounded-full bg-[#2D4F3E]" /> : null}
                     </span>
-                    <span className="font-condensed text-sm font-semibold uppercase tracking-[0.14em] text-[#1a1a1a]">
+                    <span className="text-xs font-black uppercase tracking-widest text-[#2D4F3E]">
                       Subscribe &amp; save
                     </span>
                   </span>
-                  <span className="flex shrink-0 items-baseline gap-2 font-condensed text-sm font-semibold">
-                    <span className="text-[#1a1a1a]/40 line-through">${drink.priceOneTime}</span>
-                    <span className="text-[#1a1a1a]">${drink.priceSubscribe}</span>
+                  <span className="flex shrink-0 items-baseline gap-2 text-sm font-black">
+                    <span className="text-[#2D4F3E]/45 line-through">${drink.priceOneTime}</span>
+                    <span className="text-[#2D4F3E]">${drink.priceSubscribe}</span>
                   </span>
                 </div>
-                <ul className="space-y-1.5 pl-7 font-condensed text-[0.72rem] font-medium uppercase tracking-[0.12em] text-[#1a1a1a]/72 md:text-xs">
+                <ul className="space-y-1.5 pl-7 text-[0.7rem] font-bold uppercase tracking-widest text-[#2D4F3E]/75 md:text-xs">
                   <li>{drink.perUnit}</li>
                   <li>Free shipping on recurring orders</li>
                   <li>Cancel or pause anytime</li>
                 </ul>
                 <label className="block pl-7">
-                  <span className="font-condensed text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#1a1a1a]/55">
+                  <span className="text-[0.65rem] font-black uppercase tracking-widest text-[#2D4F3E]/60">
                     Frequency
                   </span>
                   <select
                     value={frequency}
                     onChange={(e) => setFrequency(e.target.value)}
                     onClick={(e) => e.stopPropagation()}
-                    className="mt-2 w-full cursor-pointer rounded-lg border border-[#1a1a1a]/35 bg-white px-3 py-2.5 font-condensed text-xs font-medium uppercase tracking-[0.1em] text-[#1a1a1a] outline-none transition-colors focus:border-[#1a1a1a]"
+                    className="mt-2 w-full cursor-pointer rounded-lg border border-[#2D4F3E]/35 bg-[#F9EFD4] px-3 py-2.5 text-xs font-bold uppercase tracking-widest text-[#2D4F3E] outline-none transition-colors focus:border-[#2D4F3E]"
                   >
                     <option>Every 30 days</option>
                     <option>Every 45 days</option>
@@ -176,11 +176,11 @@ const FlavorShopSection: React.FC<FlavorShopSectionProps> = ({ onOpenMailingList
             <button
               type="button"
               onClick={onOpenMailingListModal}
-              className="mt-6 w-full rounded-full bg-[#F47C3E] py-4 font-condensed text-sm font-semibold uppercase tracking-[0.2em] text-white transition-transform duration-200 hover:brightness-[1.03] active:scale-[0.99]"
+              className="mt-6 w-full rounded-full bg-[#F47C3E] py-4 text-sm font-black uppercase tracking-widest text-white transition-transform duration-200 hover:brightness-[1.03] active:scale-[0.99]"
             >
               Add to cart
             </button>
-            <p className="mt-3 text-center text-xs text-[#1a1a1a]/45">
+            <p className="mt-3 text-center text-xs font-medium text-[#2D4F3E]/55">
               You&apos;ll confirm interest on the list—no charge until we ship.
             </p>
           </div>

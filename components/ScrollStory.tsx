@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { Send, ChevronDown, ChevronUp, ChevronDown as ChevronDownIcon, X } from 'lucide-react';
 import backgroundImg from '../materials/background.jpg';
 import background2Img from '../materials/background 2.png';
+import demoJivaBottle from '../materials/demo jiva.png';
 import DailyRitualSection from './DailyRitualSection';
 import FlavorShopSection from './FlavorShopSection';
 import { PRODUCT_DRINKS } from '../constants/productDrinks';
@@ -12,6 +13,96 @@ const HERO_BG_INTERVAL_MS = 4000;
 
 const BENEFITS_MARQUEE =
   '100% Natural • Indonesian Herbal Blend • No Additives • Gluten Free • Real Ingredients Only';
+
+const ProductRevealSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end end'],
+  });
+
+  const revealProgress = useTransform(scrollYProgress, [0.12, 0.82], [0, 100]);
+  const gingerWidth = useTransform(revealProgress, (v) => `${100 - v}%`);
+  const mintWidth = useTransform(revealProgress, (v) => `${v}%`);
+  const dividerLeft = useTransform(revealProgress, (v) => `${100 - v}%`);
+  const dividerOpacity = useTransform(scrollYProgress, [0.08, 0.12, 0.9, 1], [0, 1, 1, 0]);
+
+  const ginger = PRODUCT_DRINKS[0];
+  const mint = PRODUCT_DRINKS[1];
+
+  const renderFlavorLayer = (flavor: (typeof PRODUCT_DRINKS)[number], isMint = false) => (
+    <div
+      className="absolute inset-0"
+      style={{
+        color: flavor.textColor,
+        background: isMint
+          ? 'linear-gradient(135deg, #4E7145 0%, #648858 45%, #567A4A 100%)'
+          : 'linear-gradient(135deg, #EB9C35 0%, #F0B154 45%, #E7A243 100%)',
+      }}
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.14),transparent_52%)]" />
+      <div className="relative z-10 flex h-full items-center px-8 py-12 md:px-14">
+        <div className="grid w-full items-center gap-8 md:grid-cols-[1fr_auto_1fr]">
+          <div className="text-left">
+            <h2 className="font-serif text-5xl font-black leading-[0.9] text-white md:text-7xl">
+              {flavor.name === 'Mint Reset' ? 'MINT' : 'GINGER'}
+            </h2>
+            <p
+              className="mt-5 text-sm font-black uppercase tracking-[0.2em] md:text-base"
+              style={{ color: flavor.bodyColor }}
+            >
+              {flavor.eyebrow}
+            </p>
+          </div>
+
+          <div className="relative mx-auto flex items-center justify-center">
+            <img
+              src={demoJivaBottle}
+              alt={flavor.name}
+              className="relative z-10 h-auto w-[22rem] max-w-none object-contain drop-shadow-[0_24px_60px_rgba(0,0,0,0.22)] md:w-[28rem] lg:w-[32rem]"
+            />
+          </div>
+
+          <div className="max-w-sm justify-self-end text-left">
+            <p className="text-base leading-relaxed md:text-lg" style={{ color: flavor.bodyColor }}>
+              {flavor.description}
+            </p>
+            <a
+              href="#shop"
+              style={{
+                backgroundColor: flavor.buttonBg,
+                color: flavor.buttonText,
+                borderColor: flavor.buttonBorder,
+              }}
+              className="mt-8 inline-flex items-center justify-center rounded-full border px-8 py-4 font-black uppercase tracking-[0.14em] transition-all hover:brightness-105"
+            >
+              Shop now
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <section ref={sectionRef} id="benefits" className="relative bg-[#F5F2ED]" style={{ height: '220vh' }}>
+      <div className="sticky top-0 h-screen overflow-hidden">
+        <motion.div style={{ width: gingerWidth }} className="absolute inset-y-0 left-0 overflow-hidden">
+          <div className="absolute inset-y-0 left-0 w-screen">{renderFlavorLayer(ginger)}</div>
+        </motion.div>
+
+        <motion.div style={{ width: mintWidth }} className="absolute inset-y-0 right-0 overflow-hidden">
+          <div className="absolute inset-y-0 right-0 w-screen">{renderFlavorLayer(mint, true)}</div>
+        </motion.div>
+
+        <motion.div
+          style={{ left: dividerLeft, opacity: dividerOpacity }}
+          className="absolute top-0 z-30 h-full w-[2px] -translate-x-1/2 bg-white/80 shadow-[0_0_0_1px_rgba(45,79,62,0.15),0_0_22px_rgba(255,255,255,0.35)]"
+        />
+      </div>
+    </section>
+  );
+};
 
 const ScrollStory: React.FC = () => {
   const [heroBgIndex, setHeroBgIndex] = useState(0);
@@ -169,6 +260,8 @@ const ScrollStory: React.FC = () => {
           ))}
         </div>
       </div>
+
+      <ProductRevealSection />
 
       <FlavorShopSection onOpenMailingListModal={openMailingListModal} />
 
