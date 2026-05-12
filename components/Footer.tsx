@@ -1,12 +1,16 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
+import logoMark from '../materials/logo-jamu-jiva.png';
 
 const Footer: React.FC = () => {
   return (
     <footer className="py-20 px-6 border-t border-[#2D4F3E]/10">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
         <div className="max-w-xs">
-          <span className="font-serif text-3xl font-black text-[#2D4F3E] tracking-tighter block mb-4">JAMU JIVA</span>
+          <Link to="/" className="mb-4 inline-block">
+            <img src={logoMark} alt="Jamu Jiva" width={160} height={56} className="h-12 w-auto md:h-14" decoding="async" />
+          </Link>
           <p className="text-[#2D4F3E]/60 font-medium">
             Bringing the beauty and medicinal properties of Indonesian Jamu to a global scale. Food is medicine.
           </p>

@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { useMailingList } from '../contexts/MailingListContext';
+import logoMark from '../materials/logo-jamu-jiva.png';
 
 const CULTURE_LINKS = [
   { label: 'Build your ritual', to: '/#ritual' },
@@ -86,14 +87,15 @@ const Navbar: React.FC = () => {
     >
       <motion.div style={shellStyle} className={`${shellClass} ${!isHome ? 'border-b border-[#2D4F3E]/10' : ''}`}>
         <div className="flex items-center justify-between gap-6">
-          <Link to="/" onClick={closeAll} className="shrink-0">
-            {isHome ? (
-              <motion.span style={{ color: navTextColor }} className="font-serif text-2xl font-black tracking-tighter">
-                JAMU JIVA
-              </motion.span>
-            ) : (
-              <span className="font-serif text-2xl font-black tracking-tighter text-[#2D4F3E]">JAMU JIVA</span>
-            )}
+          <Link to="/" onClick={closeAll} className="shrink-0 flex items-center">
+            <img
+              src={logoMark}
+              alt="Jamu Jiva"
+              width={140}
+              height={48}
+              className={`h-9 w-auto md:h-10 ${isHome ? 'drop-shadow-[0_2px_14px_rgba(0,0,0,0.35)]' : ''}`}
+              decoding="async"
+            />
           </Link>
 
           <div className="ml-auto flex items-center gap-4 md:gap-10">
