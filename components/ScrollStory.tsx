@@ -220,6 +220,12 @@ const ScrollStory: React.FC = () => {
           <p className="text-[#2D4F3E]/85 font-medium text-lg leading-relaxed">
             In the misty mornings of Solo, the Mbok Jamu begins her ritual. Jamu Jiva was born to bring this act of care to NYC and LA—a lifestyle of intentional vitality.
           </p>
+          <Link
+            to="/culture"
+            className="mt-8 inline-flex items-center gap-2 rounded-full border-2 border-[#2D4F3E] px-8 py-4 font-black uppercase tracking-widest text-sm text-[#2D4F3E] transition-all hover:bg-[#2D4F3E] hover:text-[#F5E8CA]"
+          >
+            Explore our story
+          </Link>
         </div>
       </section>
 

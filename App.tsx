@@ -5,6 +5,7 @@ import ScrollStory from './components/ScrollStory';
 import Footer from './components/Footer';
 import HashScroll from './components/HashScroll';
 import ShopPage from './pages/ShopPage';
+import CulturePage from './pages/CulturePage';
 import { MailingListProvider } from './contexts/MailingListContext';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
@@ -30,6 +31,7 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/" element={<ScrollStory />} />
               <Route path="/shop" element={<ShopPage />} />
+              <Route path="/culture" element={<CulturePage />} />
             </Routes>
           </main>
           <Footer />
