@@ -8,8 +8,8 @@ import mint2 from '../materials/mint 2.png';
 export const PRODUCT_DRINKS = [
   {
     slug: 'bali-gold' as const,
-    name: 'Bali Gold',
-    shortLabel: 'Bali Gold',
+    name: 'Golden Glow',
+    shortLabel: 'Golden Glow',
     eyebrow: 'Ginger-rooted daily glow',
     description: 'A bright, grounding Jamu blend with golden spice warmth and clean natural energy.',
     word: 'gold',
@@ -34,8 +34,8 @@ export const PRODUCT_DRINKS = [
   },
   {
     slug: 'mint-reset' as const,
-    name: 'Mint Reset',
-    shortLabel: 'Mint Reset',
+    name: 'On The Go',
+    shortLabel: 'On The Go',
     eyebrow: 'Cooling herbal clarity',
     description: 'Fresh mint notes meet a light herbal finish for an easy, refreshing ritual.',
     word: 'mint',

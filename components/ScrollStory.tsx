@@ -54,7 +54,7 @@ const ProductRevealSection: React.FC = () => {
         <div className="grid w-full items-center gap-8 md:grid-cols-[1fr_auto_1fr]">
           <div className="text-left">
             <h2 className="font-serif text-5xl font-black leading-[0.9] text-white md:text-7xl">
-              {flavor.name === 'Mint Reset' ? 'MINT' : 'GINGER'}
+              {flavor.name === 'On The Go' ? 'MINT' : 'GINGER'}
             </h2>
             <p
               className="mt-5 text-sm font-black uppercase tracking-[0.2em] md:text-base"
@@ -261,7 +261,7 @@ const ScrollStory: React.FC = () => {
           BE THE FIRST TO SIP.
         </h2>
         <p className="text-[#2D4F3E]/80 text-lg md:text-xl text-center max-w-2xl mb-10">
-          Limited release of our seasonal "Bali Gold" brew. Only 5,000 cases.
+          Limited release of our seasonal "Golden Glow" brew. Only 5,000 cases.
         </p>
         <button
           type="button"

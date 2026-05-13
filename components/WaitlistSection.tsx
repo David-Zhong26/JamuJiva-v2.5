@@ -25,7 +25,7 @@ const WaitlistSection: React.FC<WaitlistProps> = ({ email, setEmail, onJoin, joi
           </h2>
 
           <p className="text-xl md:text-3xl mb-16 opacity-90 max-w-3xl mx-auto font-medium">
-            The first drop happens soon. Only 5,000 cases of our seasonal "Bali Gold" brew will be released.
+            The first drop happens soon. Only 5,000 cases of our seasonal "Golden Glow" brew will be released.
           </p>
 
           {!joined ? (
