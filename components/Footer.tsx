@@ -37,7 +37,7 @@ const Footer: React.FC = () => {
             <h4 className="font-bold text-[#2D4F3E] mb-6 uppercase tracking-widest text-sm">Social</h4>
             <ul className="space-y-4 text-[#2D4F3E]/60 font-medium">
               <li><a href="https://www.instagram.com/jamujiva/" target="_blank" rel="noopener noreferrer" className="hover:text-[#F47C3E]">Instagram</a></li>
-              <li><a href="mailto:jamujiva@gmail.com" className="hover:text-[#F47C3E]">jamujiva@gmail.com</a></li>
+              <li><a href="mailto:jamujiva@gmail.com" className="hover:text-[#F47C3E]">Email</a></li>
             </ul>
           </div>
         </div>
