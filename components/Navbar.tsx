@@ -3,7 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { useMailingList } from '../contexts/MailingListContext';
-import logoMark from '../materials/logo-jamu-jiva.png';
+import logoTransparent from '../materials/logo-transparent.png';
+import logoCream from '../materials/logo-cream.png';
 
 const CULTURE_LINKS = [
   { label: 'Build your ritual', to: '/#ritual' },
@@ -26,6 +27,8 @@ const Navbar: React.FC = () => {
   const buttonTextColor = useTransform(textProgress, [0, 1], ['#FFFFFF', '#FFFFFF']);
   const buttonBorder = useTransform(textProgress, [0, 1], ['rgba(255,255,255,0.45)', '#2D4F3E']);
   const mobileIconBorder = useTransform(textProgress, [0, 1], ['rgba(255,255,255,0.45)', 'rgba(45,79,62,0.22)']);
+  const logoTransparentOpacity = useTransform(textProgress, [0, 1], [1, 0]);
+  const logoCreamOpacity = useTransform(textProgress, [0, 1], [0, 1]);
 
   const [cultureOpen, setCultureOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -87,15 +90,32 @@ const Navbar: React.FC = () => {
     >
       <motion.div style={shellStyle} className={`${shellClass} ${!isHome ? 'border-b border-[#2D4F3E]/10' : ''}`}>
         <div className="flex items-center justify-between gap-6">
-          <Link to="/" onClick={closeAll} className="shrink-0 flex items-center">
-            <img
-              src={logoMark}
-              alt="Jamu Jiva"
-              width={140}
-              height={48}
-              className={`h-9 w-auto md:h-10 ${isHome ? 'drop-shadow-[0_2px_14px_rgba(0,0,0,0.35)]' : ''}`}
-              decoding="async"
-            />
+          <Link to="/" onClick={closeAll} className="relative shrink-0 flex items-center h-9 md:h-10">
+            {isHome ? (
+              <>
+                <motion.img
+                  src={logoTransparent}
+                  alt="Jamu Jiva"
+                  style={{ opacity: logoTransparentOpacity }}
+                  className="absolute left-0 top-0 h-9 w-auto md:h-10"
+                  decoding="async"
+                />
+                <motion.img
+                  src={logoCream}
+                  alt="Jamu Jiva"
+                  style={{ opacity: logoCreamOpacity }}
+                  className="h-9 w-auto md:h-10"
+                  decoding="async"
+                />
+              </>
+            ) : (
+              <img
+                src={logoCream}
+                alt="Jamu Jiva"
+                className="h-9 w-auto md:h-10"
+                decoding="async"
+              />
+            )}
           </Link>
 
           <div className="ml-auto flex items-center gap-4 md:gap-10">
