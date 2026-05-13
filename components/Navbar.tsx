@@ -28,6 +28,7 @@ const Navbar: React.FC = () => {
   const mobileIconBorder = useTransform(textProgress, [0, 1], ['rgba(255,255,255,0.45)', 'rgba(45,79,62,0.22)']);
   const logoTransparentOpacity = useTransform(textProgress, [0, 1], [1, 0]);
   const logoCreamOpacity = useTransform(textProgress, [0, 1], [0, 1]);
+  const logoHeight = useTransform(scrollY, [0, 80], [200, 100]);
 
   const [cultureOpen, setCultureOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -89,33 +90,35 @@ const Navbar: React.FC = () => {
     >
       <motion.div style={shellStyle} className={`${shellClass} ${!isHome ? 'border-b border-[#2D4F3E]/10' : ''}`}>
         <div className="flex items-center justify-between gap-6">
-          <Link to="/" onClick={closeAll} className="relative shrink-0 flex items-center h-[100px]">
-            {isHome ? (
-              <>
+          {isHome ? (
+            <motion.div style={{ height: logoHeight }} className="relative shrink-0 flex items-center">
+              <Link to="/" onClick={closeAll} className="relative block h-full">
                 <motion.img
                   src={logoTransparent}
                   alt="Jamu Jiva"
-                  style={{ opacity: logoTransparentOpacity }}
-                  className="absolute left-0 top-0 h-[100px] w-auto"
+                  style={{ opacity: logoTransparentOpacity, height: logoHeight }}
+                  className="absolute left-0 top-0 w-auto"
                   decoding="async"
                 />
                 <motion.img
                   src={logoCream}
                   alt="Jamu Jiva"
-                  style={{ opacity: logoCreamOpacity }}
-                  className="h-[100px] w-auto"
+                  style={{ opacity: logoCreamOpacity, height: logoHeight }}
+                  className="w-auto"
                   decoding="async"
                 />
-              </>
-            ) : (
+              </Link>
+            </motion.div>
+          ) : (
+            <Link to="/" onClick={closeAll} className="relative shrink-0 flex items-center h-[100px]">
               <img
                 src={logoCream}
                 alt="Jamu Jiva"
                 className="h-[100px] w-auto"
                 decoding="async"
               />
-            )}
-          </Link>
+            </Link>
+          )}
 
           <div className="ml-auto flex items-center gap-4 md:gap-10">
             <div
