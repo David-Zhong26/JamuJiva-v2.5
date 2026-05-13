@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logoCream from '../materials/logo-cream.png';
+import logoCream from '../materials/jamu jiva logo2.png';
 
 const Footer: React.FC = () => {
   return (
@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
         <div className="max-w-xs">
           <Link to="/" className="mb-4 inline-block">
-            <img src={logoCream} alt="Jamu Jiva" width={160} height={56} className="h-12 w-auto md:h-14" decoding="async" />
+            <img src={logoCream} alt="Jamu Jiva" className="h-[100px] w-auto" decoding="async" />
           </Link>
           <p className="text-[#2D4F3E]/60 font-medium">
             Bringing the beauty and medicinal properties of Indonesian Jamu to a global scale. Food is medicine.

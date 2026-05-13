@@ -3,8 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { useMailingList } from '../contexts/MailingListContext';
-import logoTransparent from '../materials/logo-transparent.png';
-import logoCream from '../materials/logo-cream.png';
+import logoTransparent from '../materials/jamu jiva logo1.png';
+import logoCream from '../materials/jamu jiva logo2.png';
 
 const CULTURE_LINKS = [
   { label: 'Build your ritual', to: '/#ritual' },
@@ -90,21 +90,21 @@ const Navbar: React.FC = () => {
     >
       <motion.div style={shellStyle} className={`${shellClass} ${!isHome ? 'border-b border-[#2D4F3E]/10' : ''}`}>
         <div className="flex items-center justify-between gap-6">
-          <Link to="/" onClick={closeAll} className="relative shrink-0 flex items-center h-9 md:h-10">
+          <Link to="/" onClick={closeAll} className="relative shrink-0 flex items-center h-[100px]">
             {isHome ? (
               <>
                 <motion.img
                   src={logoTransparent}
                   alt="Jamu Jiva"
                   style={{ opacity: logoTransparentOpacity }}
-                  className="absolute left-0 top-0 h-9 w-auto md:h-10"
+                  className="absolute left-0 top-0 h-[100px] w-auto"
                   decoding="async"
                 />
                 <motion.img
                   src={logoCream}
                   alt="Jamu Jiva"
                   style={{ opacity: logoCreamOpacity }}
-                  className="h-9 w-auto md:h-10"
+                  className="h-[100px] w-auto"
                   decoding="async"
                 />
               </>
@@ -112,7 +112,7 @@ const Navbar: React.FC = () => {
               <img
                 src={logoCream}
                 alt="Jamu Jiva"
-                className="h-9 w-auto md:h-10"
+                className="h-[100px] w-auto"
                 decoding="async"
               />
             )}
