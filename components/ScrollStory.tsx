@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Send, ChevronDown } from 'lucide-react';
-import backgroundImg from '../materials/background.jpg';
-import background2Img from '../materials/background 2.png';
+import backgroundImg from '../materials/background.png';
 import background3Img from '../materials/background 3.png';
 import background4Img from '../materials/background 4.png';
 import demoJivaBottle from '../materials/demo jiva can.png';
@@ -16,7 +15,6 @@ const HERO_BG_INTERVAL_MS = 4000;
 
 const HERO_BACKGROUNDS = [
   backgroundImg,
-  background2Img,
   background3Img,
   background4Img,
 ] as const;
