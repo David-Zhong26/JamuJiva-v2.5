@@ -6,8 +6,18 @@ import Footer from './components/Footer';
 import HashScroll from './components/HashScroll';
 import ShopPage from './pages/ShopPage';
 import CulturePage from './pages/CulturePage';
+import JournalPage from './pages/JournalPage';
 import { MailingListProvider } from './contexts/MailingListContext';
 import { motion, useScroll, useSpring } from 'framer-motion';
+
+const MerchPlaceholder: React.FC = () => (
+  <main className="flex min-h-screen items-center justify-center bg-[#F5E8CA] pt-28 pb-16">
+    <div className="text-center">
+      <h1 className="font-serif text-4xl md:text-5xl font-black text-[#2D4F3E] mb-4">Merch</h1>
+      <p className="text-[#2D4F3E]/70 text-lg">Coming soon.</p>
+    </div>
+  </main>
+);
 
 const App: React.FC = () => {
   const { scrollYProgress } = useScroll();
@@ -32,6 +42,8 @@ const App: React.FC = () => {
               <Route path="/" element={<ScrollStory />} />
               <Route path="/shop" element={<ShopPage />} />
               <Route path="/culture" element={<CulturePage />} />
+              <Route path="/journal" element={<JournalPage />} />
+              <Route path="/merch" element={<MerchPlaceholder />} />
             </Routes>
           </main>
           <Footer />

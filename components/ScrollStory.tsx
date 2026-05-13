@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Send, ChevronDown, ChevronUp, ChevronDown as ChevronDownIcon } from 'lucide-react';
+import { Send, ChevronDown } from 'lucide-react';
 import backgroundImg from '../materials/background.jpg';
 import background2Img from '../materials/background 2.png';
 import background3Img from '../materials/background 3.png';
@@ -149,13 +149,10 @@ const ScrollStory: React.FC = () => {
         </div>
 
         <div className="relative z-10 flex flex-col min-h-[calc(100vh-6rem)] justify-between pointer-events-none">
-          <div className="bg-white/15 backdrop-blur-sm inline-block w-fit px-4 py-2 rounded-full text-white/95 font-medium text-xs tracking-wider">
-            HERITAGE MEETS HUSTLE
-          </div>
           <div className="flex-1 flex flex-col justify-end gap-8 pb-4">
             <div>
               <h1 className="font-serif text-[clamp(1.75rem,5vw,4rem)] font-bold leading-tight text-white/95 tracking-tight">
-                DRINK THE <span className="text-[#E5C76B]">LIFE YOU</span> DESERVE
+                DRINK THE <span className="text-[#E5C76B]">LIFE YOU DESERVE</span>
               </h1>
               <div className="pt-4 flex items-center gap-4 text-[#E5C76B]/90 font-medium tracking-widest text-xs uppercase">
                 <span className="w-12 h-px bg-[#E5C76B]/70" />
@@ -229,6 +226,29 @@ const ScrollStory: React.FC = () => {
         </div>
       </section>
 
+      {/* ——— Explore the Journal ——— */}
+      <section className="bg-[#F5E8CA] py-24 px-8">
+        <div className="mx-auto max-w-2xl text-center">
+          <span className="text-[#A76D2A] font-black tracking-widest uppercase text-sm mb-4 block">
+            Stories &amp; Culture
+          </span>
+          <h2 className="font-serif text-4xl md:text-5xl font-black text-[#2D4F3E] leading-tight mb-6">
+            Explore the Culture Behind <span className="text-[#F47C3E]">Jamu.</span>
+          </h2>
+          <p className="text-[#2D4F3E]/80 text-lg md:text-xl leading-relaxed mb-10">
+            Jamu is more than a drink. It is a daily ritual rooted in Indonesian heritage and made
+            with ingredients like turmeric, ginger, tamarind, and botanicals. Learn the stories,
+            rituals, and ingredients behind Jamu Jiva.
+          </p>
+          <Link
+            to="/journal"
+            className="inline-block rounded-full bg-[#2D4F3E] px-10 py-4 font-black uppercase tracking-widest text-sm text-[#F5E8CA] transition-all hover:bg-[#1a3328]"
+          >
+            Read the Journal
+          </Link>
+        </div>
+      </section>
+
       {/* ——— Flavors + CTA ——— */}
       <section
         id="waitlist"
@@ -252,69 +272,7 @@ const ScrollStory: React.FC = () => {
         </button>
       </section>
 
-      <section id="faq" className="pt-12 pb-24 px-6 bg-[#F5E8CA]">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="font-serif text-3xl md:text-4xl font-black text-[#2D4F3E] mb-10 text-center">
-            Quick answers
-          </h2>
-          <FAQAccordion />
-        </div>
-      </section>
-
     </>
-  );
-};
-
-const faqItems = [
-  {
-    q: 'What is Jamu?',
-    a: 'Jamu is a traditional Indonesian herbal medicine, often served as a tonic. Our version is cold-pressed and bio-optimized for modern lifestyles.',
-  },
-  {
-    q: 'When will Jamu Jiva launch?',
-    a: 'Our first drop—"Bali Gold"—launches soon. Join the list to be notified and secure early access.',
-  },
-  {
-    q: 'Where is it available?',
-    a: 'We ship to the continental US. NYC and LA will get the first batches.',
-  },
-];
-
-const FAQAccordion: React.FC = () => {
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
-
-  return (
-    <div className="space-y-4">
-      {faqItems.map((item, i) => (
-        <motion.div
-          key={item.q}
-          initial={false}
-          className="border border-[#2D4F3E]/10 rounded-2xl overflow-hidden bg-white"
-        >
-          <button
-            onClick={() => setOpenIndex(openIndex === i ? null : i)}
-            className="w-full flex items-center justify-between px-6 py-5 text-left font-bold text-[#2D4F3E] hover:bg-[#2D4F3E]/5 transition-colors"
-          >
-            {item.q}
-            {openIndex === i ? (
-              <ChevronUp className="w-5 h-5 flex-shrink-0" />
-            ) : (
-              <ChevronDownIcon className="w-5 h-5 flex-shrink-0" />
-            )}
-          </button>
-          <motion.div
-            initial={false}
-            animate={{ height: openIndex === i ? 'auto' : 0, opacity: openIndex === i ? 1 : 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="overflow-hidden"
-          >
-            <p className="px-6 pb-5 text-[#2D4F3E]/70 font-medium leading-relaxed">
-              {item.a}
-            </p>
-          </motion.div>
-        </motion.div>
-      ))}
-    </div>
   );
 };
 

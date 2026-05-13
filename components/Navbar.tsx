@@ -7,9 +7,8 @@ import logoTransparent from '../materials/jamu jiva logo1.png';
 import logoCream from '../materials/jamu jiva logo2.png';
 
 const CULTURE_LINKS = [
-  { label: 'Build your ritual', to: '/#ritual' },
-  { label: 'Origin story', to: '/#story' },
-  { label: 'Quick answers', to: '/#faq' },
+  { label: '30 Days Ritual', to: '/#ritual' },
+  { label: 'Origin Story', to: '/#story' },
 ];
 
 const Navbar: React.FC = () => {
@@ -126,11 +125,11 @@ const Navbar: React.FC = () => {
               {isHome ? (
                 <>
                   <motion.div style={{ color: navTextColor }} className="flex items-center gap-10">
-                    <Link to="/#benefits" className={linkClassHero}>
-                      Benefits
-                    </Link>
                     <Link to="/shop" className={linkClassHero} onClick={closeAll}>
-                      Ingredients
+                      Shop All
+                    </Link>
+                    <Link to="/merch" className={linkClassHero} onClick={closeAll}>
+                      Merch
                     </Link>
                   </motion.div>
                   <div
@@ -177,18 +176,18 @@ const Navbar: React.FC = () => {
                     </AnimatePresence>
                   </div>
                   <motion.div style={{ color: navTextColor }}>
-                    <Link to="/#waitlist" className={linkClassHero}>
-                      Drops
+                    <Link to="/journal" className={linkClassHero} onClick={closeAll}>
+                      Jiva Journal
                     </Link>
                   </motion.div>
                 </>
               ) : (
                 <>
-                  <Link to="/#benefits" className={linkClassSolid}>
-                    Benefits
-                  </Link>
                   <Link to="/shop" className={linkClassSolid} onClick={closeAll}>
-                    Ingredients
+                    Shop All
+                  </Link>
+                  <Link to="/merch" className={linkClassSolid} onClick={closeAll}>
+                    Merch
                   </Link>
                   <div
                     className="relative"
@@ -231,8 +230,8 @@ const Navbar: React.FC = () => {
                       ) : null}
                     </AnimatePresence>
                   </div>
-                  <Link to="/#waitlist" className={linkClassSolid}>
-                    Drops
+                  <Link to="/journal" className={linkClassSolid} onClick={closeAll}>
+                    Jiva Journal
                   </Link>
                 </>
               )}
@@ -320,11 +319,11 @@ const Navbar: React.FC = () => {
                 </button>
               </div>
               <nav className="flex flex-col gap-1 font-bold text-xs uppercase tracking-widest text-[#2D4F3E]">
-                <Link to="/#benefits" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
-                  Benefits
-                </Link>
                 <Link to="/shop" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
-                  Ingredients
+                  Shop All
+                </Link>
+                <Link to="/merch" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
+                  Merch
                 </Link>
                 <button
                   type="button"
@@ -348,8 +347,8 @@ const Navbar: React.FC = () => {
                     ))}
                   </div>
                 ) : null}
-                <Link to="/#waitlist" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
-                  Drops
+                <Link to="/journal" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
+                  Jiva Journal
                 </Link>
               </nav>
               <button
