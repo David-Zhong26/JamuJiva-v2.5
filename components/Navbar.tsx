@@ -88,9 +88,9 @@ const Navbar: React.FC = () => {
   };
 
   const linkClassHero =
-    'font-bold text-xs uppercase tracking-widest transition-colors hover:text-[#F47C3E]';
+    'font-bold text-sm uppercase tracking-widest transition-colors hover:text-[#F47C3E]';
   const linkClassSolid =
-    'font-bold text-xs uppercase tracking-widest text-[#2D4F3E] transition-colors hover:text-[#F47C3E]';
+    'font-bold text-sm uppercase tracking-widest text-[#2D4F3E] transition-colors hover:text-[#F47C3E]';
 
   const shellClass =
     'w-full px-6 md:px-10 py-4 transition-colors backdrop-blur-[2px]';
@@ -150,7 +150,7 @@ const Navbar: React.FC = () => {
                       type="button"
                       aria-expanded={cultureOpen}
                       aria-haspopup="true"
-                      className="inline-flex cursor-default items-center gap-1 bg-transparent font-bold text-xs uppercase tracking-widest transition-colors hover:text-[#F47C3E]"
+                      className="inline-flex cursor-default items-center gap-1 bg-transparent font-bold text-sm uppercase tracking-widest transition-colors hover:text-[#F47C3E]"
                     >
                       <span className="inline-flex items-center gap-1">
                         Culture
@@ -207,7 +207,7 @@ const Navbar: React.FC = () => {
                       type="button"
                       aria-expanded={cultureOpen}
                       aria-haspopup="true"
-                      className="inline-flex cursor-default items-center gap-1 bg-transparent font-bold text-xs uppercase tracking-widest text-[#2D4F3E] transition-colors hover:text-[#F47C3E]"
+                      className="inline-flex cursor-default items-center gap-1 bg-transparent font-bold text-sm uppercase tracking-widest text-[#2D4F3E] transition-colors hover:text-[#F47C3E]"
                     >
                       Culture
                       <ChevronDown
@@ -277,7 +277,7 @@ const Navbar: React.FC = () => {
                   closeAll();
                   openMailingList();
                 }}
-                className={`hidden md:inline-flex items-center justify-center rounded-full border px-6 py-2.5 font-black text-xs transition-all hover:bg-[#F47C3E] hover:border-[#F47C3E] ${
+                className={`hidden md:inline-flex items-center justify-center rounded-full border px-6 py-2.5 font-black text-sm transition-all hover:bg-[#F47C3E] hover:border-[#F47C3E] ${
                   pastProduct
                     ? 'border-[#2D4F3E] bg-[#2D4F3E] text-white'
                     : 'border-white/45 bg-white/12 text-white'
@@ -292,7 +292,7 @@ const Navbar: React.FC = () => {
                   closeAll();
                   openMailingList();
                 }}
-                className="hidden rounded-full border border-[#2D4F3E] bg-[#2D4F3E] px-6 py-2.5 font-black text-xs text-white transition-all hover:bg-[#F47C3E] hover:border-[#F47C3E] md:inline-flex md:items-center md:justify-center"
+                className="hidden rounded-full border border-[#2D4F3E] bg-[#2D4F3E] px-6 py-2.5 font-black text-sm text-white transition-all hover:bg-[#F47C3E] hover:border-[#F47C3E] md:inline-flex md:items-center md:justify-center"
               >
                 JOIN THE LIST
               </button>
