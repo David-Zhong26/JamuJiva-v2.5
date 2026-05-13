@@ -26,6 +26,7 @@ const Navbar: React.FC = () => {
   const buttonBorder = useTransform(textProgress, [0, 1], ['rgba(255,255,255,0.45)', '#2D4F3E']);
   const mobileIconBorder = useTransform(textProgress, [0, 1], ['rgba(255,255,255,0.45)', 'rgba(45,79,62,0.22)']);
   const logoHeight = useTransform(scrollY, [0, 80], [200, 100]);
+  const logoOffsetY = useTransform(scrollY, [0, 80], [50, 0]);
 
   const [hideNav, setHideNav] = useState(false);
   const [cultureOpen, setCultureOpen] = useState(false);
@@ -113,7 +114,7 @@ const Navbar: React.FC = () => {
               <motion.img
                 src={logoTransparent}
                 alt="Jamu Jiva"
-                style={{ height: logoHeight }}
+                style={{ height: logoHeight, y: logoOffsetY }}
                 className="w-auto origin-top-left"
                 decoding="async"
               />
