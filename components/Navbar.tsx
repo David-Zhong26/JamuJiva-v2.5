@@ -27,6 +27,7 @@ const Navbar: React.FC = () => {
   const mobileIconBorder = useTransform(textProgress, [0, 1], ['rgba(255,255,255,0.45)', 'rgba(45,79,62,0.22)']);
   const logoHeight = useTransform(scrollY, [0, 80], [200, 100]);
 
+  const [hideNav, setHideNav] = useState(false);
   const [cultureOpen, setCultureOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileCultureOpen, setMobileCultureOpen] = useState(false);
@@ -52,6 +53,21 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     return () => clearCultureTimer();
   }, []);
+
+  useEffect(() => {
+    if (!isHome) {
+      setHideNav(false);
+      return;
+    }
+    const el = document.getElementById('benefits');
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setHideNav(entry.isIntersecting),
+      { threshold: 0.05 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [isHome]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -82,7 +98,8 @@ const Navbar: React.FC = () => {
   return (
     <motion.nav
       initial={{ y: -100 }}
-      animate={{ y: 0 }}
+      animate={{ y: hideNav ? '-100%' : 0 }}
+      transition={{ duration: 0.35, ease: 'easeInOut' }}
       className="fixed top-0 right-0 z-50 w-full"
     >
       <motion.div style={shellStyle} className={`${shellClass} ${!isHome ? 'border-b border-[#2D4F3E]/10' : ''}`}>
