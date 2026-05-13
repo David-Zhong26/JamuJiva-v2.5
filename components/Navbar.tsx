@@ -16,10 +16,11 @@ const Navbar: React.FC = () => {
   const { openMailingList } = useMailingList();
 
   const { scrollY } = useScroll();
-  const logoHeight = useTransform(scrollY, [0, 80], [200, 100]);
+  const logoHeight = useTransform(scrollY, [0, 80], [170, 70]);
   const logoOffsetY = useTransform(scrollY, [0, 80], [50, 0]);
 
   const [hideNav, setHideNav] = useState(false);
+  const [pastProduct, setPastProduct] = useState(false);
   const [cultureOpen, setCultureOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileCultureOpen, setMobileCultureOpen] = useState(false);
@@ -56,12 +57,14 @@ const Navbar: React.FC = () => {
       const el = document.getElementById('benefits');
       if (!el) {
         setHideNav(sy > 50);
+        setPastProduct(false);
         return;
       }
       const sectionHeight = el.offsetHeight;
       const scrolledInto = sy - el.offsetTop;
-      const pastProduct = scrolledInto >= sectionHeight * 0.75;
-      setHideNav(sy > 50 && !pastProduct);
+      const past = scrolledInto >= sectionHeight * 0.75;
+      setPastProduct(past);
+      setHideNav(sy > 50 && !past);
     };
     check();
     window.addEventListener('scroll', check, { passive: true });
@@ -91,7 +94,7 @@ const Navbar: React.FC = () => {
   const shellClass =
     'w-full px-6 md:px-10 py-4 transition-colors backdrop-blur-[2px]';
   const shellStyle = isHome
-    ? { backgroundColor: 'transparent' }
+    ? { backgroundColor: pastProduct ? 'rgba(245, 232, 202, 0.96)' : 'transparent' }
     : { backgroundColor: 'rgba(245, 242, 237, 0.97)' };
 
   return (
@@ -101,9 +104,9 @@ const Navbar: React.FC = () => {
       transition={{ duration: 0.35, ease: 'easeInOut' }}
       className="fixed top-0 right-0 z-50 w-full"
     >
-      <motion.div style={shellStyle} className={`${shellClass} ${!isHome ? 'border-b border-[#2D4F3E]/10' : ''}`}>
+      <motion.div style={shellStyle} className={`${shellClass} ${!isHome || pastProduct ? 'border-b border-[#2D4F3E]/10' : ''}`}>
         <div className="flex items-center justify-between gap-6">
-          <Link to="/" onClick={closeAll} className="relative shrink-0 flex items-center h-[100px]">
+          <Link to="/" onClick={closeAll} className="relative shrink-0 flex items-center h-[70px]">
             {isHome ? (
               <motion.img
                 src={logoTransparent}
@@ -116,7 +119,7 @@ const Navbar: React.FC = () => {
               <img
                 src={logoTransparent}
                 alt="Jamu Jiva"
-                className="h-[100px] w-auto"
+                className="h-[70px] w-auto"
                 decoding="async"
               />
             )}
@@ -124,12 +127,12 @@ const Navbar: React.FC = () => {
 
           <div className="ml-auto flex items-center gap-4 md:gap-10">
             <div
-              style={{ color: isHome ? undefined : '#2D4F3E' }}
-              className={`hidden md:flex items-center gap-10 ${isHome ? '' : 'text-[#2D4F3E]'}`}
+              className={`hidden md:flex items-center gap-10`}
+              style={{ color: isHome && !pastProduct ? '#FFFFFF' : '#2D4F3E' }}
             >
               {isHome ? (
                 <>
-                  <div className="flex items-center gap-10 text-white">
+                  <div className="flex items-center gap-10">
                     <Link to="/shop" className={linkClassHero} onClick={closeAll}>
                       Shop All
                     </Link>
@@ -148,7 +151,7 @@ const Navbar: React.FC = () => {
                       aria-haspopup="true"
                       className="inline-flex cursor-default items-center gap-1 bg-transparent font-bold text-xs uppercase tracking-widest transition-colors hover:text-[#F47C3E]"
                     >
-                      <span className="inline-flex items-center gap-1 text-white">
+                      <span className="inline-flex items-center gap-1">
                         Culture
                         <ChevronDown
                           className={`h-3 w-3 shrink-0 transition-transform ${cultureOpen ? 'rotate-180' : ''}`}
@@ -180,7 +183,7 @@ const Navbar: React.FC = () => {
                       ) : null}
                     </AnimatePresence>
                   </div>
-                  <div className="text-white">
+                  <div>
                     <Link to="/journal" className={linkClassHero} onClick={closeAll}>
                       Jiva Journal
                     </Link>
@@ -245,7 +248,11 @@ const Navbar: React.FC = () => {
             {isHome ? (
               <button
                 type="button"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/45 text-white bg-transparent md:hidden"
+                className={`inline-flex h-10 w-10 items-center justify-center rounded-full border md:hidden ${
+                  pastProduct
+                    ? 'border-[#2D4F3E]/25 text-[#2D4F3E]'
+                    : 'border-white/45 text-white bg-transparent'
+                }`}
                 aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
                 onClick={() => setMobileOpen((v) => !v)}
               >
@@ -269,7 +276,11 @@ const Navbar: React.FC = () => {
                   closeAll();
                   openMailingList();
                 }}
-                className="hidden md:inline-flex items-center justify-center rounded-full border border-white/45 bg-white/12 px-6 py-2.5 font-black text-xs text-white transition-all hover:bg-[#F47C3E] hover:border-[#F47C3E]"
+                className={`hidden md:inline-flex items-center justify-center rounded-full border px-6 py-2.5 font-black text-xs transition-all hover:bg-[#F47C3E] hover:border-[#F47C3E] ${
+                  pastProduct
+                    ? 'border-[#2D4F3E] bg-[#2D4F3E] text-white'
+                    : 'border-white/45 bg-white/12 text-white'
+                }`}
               >
                 JOIN THE LIST
               </button>
