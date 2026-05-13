@@ -7,6 +7,7 @@ import HashScroll from './components/HashScroll';
 import ShopPage from './pages/ShopPage';
 import CulturePage from './pages/CulturePage';
 import JournalPage from './pages/JournalPage';
+import RitualPage from './pages/RitualPage';
 import { MailingListProvider } from './contexts/MailingListContext';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
@@ -42,6 +43,7 @@ const App: React.FC = () => {
               <Route path="/" element={<ScrollStory />} />
               <Route path="/shop" element={<ShopPage />} />
               <Route path="/culture" element={<CulturePage />} />
+              <Route path="/ritual" element={<RitualPage />} />
               <Route path="/journal" element={<JournalPage />} />
               <Route path="/merch" element={<MerchPlaceholder />} />
             </Routes>

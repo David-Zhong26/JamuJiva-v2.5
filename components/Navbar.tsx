@@ -6,8 +6,8 @@ import { useMailingList } from '../contexts/MailingListContext';
 import logoTransparent from '../materials/jamu jiva logo1.png';
 
 const CULTURE_LINKS = [
-  { label: '30 Days Ritual', to: '/#ritual' },
-  { label: 'Origin Story', to: '/#story' },
+  { label: '30 Days Ritual', to: '/ritual' },
+  { label: 'Origin Story', to: '/culture' },
 ];
 
 const Navbar: React.FC = () => {
@@ -59,14 +59,18 @@ const Navbar: React.FC = () => {
       setHideNav(false);
       return;
     }
-    const el = document.getElementById('benefits');
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setHideNav(entry.isIntersecting),
-      { threshold: 0, rootMargin: '200px 0px 0px 0px' }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
+    const check = () => {
+      const el = document.getElementById('benefits');
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const sectionHeight = el.offsetHeight;
+      const scrolledInto = -rect.top;
+      const inSection = rect.top < 200 && scrolledInto < sectionHeight * 0.75;
+      setHideNav(inSection);
+    };
+    check();
+    window.addEventListener('scroll', check, { passive: true });
+    return () => window.removeEventListener('scroll', check);
   }, [isHome]);
 
   useEffect(() => {
@@ -104,28 +108,24 @@ const Navbar: React.FC = () => {
     >
       <motion.div style={shellStyle} className={`${shellClass} ${!isHome ? 'border-b border-[#2D4F3E]/10' : ''}`}>
         <div className="flex items-center justify-between gap-6">
-          {isHome ? (
-            <motion.div style={{ height: logoHeight }} className="relative shrink-0 flex items-center">
-              <Link to="/" onClick={closeAll} className="relative block h-full">
-                <motion.img
-                  src={logoTransparent}
-                  alt="Jamu Jiva"
-                  style={{ height: logoHeight }}
-                  className="w-auto"
-                  decoding="async"
-                />
-              </Link>
-            </motion.div>
-          ) : (
-            <Link to="/" onClick={closeAll} className="relative shrink-0 flex items-center h-[100px]">
+          <Link to="/" onClick={closeAll} className="relative shrink-0 flex items-center h-[100px]">
+            {isHome ? (
+              <motion.img
+                src={logoTransparent}
+                alt="Jamu Jiva"
+                style={{ height: logoHeight }}
+                className="w-auto origin-top-left"
+                decoding="async"
+              />
+            ) : (
               <img
                 src={logoTransparent}
                 alt="Jamu Jiva"
                 className="h-[100px] w-auto"
                 decoding="async"
               />
-            </Link>
-          )}
+            )}
+          </Link>
 
           <div className="ml-auto flex items-center gap-4 md:gap-10">
             <div
