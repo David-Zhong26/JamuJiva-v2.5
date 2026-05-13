@@ -4,7 +4,6 @@ import { AnimatePresence, motion, useMotionTemplate, useScroll, useTransform } f
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { useMailingList } from '../contexts/MailingListContext';
 import logoTransparent from '../materials/jamu jiva logo1.png';
-import logoCream from '../materials/jamu jiva logo2.png';
 
 const CULTURE_LINKS = [
   { label: '30 Days Ritual', to: '/#ritual' },
@@ -26,8 +25,6 @@ const Navbar: React.FC = () => {
   const buttonTextColor = useTransform(textProgress, [0, 1], ['#FFFFFF', '#FFFFFF']);
   const buttonBorder = useTransform(textProgress, [0, 1], ['rgba(255,255,255,0.45)', '#2D4F3E']);
   const mobileIconBorder = useTransform(textProgress, [0, 1], ['rgba(255,255,255,0.45)', 'rgba(45,79,62,0.22)']);
-  const logoTransparentOpacity = useTransform(textProgress, [0, 1], [1, 0]);
-  const logoCreamOpacity = useTransform(textProgress, [0, 1], [0, 1]);
   const logoHeight = useTransform(scrollY, [0, 80], [200, 100]);
 
   const [cultureOpen, setCultureOpen] = useState(false);
@@ -96,14 +93,7 @@ const Navbar: React.FC = () => {
                 <motion.img
                   src={logoTransparent}
                   alt="Jamu Jiva"
-                  style={{ opacity: logoTransparentOpacity, height: logoHeight }}
-                  className="absolute left-0 top-0 w-auto"
-                  decoding="async"
-                />
-                <motion.img
-                  src={logoCream}
-                  alt="Jamu Jiva"
-                  style={{ opacity: logoCreamOpacity, height: logoHeight }}
+                  style={{ height: logoHeight }}
                   className="w-auto"
                   decoding="async"
                 />
@@ -112,7 +102,7 @@ const Navbar: React.FC = () => {
           ) : (
             <Link to="/" onClick={closeAll} className="relative shrink-0 flex items-center h-[100px]">
               <img
-                src={logoCream}
+                src={logoTransparent}
                 alt="Jamu Jiva"
                 className="h-[100px] w-auto"
                 decoding="async"
