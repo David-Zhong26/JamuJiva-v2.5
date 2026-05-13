@@ -54,7 +54,7 @@ const ProductRevealSection: React.FC = () => {
         <div className="grid w-full items-center gap-8 md:grid-cols-[1fr_auto_1fr]">
           <div className="text-left">
             <h2 className="font-serif text-5xl font-black leading-[0.9] text-white md:text-7xl">
-              {flavor.name === 'On The Go' ? 'MINT' : 'GINGER'}
+              {flavor.name === 'On The Go' ? 'ON THE GO' : 'GOLDEN GLOW'}
             </h2>
             <p
               className="mt-5 text-sm font-black uppercase tracking-[0.2em] md:text-base"

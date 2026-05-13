@@ -63,7 +63,7 @@ const Navbar: React.FC = () => {
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => setHideNav(entry.isIntersecting),
-      { threshold: 0.05 }
+      { threshold: 0, rootMargin: '200px 0px 0px 0px' }
     );
     observer.observe(el);
     return () => observer.disconnect();
