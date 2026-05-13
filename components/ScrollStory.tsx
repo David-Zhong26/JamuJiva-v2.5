@@ -7,6 +7,7 @@ import background2Img from '../materials/background 2.png';
 import background3Img from '../materials/background 3.png';
 import background4Img from '../materials/background 4.png';
 import demoJivaBottle from '../materials/demo jiva can.png';
+import artworkImg from '../materials/Artwork.png';
 import DailyRitualSection from './DailyRitualSection';
 import { PRODUCT_DRINKS } from '../constants/productDrinks';
 import { useMailingList } from '../contexts/MailingListContext';
@@ -205,24 +206,33 @@ const ScrollStory: React.FC = () => {
       {/* ——— Culture ——— */}
       <section
         id="story"
-        className="min-h-screen bg-[#F5E8CA] flex items-center pl-8 md:pl-24 lg:pl-52 pr-8 md:pr-48 py-20"
+        className="min-h-screen bg-[#F5E8CA] flex items-center px-8 md:px-16 lg:px-24 py-20"
       >
-        <div className="max-w-lg">
-          <span className="text-[#A76D2A] font-black tracking-widest uppercase text-sm mb-4 block">
-            The Origin Story
-          </span>
-          <h2 className="font-serif text-4xl md:text-6xl font-black text-[#2D4F3E] leading-tight mb-6">
-            ROOTED IN <span className="text-[#F47C3E]">TRADITION.</span>
-          </h2>
-          <p className="text-[#2D4F3E]/85 font-medium text-lg leading-relaxed">
-            In the misty mornings of Solo, the Mbok Jamu begins her ritual. Jamu Jiva was born to bring this act of care to NYC and LA—a lifestyle of intentional vitality.
-          </p>
-          <Link
-            to="/culture"
-            className="mt-8 inline-flex items-center gap-2 rounded-full border-2 border-[#2D4F3E] px-8 py-4 font-black uppercase tracking-widest text-sm text-[#2D4F3E] transition-all hover:bg-[#2D4F3E] hover:text-[#F5E8CA]"
-          >
-            Explore our story
-          </Link>
+        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1fr_minmax(0,1fr)] lg:gap-20">
+          <div className="max-w-lg">
+            <span className="text-[#A76D2A] font-black tracking-widest uppercase text-sm mb-4 block">
+              The Origin Story
+            </span>
+            <h2 className="font-serif text-4xl md:text-6xl font-black text-[#2D4F3E] leading-tight mb-6">
+              ROOTED IN <span className="text-[#F47C3E]">TRADITION.</span>
+            </h2>
+            <p className="text-[#2D4F3E]/85 font-medium text-lg leading-relaxed">
+              In the misty mornings of Solo, the Mbok Jamu begins her ritual. Jamu Jiva was born to bring this act of care to NYC and LA—a lifestyle of intentional vitality.
+            </p>
+            <Link
+              to="/culture"
+              className="mt-8 inline-flex items-center gap-2 rounded-full border-2 border-[#2D4F3E] px-8 py-4 font-black uppercase tracking-widest text-sm text-[#2D4F3E] transition-all hover:bg-[#2D4F3E] hover:text-[#F5E8CA]"
+            >
+              Explore our story
+            </Link>
+          </div>
+          <div className="overflow-hidden rounded-2xl">
+            <img
+              src={artworkImg}
+              alt="Jamu Jiva artwork"
+              className="h-full w-full object-cover"
+            />
+          </div>
         </div>
       </section>
 
