@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion, useMotionTemplate, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown, Menu, X } from 'lucide-react';
 import { useMailingList } from '../contexts/MailingListContext';
 import logoTransparent from '../materials/jamu jiva logo1.png';
@@ -16,15 +16,6 @@ const Navbar: React.FC = () => {
   const { openMailingList } = useMailingList();
 
   const { scrollY } = useScroll();
-  const shellOpacity = useTransform(scrollY, [0, 80], [0, 0.96]);
-  const textProgress = useTransform(scrollY, [0, 80], [0, 1]);
-
-  const shellBackground = useMotionTemplate`rgba(245, 232, 202, ${shellOpacity})`;
-  const navTextColor = useTransform(textProgress, [0, 1], ['#FFFFFF', '#2D4F3E']);
-  const buttonBackground = useTransform(textProgress, [0, 1], ['rgba(255,255,255,0.12)', '#2D4F3E']);
-  const buttonTextColor = useTransform(textProgress, [0, 1], ['#FFFFFF', '#FFFFFF']);
-  const buttonBorder = useTransform(textProgress, [0, 1], ['rgba(255,255,255,0.45)', '#2D4F3E']);
-  const mobileIconBorder = useTransform(textProgress, [0, 1], ['rgba(255,255,255,0.45)', 'rgba(45,79,62,0.22)']);
   const logoHeight = useTransform(scrollY, [0, 80], [200, 100]);
   const logoOffsetY = useTransform(scrollY, [0, 80], [50, 0]);
 
@@ -61,13 +52,16 @@ const Navbar: React.FC = () => {
       return;
     }
     const check = () => {
+      const sy = window.scrollY;
       const el = document.getElementById('benefits');
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
+      if (!el) {
+        setHideNav(sy > 50);
+        return;
+      }
       const sectionHeight = el.offsetHeight;
-      const scrolledInto = -rect.top;
-      const inSection = rect.top < 200 && scrolledInto < sectionHeight * 0.75;
-      setHideNav(inSection);
+      const scrolledInto = sy - el.offsetTop;
+      const pastProduct = scrolledInto >= sectionHeight * 0.75;
+      setHideNav(sy > 50 && !pastProduct);
     };
     check();
     window.addEventListener('scroll', check, { passive: true });
@@ -97,7 +91,7 @@ const Navbar: React.FC = () => {
   const shellClass =
     'w-full px-6 md:px-10 py-4 transition-colors backdrop-blur-[2px]';
   const shellStyle = isHome
-    ? { backgroundColor: shellBackground }
+    ? { backgroundColor: 'transparent' }
     : { backgroundColor: 'rgba(245, 242, 237, 0.97)' };
 
   return (
@@ -135,14 +129,14 @@ const Navbar: React.FC = () => {
             >
               {isHome ? (
                 <>
-                  <motion.div style={{ color: navTextColor }} className="flex items-center gap-10">
+                  <div className="flex items-center gap-10 text-white">
                     <Link to="/shop" className={linkClassHero} onClick={closeAll}>
                       Shop All
                     </Link>
                     <Link to="/merch" className={linkClassHero} onClick={closeAll}>
                       Merch
                     </Link>
-                  </motion.div>
+                  </div>
                   <div
                     className="relative"
                     onMouseEnter={openCultureMenu}
@@ -154,12 +148,12 @@ const Navbar: React.FC = () => {
                       aria-haspopup="true"
                       className="inline-flex cursor-default items-center gap-1 bg-transparent font-bold text-xs uppercase tracking-widest transition-colors hover:text-[#F47C3E]"
                     >
-                      <motion.span style={{ color: navTextColor }} className="inline-flex items-center gap-1">
+                      <span className="inline-flex items-center gap-1 text-white">
                         Culture
                         <ChevronDown
                           className={`h-3 w-3 shrink-0 transition-transform ${cultureOpen ? 'rotate-180' : ''}`}
                         />
-                      </motion.span>
+                      </span>
                     </button>
                     <AnimatePresence>
                       {cultureOpen ? (
@@ -186,11 +180,11 @@ const Navbar: React.FC = () => {
                       ) : null}
                     </AnimatePresence>
                   </div>
-                  <motion.div style={{ color: navTextColor }}>
+                  <div className="text-white">
                     <Link to="/journal" className={linkClassHero} onClick={closeAll}>
                       Jiva Journal
                     </Link>
-                  </motion.div>
+                  </div>
                 </>
               ) : (
                 <>
@@ -249,15 +243,14 @@ const Navbar: React.FC = () => {
             </div>
 
             {isHome ? (
-              <motion.button
+              <button
                 type="button"
-                style={{ borderColor: mobileIconBorder, color: navTextColor }}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border bg-transparent md:hidden"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/45 text-white bg-transparent md:hidden"
                 aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
                 onClick={() => setMobileOpen((v) => !v)}
               >
                 {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </motion.button>
+              </button>
             ) : (
               <button
                 type="button"
@@ -270,21 +263,16 @@ const Navbar: React.FC = () => {
             )}
 
             {isHome ? (
-              <motion.button
+              <button
                 type="button"
                 onClick={() => {
                   closeAll();
                   openMailingList();
                 }}
-                style={{
-                  backgroundColor: buttonBackground,
-                  color: buttonTextColor,
-                  borderColor: buttonBorder,
-                }}
-                className="hidden md:inline-flex items-center justify-center rounded-full border px-6 py-2.5 font-black text-xs transition-all hover:bg-[#F47C3E] hover:border-[#F47C3E]"
+                className="hidden md:inline-flex items-center justify-center rounded-full border border-white/45 bg-white/12 px-6 py-2.5 font-black text-xs text-white transition-all hover:bg-[#F47C3E] hover:border-[#F47C3E]"
               >
                 JOIN THE LIST
-              </motion.button>
+              </button>
             ) : (
               <button
                 type="button"
