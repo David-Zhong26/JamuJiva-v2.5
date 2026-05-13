@@ -54,9 +54,10 @@ const Navbar: React.FC = () => {
     }
     const check = () => {
       const sy = window.scrollY;
+      const halfHero = window.innerHeight * 0.5;
       const el = document.getElementById('benefits');
       if (!el) {
-        setHideNav(sy > 50);
+        setHideNav(sy > halfHero);
         setPastProduct(false);
         return;
       }
@@ -64,7 +65,7 @@ const Navbar: React.FC = () => {
       const scrolledInto = sy - el.offsetTop;
       const past = scrolledInto >= sectionHeight * 0.75;
       setPastProduct(past);
-      setHideNav(sy > 50 && !past);
+      setHideNav(sy > halfHero && !past);
     };
     check();
     window.addEventListener('scroll', check, { passive: true });
