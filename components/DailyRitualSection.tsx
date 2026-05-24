@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import ritualLifestyleImg from '../materials/1f91114e-0361-4d9a-9691-db194aa66ed9.png';
+import ritualLifestyleImg from '../materials/ritual-lifestyle.png';
 
 const DURING_LINES = [
   'Create a slower morning moment',
@@ -40,7 +40,7 @@ const DailyRitualSection: React.FC = () => {
         >
           <img
             src={ritualLifestyleImg}
-            alt="Jamu Jiva wellness shot in hand, outdoor moment"
+            alt="Jamu Jiva wellness shot on a sunlit table"
             className="h-full w-full object-cover object-center"
           />
         </motion.div>
