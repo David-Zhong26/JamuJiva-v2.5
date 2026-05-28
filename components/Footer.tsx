@@ -28,9 +28,9 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="font-bold text-[#2D4F3E] mb-6 uppercase tracking-widest text-sm">Culture</h4>
             <ul className="space-y-4 text-[#2D4F3E]/60 font-medium">
-              <li><a href="#" className="hover:text-[#F47C3E]">The Mbok Story</a></li>
-              <li><a href="#" className="hover:text-[#F47C3E]">Heritage</a></li>
-              <li><a href="#" className="hover:text-[#F47C3E]">Wellness</a></li>
+              <li><Link to="/culture" className="hover:text-[#F47C3E]">About Us</Link></li>
+              <li><Link to="/ritual" className="hover:text-[#F47C3E]">30 Days Ritual</Link></li>
+              <li><Link to="/journal" className="hover:text-[#F47C3E]">Jiva Journal</Link></li>
             </ul>
           </div>
           <div>
