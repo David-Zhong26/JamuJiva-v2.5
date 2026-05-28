@@ -234,25 +234,30 @@ const ScrollStory: React.FC = () => {
         </div>
       </section>
 
-      {/* ——— Explore the Journal ——— */}
+      {/* ——— About Us ——— */}
       <section className="bg-[#F5E8CA] py-24 px-8">
         <div className="mx-auto max-w-2xl text-center">
           <span className="text-[#A76D2A] font-black tracking-widest uppercase text-sm mb-4 block">
             Stories &amp; Culture
           </span>
           <h2 className="font-serif text-4xl md:text-5xl font-black text-[#2D4F3E] leading-tight mb-6">
-            Explore the Culture Behind <span className="text-[#F47C3E]">Jamu.</span>
+            About <span className="text-[#F47C3E]">Us.</span>
           </h2>
+          <p className="text-[#2D4F3E]/80 text-lg md:text-xl leading-relaxed mb-6">
+            On a mission to share and introduce the culture of jamu to a new generation seeking
+            natural energy, balance, and better living.
+          </p>
           <p className="text-[#2D4F3E]/80 text-lg md:text-xl leading-relaxed mb-10">
-            Jamu is more than a drink. It is a daily ritual rooted in Indonesian heritage and made
-            with ingredients like turmeric, ginger, tamarind, and botanicals. Learn the stories,
-            rituals, and ingredients behind Jamu Jiva.
+            Jiva is a modern wellness brand rooted in Indonesian heritage — reimagining ancient
+            herbal traditions for today&apos;s fast-paced world. We believe feeling good
+            shouldn&apos;t be complicated. It should be daily, intentional, and deeply connected
+            to culture.
           </p>
           <Link
-            to="/journal"
+            to="/culture"
             className="inline-block rounded-full bg-[#2D4F3E] px-10 py-4 font-black uppercase tracking-widest text-sm text-[#F5E8CA] transition-all hover:bg-[#1a3328]"
           >
-            Read the Journal
+            Our Story
           </Link>
         </div>
       </section>
