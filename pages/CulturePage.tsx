@@ -13,28 +13,17 @@ const fadeUp = {
 
 const CulturePage: React.FC = () => (
   <main className="bg-[#F5E8CA] pt-32 pb-20">
-    {/* ——— About Us ——— */}
+    {/* ——— Our Mission ——— */}
     <section className="mx-auto max-w-3xl px-6 md:px-12 pb-20">
-      <motion.span
-        className="text-[#A76D2A] font-black tracking-widest uppercase text-sm mb-4 block"
+      <motion.h1
+        className="font-serif text-4xl md:text-6xl font-black text-[#2D4F3E] leading-tight mb-8"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         custom={0}
         variants={fadeUp}
       >
-        Our Mission
-      </motion.span>
-
-      <motion.h1
-        className="font-serif text-4xl md:text-6xl font-black text-[#2D4F3E] leading-tight mb-8"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        custom={1}
-        variants={fadeUp}
-      >
-        About <span className="text-[#F47C3E]">Us.</span>
+        Our <span className="text-[#F47C3E]">Mission.</span>
       </motion.h1>
 
       <motion.div
@@ -42,18 +31,18 @@ const CulturePage: React.FC = () => (
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        custom={2}
+        custom={1}
         variants={fadeUp}
       >
         <p>
-          On a mission to share and introduce the culture of jamu to a new generation
-          seeking natural energy, balance, and better living.
+          We aim to share and introduce the culture of jamu to a new generation seeking natural
+          energy, balance, and better living.
         </p>
         <p>
-          Jiva is a modern wellness brand rooted in Indonesian heritage — reimagining
-          ancient herbal traditions for today&apos;s fast-paced world. We believe feeling
-          good shouldn&apos;t be complicated. It should be daily, intentional, and deeply
-          connected to culture.
+          Jiva is a modern wellness brand rooted in Indonesian heritage — reimagining ancient
+          herbal traditions for today&apos;s fast-paced world. We believe feeling good
+          shouldn&apos;t be complicated. It should be daily, intentional, and deeply connected
+          to culture.
         </p>
       </motion.div>
     </section>

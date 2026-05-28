@@ -204,7 +204,7 @@ const ScrollStory: React.FC = () => {
       {/* ——— Culture ——— */}
       <section
         id="story"
-        className="min-h-screen bg-[#F5E8CA] flex items-center px-8 md:px-16 lg:px-24 py-20"
+        className="bg-[#F5E8CA] flex items-center px-8 md:px-16 lg:px-24 py-20 md:py-24"
       >
         <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1fr_minmax(0,1fr)] lg:gap-20">
           <div className="max-w-lg">
@@ -234,38 +234,10 @@ const ScrollStory: React.FC = () => {
         </div>
       </section>
 
-      {/* ——— About Us ——— */}
-      <section className="bg-[#F5E8CA] py-24 px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="text-[#A76D2A] font-black tracking-widest uppercase text-sm mb-4 block">
-            Stories &amp; Culture
-          </span>
-          <h2 className="font-serif text-4xl md:text-5xl font-black text-[#2D4F3E] leading-tight mb-6">
-            About <span className="text-[#F47C3E]">Us.</span>
-          </h2>
-          <p className="text-[#2D4F3E]/80 text-lg md:text-xl leading-relaxed mb-6">
-            On a mission to share and introduce the culture of jamu to a new generation seeking
-            natural energy, balance, and better living.
-          </p>
-          <p className="text-[#2D4F3E]/80 text-lg md:text-xl leading-relaxed mb-10">
-            Jiva is a modern wellness brand rooted in Indonesian heritage — reimagining ancient
-            herbal traditions for today&apos;s fast-paced world. We believe feeling good
-            shouldn&apos;t be complicated. It should be daily, intentional, and deeply connected
-            to culture.
-          </p>
-          <Link
-            to="/culture"
-            className="inline-block rounded-full bg-[#2D4F3E] px-10 py-4 font-black uppercase tracking-widest text-sm text-[#F5E8CA] transition-all hover:bg-[#1a3328]"
-          >
-            Our Story
-          </Link>
-        </div>
-      </section>
-
       {/* ——— Flavors + CTA ——— */}
       <section
         id="waitlist"
-        className="min-h-screen bg-[#F5E8CA] flex flex-col items-center justify-center px-8 py-20"
+        className="bg-[#F5E8CA] flex flex-col items-center justify-center px-8 py-24 md:py-32"
       >
         <span className="text-[#F47C3E] font-black tracking-widest uppercase text-sm mb-4">
           The First Drop
