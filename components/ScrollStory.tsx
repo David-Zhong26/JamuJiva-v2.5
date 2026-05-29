@@ -20,7 +20,7 @@ const HERO_BACKGROUNDS = [
 ] as const;
 
 const BENEFITS_MARQUEE =
-  '100% Natural • Indonesian Herbal Blend • No Additives • Gluten Free • Real Ingredients Only';
+  '100% Natural • Indonesian Herbal Blend • No Additives • No Added Sugar • Gluten Free • Real Ingredients Only';
 
 const ProductRevealSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -117,6 +117,65 @@ const ProductRevealSection: React.FC = () => {
   );
 };
 
+const WhyJivaSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start 1.25', 'start 0.25'],
+  });
+
+  const artworkX = useTransform(scrollYProgress, [0, 1], ['100vw', '0vw']);
+  const artworkOpacity = useTransform(scrollYProgress, [0, 0.4], [0, 1]);
+
+  return (
+    <section
+      ref={sectionRef}
+      id="story"
+      className="overflow-hidden bg-[#F5E8CA] flex items-center px-5 py-10 sm:px-8 md:px-16 md:py-14 lg:px-24"
+    >
+      <div className="mx-auto grid max-w-6xl items-center gap-8 md:gap-12 lg:grid-cols-[1fr_minmax(0,1fr)] lg:gap-16">
+        <div className="max-w-xl">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl font-black text-[#2D4F3E] leading-tight mb-4 md:mb-6">
+            Why <span className="text-[#F47C3E]">Jiva?</span>
+          </h2>
+          <div className="space-y-4 text-[#2D4F3E]/85 font-medium text-base leading-relaxed md:text-lg">
+            <p>
+              Jiva is Sanskrit for the living soul: the vital force that animates us, connects us
+              to the earth, and carries the wisdom of those who came before.
+            </p>
+            <p>
+              It is not a concept. It is what you are and how you live.
+            </p>
+            <p>
+              For centuries, Indonesian healers understood this. They knew that to heal the body was
+              to heal the soul. Turmeric ground at dawn, ginger steeped with intention, and herbs
+              passed down through generations were never just medicine. They were a ritual of
+              remembrance. A way of saying you are worth caring for.
+            </p>
+            <p>
+              Jiva is that belief, bottled.
+            </p>
+          </div>
+          <Link
+            to="/culture"
+            className="mt-6 inline-flex items-center gap-2 rounded-full border-2 border-[#2D4F3E] px-6 py-3 font-black uppercase tracking-widest text-xs text-[#2D4F3E] transition-all hover:bg-[#2D4F3E] hover:text-[#F5E8CA] sm:mt-8 sm:px-8 sm:py-4 sm:text-sm"
+          >
+            Learn more
+          </Link>
+        </div>
+        <div className="relative flex items-center justify-center lg:justify-end">
+          <motion.img
+            src={artworkImg}
+            alt="Jamu Jiva artwork"
+            style={{ x: artworkX, opacity: artworkOpacity }}
+            className="w-full max-w-sm sm:max-w-md object-contain will-change-transform"
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const ScrollStory: React.FC = () => {
   const [heroBgIndex, setHeroBgIndex] = useState(0);
   const { openMailingList } = useMailingList();
@@ -206,50 +265,7 @@ const ScrollStory: React.FC = () => {
 
       <DailyRitualSection />
 
-      {/* ——— Culture ——— */}
-      <section
-        id="story"
-        className="bg-[#F5E8CA] flex items-center px-5 py-10 sm:px-8 md:px-16 md:py-14 lg:px-24"
-      >
-        <div className="mx-auto grid max-w-6xl items-center gap-8 md:gap-12 lg:grid-cols-[1fr_minmax(0,1fr)] lg:gap-16">
-          <div className="max-w-xl">
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl font-black text-[#2D4F3E] leading-tight mb-4 md:mb-6">
-              Why <span className="text-[#F47C3E]">Jiva?</span>
-            </h2>
-            <div className="space-y-4 text-[#2D4F3E]/85 font-medium text-base leading-relaxed md:text-lg">
-              <p>
-                Jiva is Sanskrit for the living soul: the vital force that animates us, connects us
-                to the earth, and carries the wisdom of those who came before.
-              </p>
-              <p>
-                It is not a concept. It is what you are and how you live.
-              </p>
-              <p>
-                For centuries, Indonesian healers understood this. They knew that to heal the body was
-                to heal the soul. Turmeric ground at dawn, ginger steeped with intention, and herbs
-                passed down through generations were never just medicine. They were a ritual of
-                remembrance. A way of saying you are worth caring for.
-              </p>
-              <p>
-                Jiva is that belief, bottled.
-              </p>
-            </div>
-            <Link
-              to="/culture"
-              className="mt-6 inline-flex items-center gap-2 rounded-full border-2 border-[#2D4F3E] px-6 py-3 font-black uppercase tracking-widest text-xs text-[#2D4F3E] transition-all hover:bg-[#2D4F3E] hover:text-[#F5E8CA] sm:mt-8 sm:px-8 sm:py-4 sm:text-sm"
-            >
-              Learn more
-            </Link>
-          </div>
-          <div className="overflow-hidden rounded-2xl">
-            <img
-              src={artworkImg}
-              alt="Jamu Jiva artwork"
-              className="h-full w-full object-cover"
-            />
-          </div>
-        </div>
-      </section>
+      <WhyJivaSection />
 
       {/* ——— Flavors + CTA ——— */}
       <section
@@ -259,12 +275,9 @@ const ScrollStory: React.FC = () => {
         <span className="text-[#F47C3E] font-black tracking-widest uppercase text-sm mb-3">
           The First Drop
         </span>
-        <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl font-black text-[#2D4F3E] text-center mb-4 md:mb-6">
+        <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl font-black text-[#2D4F3E] text-center mb-6 md:mb-8">
           BE THE FIRST TO SIP.
         </h2>
-        <p className="text-[#2D4F3E]/80 text-base sm:text-lg md:text-xl text-center max-w-2xl mb-6 md:mb-8">
-          Limited release of our seasonal "Golden Glow" brew. Only 5,000 cases.
-        </p>
         <button
           type="button"
           onClick={openMailingList}
