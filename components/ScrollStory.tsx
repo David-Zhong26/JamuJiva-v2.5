@@ -5,7 +5,7 @@ import { Send, ChevronDown } from 'lucide-react';
 import backgroundImg from '../materials/background.png';
 import background3Img from '../materials/background 3.png';
 import background4Img from '../materials/background 4.png';
-import demoJivaBottle from '../materials/demo jiva can.png';
+import demoJivaBottle from '../materials/jiva can.png';
 import artworkImg from '../materials/Artwork.png';
 import DailyRitualSection from './DailyRitualSection';
 import { PRODUCT_DRINKS } from '../constants/productDrinks';
@@ -49,11 +49,24 @@ const ProductRevealSection: React.FC = () => {
       }}
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.14),transparent_52%)]" />
-      <div className="relative z-10 flex h-full items-center px-8 py-12 md:px-14">
-        <div className="grid w-full items-center gap-8 md:grid-cols-[1fr_auto_1fr]">
+      <div className="relative z-10 flex h-full flex-col justify-end gap-5 overflow-visible px-5 pb-10 pt-24 sm:px-8 md:justify-center md:gap-8 md:px-14 md:py-12">
+        <img
+          src={demoJivaBottle}
+          alt={flavor.name}
+          className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[50vh] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:h-[58vh] md:h-[95vh]"
+        />
+        <div className="relative z-10 grid w-full gap-6 md:grid-cols-2 md:items-center md:gap-8">
           <div className="text-left">
-            <h2 className="font-serif text-5xl font-black leading-[0.9] text-white md:text-7xl">
-              {flavor.name === 'On The Go' ? 'ON THE GO' : 'GOLDEN GLOW'}
+            <h2 className="font-serif text-4xl font-black leading-[0.9] text-white sm:text-5xl md:text-7xl">
+              {flavor.name === 'On The Go' ? (
+                'ON THE GO'
+              ) : (
+                <>
+                  GOLDEN
+                  <br />
+                  GLOW
+                </>
+              )}
             </h2>
             <p
               className="mt-5 text-sm font-black uppercase tracking-[0.2em] md:text-base"
@@ -63,16 +76,8 @@ const ProductRevealSection: React.FC = () => {
             </p>
           </div>
 
-          <div className="relative mx-auto flex items-center justify-center">
-            <img
-              src={demoJivaBottle}
-              alt={flavor.name}
-              className="relative z-10 h-auto w-[22rem] max-w-none object-contain md:w-[28rem] lg:w-[32rem]"
-            />
-          </div>
-
-          <div className="max-w-sm justify-self-end text-left">
-            <p className="text-base leading-relaxed md:text-lg" style={{ color: flavor.bodyColor }}>
+          <div className="max-w-sm text-left md:col-start-2 md:justify-self-end">
+            <p className="text-sm leading-relaxed sm:text-base md:text-lg" style={{ color: flavor.bodyColor }}>
               {flavor.description}
             </p>
             <Link
@@ -82,7 +87,7 @@ const ProductRevealSection: React.FC = () => {
                 color: flavor.buttonText,
                 borderColor: flavor.buttonBorder,
               }}
-              className="mt-8 inline-flex items-center justify-center rounded-full border px-8 py-4 font-black uppercase tracking-[0.14em] transition-all hover:brightness-105"
+              className="mt-5 inline-flex items-center justify-center rounded-full border px-6 py-3 text-xs font-black uppercase tracking-[0.14em] transition-all hover:brightness-105 sm:mt-8 sm:px-8 sm:py-4 sm:text-sm"
             >
               Shop now
             </Link>
@@ -129,7 +134,7 @@ const ScrollStory: React.FC = () => {
       {/* ——— Hero ——— */}
       <section
         id="hero"
-        className="relative min-h-screen flex flex-col justify-between pt-28 pb-12 md:pb-20 pl-24 pr-12 md:pl-32 md:pr-20 overflow-hidden"
+        className="relative min-h-screen flex flex-col justify-between overflow-hidden px-5 pb-10 pt-24 sm:px-8 md:px-12 md:pb-20 md:pt-28 lg:pl-32 lg:pr-20"
       >
         <div className="absolute inset-0 z-0 bg-[#2D4F3E]" />
         <div className="absolute inset-0 z-0">
@@ -165,7 +170,7 @@ const ScrollStory: React.FC = () => {
               <button
                 type="button"
                 onClick={openMailingList}
-                className="inline-flex items-center gap-3 bg-white/20 backdrop-blur-xl rounded-full border border-white/30 px-8 py-4 font-black text-white hover:bg-white/25 transition-all"
+                className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/20 px-6 py-3 text-sm font-black text-white backdrop-blur-xl transition-all hover:bg-white/25 sm:gap-3 sm:px-8 sm:py-4"
               >
                 JOIN THE DROP <Send className="w-4 h-4" />
               </button>
@@ -204,24 +209,36 @@ const ScrollStory: React.FC = () => {
       {/* ——— Culture ——— */}
       <section
         id="story"
-        className="bg-[#F5E8CA] flex items-center px-8 md:px-16 lg:px-24 py-20 md:py-24"
+        className="bg-[#F5E8CA] flex items-center px-5 py-10 sm:px-8 md:px-16 md:py-14 lg:px-24"
       >
-        <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1fr_minmax(0,1fr)] lg:gap-20">
-          <div className="max-w-lg">
-            <span className="text-[#A76D2A] font-black tracking-widest uppercase text-sm mb-4 block">
-              The Origin Story
-            </span>
-            <h2 className="font-serif text-4xl md:text-6xl font-black text-[#2D4F3E] leading-tight mb-6">
-              ROOTED IN <span className="text-[#F47C3E]">TRADITION.</span>
+        <div className="mx-auto grid max-w-6xl items-center gap-8 md:gap-12 lg:grid-cols-[1fr_minmax(0,1fr)] lg:gap-16">
+          <div className="max-w-xl">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl font-black text-[#2D4F3E] leading-tight mb-4 md:mb-6">
+              Why <span className="text-[#F47C3E]">Jiva?</span>
             </h2>
-            <p className="text-[#2D4F3E]/85 font-medium text-lg leading-relaxed">
-              In the misty mornings of Solo, the Mbok Jamu begins her ritual. Jamu Jiva was born to bring this act of care to NYC and LA—a lifestyle of intentional vitality.
-            </p>
+            <div className="space-y-4 text-[#2D4F3E]/85 font-medium text-base leading-relaxed md:text-lg">
+              <p>
+                Jiva is Sanskrit for the living soul: the vital force that animates us, connects us
+                to the earth, and carries the wisdom of those who came before.
+              </p>
+              <p>
+                It is not a concept. It is what you are and how you live.
+              </p>
+              <p>
+                For centuries, Indonesian healers understood this. They knew that to heal the body was
+                to heal the soul. Turmeric ground at dawn, ginger steeped with intention, and herbs
+                passed down through generations were never just medicine. They were a ritual of
+                remembrance. A way of saying you are worth caring for.
+              </p>
+              <p>
+                Jiva is that belief, bottled.
+              </p>
+            </div>
             <Link
               to="/culture"
-              className="mt-8 inline-flex items-center gap-2 rounded-full border-2 border-[#2D4F3E] px-8 py-4 font-black uppercase tracking-widest text-sm text-[#2D4F3E] transition-all hover:bg-[#2D4F3E] hover:text-[#F5E8CA]"
+              className="mt-6 inline-flex items-center gap-2 rounded-full border-2 border-[#2D4F3E] px-6 py-3 font-black uppercase tracking-widest text-xs text-[#2D4F3E] transition-all hover:bg-[#2D4F3E] hover:text-[#F5E8CA] sm:mt-8 sm:px-8 sm:py-4 sm:text-sm"
             >
-              Explore our story
+              Learn more
             </Link>
           </div>
           <div className="overflow-hidden rounded-2xl">
@@ -237,15 +254,15 @@ const ScrollStory: React.FC = () => {
       {/* ——— Flavors + CTA ——— */}
       <section
         id="waitlist"
-        className="bg-[#F5E8CA] flex flex-col items-center justify-center px-8 py-24 md:py-32"
+        className="bg-[#F5E8CA] flex flex-col items-center justify-center px-5 py-10 sm:px-8 md:py-14"
       >
-        <span className="text-[#F47C3E] font-black tracking-widest uppercase text-sm mb-4">
+        <span className="text-[#F47C3E] font-black tracking-widest uppercase text-sm mb-3">
           The First Drop
         </span>
-        <h2 className="font-serif text-4xl md:text-6xl font-black text-[#2D4F3E] text-center mb-8">
+        <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl font-black text-[#2D4F3E] text-center mb-4 md:mb-6">
           BE THE FIRST TO SIP.
         </h2>
-        <p className="text-[#2D4F3E]/80 text-lg md:text-xl text-center max-w-2xl mb-10">
+        <p className="text-[#2D4F3E]/80 text-base sm:text-lg md:text-xl text-center max-w-2xl mb-6 md:mb-8">
           Limited release of our seasonal "Golden Glow" brew. Only 5,000 cases.
         </p>
         <button

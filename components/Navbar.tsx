@@ -7,7 +7,7 @@ import logoTransparent from '../materials/jamu jiva logo1.png';
 
 const CULTURE_LINKS = [
   { label: '30 Days Ritual', to: '/ritual' },
-  { label: 'Origin Story', to: '/culture' },
+  { label: 'About Us', to: '/culture' },
 ];
 
 const Navbar: React.FC = () => {
@@ -16,8 +16,8 @@ const Navbar: React.FC = () => {
   const { openMailingList } = useMailingList();
 
   const { scrollY } = useScroll();
-  const logoHeight = useTransform(scrollY, [0, 80], [170, 70]);
-  const logoOffsetY = useTransform(scrollY, [0, 80], [50, 0]);
+  const logoHeight = useTransform(scrollY, [0, 80], [110, 58]);
+  const logoOffsetY = useTransform(scrollY, [0, 80], [16, 0]);
 
   const [hideNav, setHideNav] = useState(false);
   const [pastProduct, setPastProduct] = useState(false);
@@ -93,7 +93,7 @@ const Navbar: React.FC = () => {
     'font-bold text-sm uppercase tracking-widest text-[#2D4F3E] transition-colors hover:text-[#F47C3E]';
 
   const shellClass =
-    'w-full px-6 md:px-10 py-4 transition-colors backdrop-blur-[2px]';
+    'w-full px-4 py-2 transition-colors backdrop-blur-[2px] md:px-10 md:py-4';
   const shellStyle = isHome
     ? { backgroundColor: pastProduct ? 'rgba(245, 232, 202, 0.96)' : 'transparent' }
     : { backgroundColor: 'rgba(245, 242, 237, 0.97)' };
@@ -107,7 +107,7 @@ const Navbar: React.FC = () => {
     >
       <motion.div style={shellStyle} className={`${shellClass} ${!isHome || pastProduct ? 'border-b border-[#2D4F3E]/10' : ''}`}>
         <div className="flex items-center justify-between gap-6">
-          <Link to="/" onClick={closeAll} className="relative shrink-0 flex items-center h-[70px]">
+          <Link to="/" onClick={closeAll} className="relative shrink-0 flex items-center h-[52px] md:h-[70px]">
             {isHome ? (
               <motion.img
                 src={logoTransparent}

@@ -19,7 +19,7 @@ const DailyRitualSection: React.FC = () => {
   return (
     <section
       id="ritual"
-      className="relative overflow-hidden bg-gradient-to-b from-[#F5E8CA] via-[#F3DFA8]/90 to-[#F5E8CA] px-5 py-16 md:px-10 md:py-24"
+      className="relative overflow-hidden bg-gradient-to-b from-[#F5E8CA] via-[#F3DFA8]/90 to-[#F5E8CA] px-5 py-12 md:px-10 md:py-20"
     >
       <div
         className="pointer-events-none absolute left-[6%] top-[18%] h-[min(42vw,320px)] w-[min(42vw,320px)] rounded-full bg-[#2D4F3E]/14 blur-[72px]"
@@ -30,7 +30,7 @@ const DailyRitualSection: React.FC = () => {
         aria-hidden
       />
 
-      <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14">
+      <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-8 md:gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14">
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}

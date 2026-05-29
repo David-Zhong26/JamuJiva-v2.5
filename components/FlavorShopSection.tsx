@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import demoJivaBottle from '../materials/demo jiva can.png';
+import demoJivaBottle from '../materials/jiva can.png';
 import { PRODUCT_DRINKS, type ProductDrink } from '../constants/productDrinks';
 
 interface FlavorShopSectionProps {
