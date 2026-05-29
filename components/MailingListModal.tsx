@@ -46,7 +46,7 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
 
     const flavorMap: Record<string, string> = {
       'Golden Glow': 'golden_glow',
-      'On The Go': 'on_the_go',
+      'Spiced Ivory': 'spiced_ivory',
     };
 
     const mappedFlavors = interests.map(

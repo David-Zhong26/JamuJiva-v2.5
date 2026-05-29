@@ -35,17 +35,15 @@ const ProductRevealSection: React.FC = () => {
   const dividerLeft = useTransform(revealProgress, (v) => `${100 - v}%`);
   const dividerOpacity = useTransform(scrollYProgress, [0.08, 0.12, 0.9, 1], [0, 1, 1, 0]);
 
-  const ginger = PRODUCT_DRINKS[0];
-  const mint = PRODUCT_DRINKS[1];
+  const goldenGlow = PRODUCT_DRINKS[0];
+  const spicedIvory = PRODUCT_DRINKS[1];
 
-  const renderFlavorLayer = (flavor: (typeof PRODUCT_DRINKS)[number], isMint = false) => (
+  const renderFlavorLayer = (flavor: (typeof PRODUCT_DRINKS)[number]) => (
     <div
       className="absolute inset-0"
       style={{
         color: flavor.textColor,
-        background: isMint
-          ? 'linear-gradient(135deg, #4E7145 0%, #648858 45%, #567A4A 100%)'
-          : 'linear-gradient(135deg, #EB9C35 0%, #F0B154 45%, #E7A243 100%)',
+        background: flavor.backgroundGradient,
       }}
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.14),transparent_52%)]" />
@@ -57,16 +55,16 @@ const ProductRevealSection: React.FC = () => {
         />
         <div className="relative z-10 grid w-full gap-6 md:grid-cols-2 md:items-center md:gap-8">
           <div className="text-left">
-            <h2 className="font-serif text-4xl font-black leading-[0.9] text-white sm:text-5xl md:text-7xl">
-              {flavor.name === 'On The Go' ? (
-                'ON THE GO'
-              ) : (
-                <>
-                  GOLDEN
-                  <br />
-                  GLOW
-                </>
-              )}
+            <h2
+              className="font-serif text-4xl font-black leading-[0.9] sm:text-5xl md:text-7xl"
+              style={{ color: flavor.textColor }}
+            >
+              {flavor.name.split(' ').map((word, index, words) => (
+                <React.Fragment key={word}>
+                  {word.toUpperCase()}
+                  {index < words.length - 1 ? <br /> : null}
+                </React.Fragment>
+              ))}
             </h2>
             <p
               className="mt-5 text-sm font-black uppercase tracking-[0.2em] md:text-base"
@@ -101,11 +99,11 @@ const ProductRevealSection: React.FC = () => {
     <section ref={sectionRef} id="benefits" className="relative bg-[#F5F2ED]" style={{ height: '220vh' }}>
       <div className="sticky top-0 h-screen overflow-hidden">
         <motion.div style={{ width: gingerWidth }} className="absolute inset-y-0 left-0 overflow-hidden">
-          <div className="absolute inset-y-0 left-0 w-screen">{renderFlavorLayer(ginger)}</div>
+          <div className="absolute inset-y-0 left-0 w-screen">{renderFlavorLayer(goldenGlow)}</div>
         </motion.div>
 
         <motion.div style={{ width: mintWidth }} className="absolute inset-y-0 right-0 overflow-hidden">
-          <div className="absolute inset-y-0 right-0 w-screen">{renderFlavorLayer(mint, true)}</div>
+          <div className="absolute inset-y-0 right-0 w-screen">{renderFlavorLayer(spicedIvory)}</div>
         </motion.div>
 
         <motion.div
