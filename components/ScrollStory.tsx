@@ -163,7 +163,7 @@ const WhyJivaSection: React.FC = () => {
             Learn more
           </Link>
         </div>
-        <div className="relative flex items-center justify-center lg:justify-end">
+        <div className="relative flex items-center justify-center translate-x-4 lg:translate-x-8 lg:justify-end">
           <motion.img
             src={artworkImg}
             alt="Jamu Jiva artwork"
