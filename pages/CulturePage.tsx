@@ -23,7 +23,7 @@ const CulturePage: React.FC = () => (
         custom={0}
         variants={fadeUp}
       >
-        Mission
+        Our Mission
       </motion.h1>
 
       <motion.div

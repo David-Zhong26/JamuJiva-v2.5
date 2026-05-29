@@ -168,7 +168,7 @@ const WhyJivaSection: React.FC = () => {
             src={artworkImg}
             alt="Jamu Jiva artwork"
             style={{ x: artworkX, opacity: artworkOpacity }}
-            className="w-full max-w-sm sm:max-w-md object-contain will-change-transform"
+            className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl object-contain will-change-transform"
           />
         </div>
       </div>
