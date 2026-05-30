@@ -131,7 +131,7 @@ const WhyJivaSection: React.FC = () => {
       id="story"
       className="overflow-hidden bg-[#F5E8CA] flex items-center px-5 py-10 sm:px-8 md:px-16 md:py-14 lg:px-24"
     >
-      <div className="mx-auto grid max-w-6xl items-center gap-8 md:gap-12 lg:grid-cols-[1fr_minmax(0,1fr)] lg:gap-16">
+      <div className="mx-auto grid max-w-6xl translate-x-3 items-center gap-8 sm:translate-x-4 md:translate-x-6 md:gap-12 lg:grid-cols-[1fr_minmax(0,1fr)] lg:translate-x-8 lg:gap-16">
         <div className="max-w-xl">
           <h2 className="font-serif text-3xl sm:text-4xl md:text-6xl font-black text-[#2D4F3E] leading-tight mb-4 md:mb-6">
             Why <span className="text-[#F47C3E]">Jiva?</span>

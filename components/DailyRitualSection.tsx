@@ -18,7 +18,7 @@ const DailyRitualSection: React.FC = () => {
       />
 
       <div className="relative z-10 mx-auto max-w-6xl">
-        <div className="grid items-center gap-8 md:gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-14">
+        <div className="grid translate-x-3 items-center gap-8 sm:translate-x-4 md:translate-x-6 md:gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:translate-x-8 lg:gap-14">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -38,9 +38,9 @@ const DailyRitualSection: React.FC = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.55, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-            className="flex min-h-[180px] items-center justify-center lg:min-h-[360px] lg:pl-10 xl:pl-16"
+            className="flex min-h-[180px] items-center justify-center lg:min-h-[360px] lg:pl-4 xl:pl-8"
           >
-            <h2 className="translate-x-4 font-serif text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.08] tracking-tight text-[#2D4F3E] lg:translate-x-8">
+            <h2 className="font-serif text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.08] tracking-tight text-[#2D4F3E] lg:-translate-x-2">
               Coming soon.
             </h2>
           </motion.div>
