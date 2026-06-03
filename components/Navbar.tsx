@@ -1,14 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useMailingList } from '../contexts/MailingListContext';
 import logoTransparent from '../materials/jamu jiva logo1.png';
-
-const CULTURE_LINKS = [
-  { label: '30 Days Ritual', to: '/ritual' },
-  { label: 'About Us', to: '/culture' },
-];
 
 const Navbar: React.FC = () => {
   const location = useLocation();
@@ -21,31 +16,7 @@ const Navbar: React.FC = () => {
 
   const [hideNav, setHideNav] = useState(false);
   const [pastProduct, setPastProduct] = useState(false);
-  const [cultureOpen, setCultureOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileCultureOpen, setMobileCultureOpen] = useState(false);
-  const cultureCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const clearCultureTimer = () => {
-    if (cultureCloseTimer.current) {
-      clearTimeout(cultureCloseTimer.current);
-      cultureCloseTimer.current = null;
-    }
-  };
-
-  const openCultureMenu = () => {
-    clearCultureTimer();
-    setCultureOpen(true);
-  };
-
-  const scheduleCloseCultureMenu = () => {
-    clearCultureTimer();
-    cultureCloseTimer.current = setTimeout(() => setCultureOpen(false), 140);
-  };
-
-  useEffect(() => {
-    return () => clearCultureTimer();
-  }, []);
 
   useEffect(() => {
     if (!isHome) {
@@ -82,9 +53,7 @@ const Navbar: React.FC = () => {
   }, [mobileOpen]);
 
   const closeAll = () => {
-    setCultureOpen(false);
     setMobileOpen(false);
-    setMobileCultureOpen(false);
   };
 
   const linkClassHero =
@@ -128,67 +97,23 @@ const Navbar: React.FC = () => {
 
           <div className="ml-auto flex items-center gap-4 md:gap-10">
             <div
-              className={`hidden md:flex items-center gap-10`}
+              className="hidden md:flex items-center gap-10"
               style={{ color: isHome && !pastProduct ? '#FFFFFF' : '#2D4F3E' }}
             >
               {isHome ? (
                 <>
-                  <div className="flex items-center gap-10">
-                    <Link to="/shop" className={linkClassHero} onClick={closeAll}>
-                      Shop All
-                    </Link>
-                    <Link to="/merch" className={linkClassHero} onClick={closeAll}>
-                      Merch
-                    </Link>
-                  </div>
-                  <div
-                    className="relative"
-                    onMouseEnter={openCultureMenu}
-                    onMouseLeave={scheduleCloseCultureMenu}
-                  >
-                    <button
-                      type="button"
-                      aria-expanded={cultureOpen}
-                      aria-haspopup="true"
-                      className="inline-flex cursor-default items-center gap-1 bg-transparent font-bold text-sm uppercase tracking-widest transition-colors hover:text-[#F47C3E]"
-                    >
-                      <span className="inline-flex items-center gap-1">
-                        Culture
-                        <ChevronDown
-                          className={`h-3 w-3 shrink-0 transition-transform ${cultureOpen ? 'rotate-180' : ''}`}
-                        />
-                      </span>
-                    </button>
-                    <AnimatePresence>
-                      {cultureOpen ? (
-                        <motion.div
-                          initial={{ opacity: 0, y: -4 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -4 }}
-                          transition={{ duration: 0.18, ease: 'easeOut' }}
-                          className="absolute right-0 top-full z-[60] mt-2 min-w-[13rem] rounded-lg border border-[#2D4F3E] bg-[#F5E8CA] py-2 shadow-[0_14px_40px_rgba(45,79,62,0.12)]"
-                          onMouseEnter={openCultureMenu}
-                          onMouseLeave={scheduleCloseCultureMenu}
-                        >
-                          {CULTURE_LINKS.map((item) => (
-                            <Link
-                              key={item.to}
-                              to={item.to}
-                              onClick={closeAll}
-                              className="block px-5 py-2.5 font-bold text-xs uppercase tracking-widest text-[#2D4F3E] transition-colors hover:bg-[#F9D067]/45 hover:text-[#1e3d30]"
-                            >
-                              {item.label}
-                            </Link>
-                          ))}
-                        </motion.div>
-                      ) : null}
-                    </AnimatePresence>
-                  </div>
-                  <div>
-                    <Link to="/journal" className={linkClassHero} onClick={closeAll}>
-                      Jiva Journal
-                    </Link>
-                  </div>
+                  <Link to="/shop" className={linkClassHero} onClick={closeAll}>
+                    Shop All
+                  </Link>
+                  <Link to="/merch" className={linkClassHero} onClick={closeAll}>
+                    Merch
+                  </Link>
+                  <Link to="/culture" className={linkClassHero} onClick={closeAll}>
+                    About Us
+                  </Link>
+                  <Link to="/journal" className={linkClassHero} onClick={closeAll}>
+                    Jiva Journal
+                  </Link>
                 </>
               ) : (
                 <>
@@ -198,47 +123,9 @@ const Navbar: React.FC = () => {
                   <Link to="/merch" className={linkClassSolid} onClick={closeAll}>
                     Merch
                   </Link>
-                  <div
-                    className="relative"
-                    onMouseEnter={openCultureMenu}
-                    onMouseLeave={scheduleCloseCultureMenu}
-                  >
-                    <button
-                      type="button"
-                      aria-expanded={cultureOpen}
-                      aria-haspopup="true"
-                      className="inline-flex cursor-default items-center gap-1 bg-transparent font-bold text-sm uppercase tracking-widest text-[#2D4F3E] transition-colors hover:text-[#F47C3E]"
-                    >
-                      Culture
-                      <ChevronDown
-                        className={`h-3 w-3 shrink-0 transition-transform ${cultureOpen ? 'rotate-180' : ''}`}
-                      />
-                    </button>
-                    <AnimatePresence>
-                      {cultureOpen ? (
-                        <motion.div
-                          initial={{ opacity: 0, y: -4 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -4 }}
-                          transition={{ duration: 0.18, ease: 'easeOut' }}
-                          className="absolute right-0 top-full z-[60] mt-2 min-w-[13rem] rounded-lg border border-[#2D4F3E] bg-[#F5E8CA] py-2 shadow-[0_14px_40px_rgba(45,79,62,0.12)]"
-                          onMouseEnter={openCultureMenu}
-                          onMouseLeave={scheduleCloseCultureMenu}
-                        >
-                          {CULTURE_LINKS.map((item) => (
-                            <Link
-                              key={item.to}
-                              to={item.to}
-                              onClick={closeAll}
-                              className="block px-5 py-2.5 font-bold text-xs uppercase tracking-widest text-[#2D4F3E] transition-colors hover:bg-[#F9D067]/45 hover:text-[#1e3d30]"
-                            >
-                              {item.label}
-                            </Link>
-                          ))}
-                        </motion.div>
-                      ) : null}
-                    </AnimatePresence>
-                  </div>
+                  <Link to="/culture" className={linkClassSolid} onClick={closeAll}>
+                    About Us
+                  </Link>
                   <Link to="/journal" className={linkClassSolid} onClick={closeAll}>
                     Jiva Journal
                   </Link>
@@ -336,28 +223,9 @@ const Navbar: React.FC = () => {
                 <Link to="/merch" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
                   Merch
                 </Link>
-                <button
-                  type="button"
-                  onClick={() => setMobileCultureOpen((v) => !v)}
-                  className="flex w-full items-center justify-between rounded-lg py-3 text-left hover:bg-[#F9D067]/35"
-                >
-                  Culture
-                  <ChevronDown className={`h-4 w-4 transition-transform ${mobileCultureOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {mobileCultureOpen ? (
-                  <div className="ml-2 border-l border-[#2D4F3E]/15 pl-3">
-                    {CULTURE_LINKS.map((item) => (
-                      <Link
-                        key={item.to}
-                        to={item.to}
-                        onClick={closeAll}
-                        className="block py-2.5 text-[0.7rem] text-[#2D4F3E]/90 hover:text-[#F47C3E]"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                ) : null}
+                <Link to="/culture" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
+                  About Us
+                </Link>
                 <Link to="/journal" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
                   Jiva Journal
                 </Link>

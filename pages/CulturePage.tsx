@@ -93,6 +93,54 @@ const CulturePage: React.FC = () => (
 
     <hr className="mx-auto max-w-3xl border-[#2D4F3E]/10" />
 
+    {/* ——— The Culture Behind Jiva ——— */}
+    <section className="mx-auto max-w-3xl px-5 py-12 md:px-12 md:py-20">
+      <motion.h2
+        className="font-serif text-3xl sm:text-4xl md:text-5xl font-black text-[#2D4F3E] leading-tight mb-6 md:mb-8"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        custom={0}
+        variants={fadeUp}
+      >
+        The Culture Behind <span className="text-[#F47C3E]">Jiva</span>
+      </motion.h2>
+
+      <motion.div
+        className="space-y-5 text-[#2D4F3E]/85 text-base leading-relaxed md:text-lg"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        custom={1}
+        variants={fadeUp}
+      >
+        <p>
+          Jiva is inspired by jamu, Indonesia&apos;s long-standing herbal wellness tradition made
+          with roots, spices, and botanicals. For generations, jamu has been connected to daily
+          care, balance, and natural wellness.
+        </p>
+        <p>
+          We created Jiva to honor that cultural foundation while making the experience lighter,
+          brighter, and easier to enjoy in a modern routine.
+        </p>
+        <p>
+          We do not claim to represent every version of jamu. Across Indonesia, jamu can vary by
+          region, family, ingredient, and purpose. Our approach is inspired by the spirit of jamu:
+          natural ingredients, intentional care, and everyday wellness.
+        </p>
+        <p>
+          From there, we build our own recipes with a smoother and more refreshing taste for
+          today&apos;s wellness drinkers. Our goal is not to replace traditional jamu, but to
+          introduce more people to the culture behind it in a respectful and approachable way.
+        </p>
+        <p>
+          Jiva is rooted in tradition, but made for the way we live today.
+        </p>
+      </motion.div>
+    </section>
+
+    <hr className="mx-auto max-w-3xl border-[#2D4F3E]/10" />
+
     {/* ——— Final CTA ——— */}
     <section className="mx-auto max-w-3xl px-5 py-16 text-center md:px-12 md:py-24">
       <motion.div
