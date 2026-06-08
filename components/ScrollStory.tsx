@@ -54,7 +54,7 @@ const ProductRevealSection: React.FC = () => {
           className="pointer-events-none absolute left-1/2 top-[38%] z-0 h-[50vh] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:h-[58vh] md:top-1/2 md:h-[95vh]"
         />
         <div
-          className="pointer-events-none absolute right-5 top-[max(1.25rem,env(safe-area-inset-top))] z-20 flex items-center gap-1.5 whitespace-nowrap text-[0.62rem] font-medium uppercase tracking-widest md:hidden"
+          className="pointer-events-none absolute right-5 top-[max(2.75rem,calc(env(safe-area-inset-top)+1.5rem))] z-20 flex items-center gap-1.5 whitespace-nowrap text-[0.62rem] font-medium uppercase tracking-widest md:hidden"
           style={{ color: flavor.bodyColor }}
           aria-hidden
         >
@@ -66,7 +66,11 @@ const ProductRevealSection: React.FC = () => {
             <ChevronDown className="h-3.5 w-3.5" />
           </motion.div>
         </div>
-        <div className="relative z-10 grid w-full gap-6 md:grid-cols-2 md:items-center md:gap-8">
+        <div
+          className={`relative z-10 grid w-full gap-6 md:grid-cols-2 md:items-center md:gap-8 md:pl-0${
+            flavor.slug === 'spiced-ivory' ? ' pl-6' : flavor.slug === 'bali-gold' ? ' pl-4' : ''
+          }`}
+        >
           <div className="text-left">
             <h2
               className="font-serif text-4xl font-black leading-[0.9] sm:text-5xl md:text-7xl"

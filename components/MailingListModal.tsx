@@ -159,10 +159,10 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
                   You&apos;re in
                 </span>
                 <h3 className="font-serif text-3xl font-black leading-tight text-[#2D4F3E]">
-                  {firstName.trim() ? `Thanks, ${firstName.trim()}.` : "You're on the list."}
+                  {firstName.trim() ? `Thanks, ${firstName.trim()}!` : "You're on the list!"}
                 </h3>
                 <p className="mt-4 text-base leading-relaxed text-[#2D4F3E]/75">
-                  We&apos;ll let you know when the next product drop is ready.
+                  We&apos;ll let you know when the next product drop is ready!
                 </p>
                 <button
                   type="button"
