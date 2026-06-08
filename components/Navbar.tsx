@@ -11,8 +11,8 @@ const Navbar: React.FC = () => {
   const { openMailingList } = useMailingList();
 
   const { scrollY } = useScroll();
-  const logoHeight = useTransform(scrollY, [0, 80], [110, 58]);
-  const logoOffsetY = useTransform(scrollY, [0, 80], [16, 0]);
+  const logoHeight = useTransform(scrollY, [0, 80], [132, 72]);
+  const logoOffsetY = useTransform(scrollY, [0, 80], [18, 0]);
 
   const [hideNav, setHideNav] = useState(false);
   const [pastProduct, setPastProduct] = useState(false);
@@ -76,7 +76,7 @@ const Navbar: React.FC = () => {
     >
       <motion.div style={shellStyle} className={`${shellClass} ${!isHome || pastProduct ? 'border-b border-[#2D4F3E]/10' : ''}`}>
         <div className="flex items-center justify-between gap-6">
-          <Link to="/" onClick={closeAll} className="relative shrink-0 flex items-center h-[52px] md:h-[70px]">
+          <Link to="/" onClick={closeAll} className="relative shrink-0 flex items-center h-[58px] md:h-[88px]">
             {isHome ? (
               <motion.img
                 src={logoTransparent}
@@ -89,7 +89,7 @@ const Navbar: React.FC = () => {
               <img
                 src={logoTransparent}
                 alt="Jamu Jiva"
-                className="h-[70px] w-auto"
+                className="h-[88px] w-auto"
                 decoding="async"
               />
             )}
