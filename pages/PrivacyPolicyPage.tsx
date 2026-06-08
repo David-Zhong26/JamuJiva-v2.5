@@ -9,6 +9,7 @@ type ContentBlock =
 type PrivacySection = {
   id: string;
   title: string;
+  inNav?: boolean;
   blocks: ContentBlock[];
 };
 
@@ -17,6 +18,8 @@ const { title, lastUpdated, sections } = privacyContent as {
   lastUpdated: string;
   sections: PrivacySection[];
 };
+
+const navSections = sections.filter((section) => section.inNav);
 
 const renderInline = (text: string, keyPrefix: string) => {
   const parts = text.split(/(https?:\/\/[^\s)]+|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g);
@@ -86,7 +89,7 @@ const PrivacyPolicyPage: React.FC = () => (
       <div className="lg:grid lg:grid-cols-[220px_minmax(0,680px)] lg:justify-center lg:gap-12 xl:grid-cols-[240px_minmax(0,680px)] xl:gap-16">
         <aside className="hidden lg:block">
           <div className="sticky top-28 pt-2">
-            <TableOfContents sections={sections} />
+            <TableOfContents sections={navSections} />
           </div>
         </aside>
 
@@ -112,7 +115,7 @@ const PrivacyPolicyPage: React.FC = () => (
               <option value="" disabled>
                 Select a section
               </option>
-              {sections.map((section) => (
+              {navSections.map((section) => (
                 <option key={section.id} value={section.id}>
                   {section.title}
                 </option>

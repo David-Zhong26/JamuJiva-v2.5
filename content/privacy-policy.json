@@ -25,6 +25,7 @@
     {
       "id": "personal-information-collected",
       "title": "Personal Information Collected",
+      "inNav": true,
       "blocks": [
         {
           "type": "paragraph",
@@ -45,6 +46,7 @@
     {
       "id": "cookies-and-tracking",
       "title": "Cookies and Tracking",
+      "inNav": true,
       "blocks": [
         {
           "type": "paragraph",
@@ -90,6 +92,7 @@
     {
       "id": "marketing-communications",
       "title": "Marketing Communications",
+      "inNav": true,
       "blocks": [
         {
           "type": "paragraph",
@@ -100,6 +103,7 @@
     {
       "id": "contact-us",
       "title": "Contact Us",
+      "inNav": true,
       "blocks": [
         {
           "type": "paragraph",

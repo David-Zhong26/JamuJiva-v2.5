@@ -78,6 +78,14 @@ const getSectionLabel = (block: TermBlock): string | null => {
   return block.text;
 };
 
+const NAV_SECTION_IDS = new Set([
+  'access-to-the-site',
+  'disclaimers',
+  'limitation-on-liability',
+  'term-and-termination',
+  'general',
+]);
+
 const getSections = (bodyBlocks: TermBlock[]): SectionNav[] =>
   bodyBlocks.flatMap((block, index) => {
     const label = getSectionLabel(block);
@@ -116,6 +124,10 @@ const TermsPage: React.FC = () => {
   const bodyBlocks = blocks.slice(2);
 
   const sections = useMemo(() => getSections(bodyBlocks), [bodyBlocks]);
+  const navSections = useMemo(
+    () => sections.filter((section) => NAV_SECTION_IDS.has(section.id)),
+    [sections],
+  );
   const sectionByIndex = useMemo(
     () => new Map(sections.map((section) => [section.index, section])),
     [sections],
@@ -127,7 +139,7 @@ const TermsPage: React.FC = () => {
         <div className="lg:grid lg:grid-cols-[220px_minmax(0,680px)] lg:justify-center lg:gap-12 xl:grid-cols-[240px_minmax(0,680px)] xl:gap-16">
           <aside className="hidden lg:block">
             <div className="sticky top-28 pt-2">
-              <TableOfContents sections={sections} />
+              <TableOfContents sections={navSections} />
             </div>
           </aside>
 
@@ -150,7 +162,7 @@ const TermsPage: React.FC = () => {
                 <option value="" disabled>
                   Select a section
                 </option>
-                {sections.map((section) => (
+                {navSections.map((section) => (
                   <option key={section.id} value={section.id}>
                     {section.label}
                   </option>
