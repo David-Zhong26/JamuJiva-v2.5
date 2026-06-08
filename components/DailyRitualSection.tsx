@@ -6,17 +6,8 @@ const DailyRitualSection: React.FC = () => {
   return (
     <section
       id="ritual"
-      className="relative overflow-hidden bg-gradient-to-b from-[#F5E8CA] via-[#F3DFA8]/90 to-[#F5E8CA] px-5 py-12 md:px-10 md:py-20"
+      className="relative overflow-hidden bg-[#F5E8CA] px-5 py-12 md:px-10 md:py-20"
     >
-      <div
-        className="pointer-events-none absolute left-[6%] top-[18%] h-[min(42vw,320px)] w-[min(42vw,320px)] rounded-full bg-[#2D4F3E]/14 blur-[72px]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute -right-[6%] bottom-[12%] h-72 w-72 rounded-full bg-[#E5C76B]/28 blur-[72px]"
-        aria-hidden
-      />
-
       <div className="relative z-10 mx-auto max-w-6xl">
         <div className="grid translate-x-3 items-center gap-8 sm:translate-x-4 md:translate-x-6 md:gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:translate-x-8 lg:gap-14">
           <motion.div
