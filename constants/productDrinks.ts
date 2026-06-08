@@ -12,7 +12,7 @@ export const PRODUCT_DRINKS = [
     shortLabel: 'Golden Glow',
     eyebrow: 'Turmeric rooted daily glow',
     description:
-      'A bright blend of golden turmeric and tamarind with a zesty lime finish and a touch of salt.',
+      'A bright blend of turmeric and tamarind with a zesty lime finish and a touch of salt.',
     word: 'gold',
     background: 'from-[#EB9C35] via-[#F0B154] to-[#E7A243]',
     accent: '#8A4F12',
