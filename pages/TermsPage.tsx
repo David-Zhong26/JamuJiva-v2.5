@@ -98,14 +98,6 @@ const TermsPage: React.FC = () => {
             }
 
             if (block.style === null) {
-              if (block.text === 'Address:') {
-                return (
-                  <p key={key} className="pt-2 font-bold">
-                    {block.text}
-                  </p>
-                );
-              }
-
               return <p key={key}>{renderInline(block.text, key)}</p>;
             }
 
@@ -124,12 +116,12 @@ const TermsPage: React.FC = () => {
               const split = splitL1Paragraph(block.text);
               if (split) {
                 return (
-                  <p key={key} className="pt-6">
-                    <span className="font-serif text-xl font-bold text-[#2D4F3E] md:text-2xl">
-                      {split.title}{' '}
-                    </span>
-                    <span className="font-normal">{renderInline(split.body, key)}</span>
-                  </p>
+                  <div key={key} className="pt-6">
+                    <h2 className="font-serif text-xl font-bold text-[#2D4F3E] md:text-2xl">
+                      {split.title}
+                    </h2>
+                    <p className="mt-4">{renderInline(split.body, key)}</p>
+                  </div>
                 );
               }
             }
@@ -146,11 +138,19 @@ const TermsPage: React.FC = () => {
                 );
               }
 
-              if (block.text === 'Contact Information:') {
+              if (block.text === 'Contact Us' || block.text === 'Contact Information:') {
                 return (
-                  <p key={key} className="pt-4 font-bold">
-                    {block.text}
-                  </p>
+                  <div key={key} className="pt-6">
+                    <h2 className="mb-4 font-serif text-xl font-bold text-[#2D4F3E] md:text-2xl">
+                      Contact Us
+                    </h2>
+                    <p>
+                      {renderInline(
+                        'If you have any questions regarding these Terms or the practices of this Site, please contact us by sending an email to jamujiva@gmail.com.',
+                        key,
+                      )}
+                    </p>
+                  </div>
                 );
               }
 

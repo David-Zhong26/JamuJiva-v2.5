@@ -12,7 +12,7 @@ const Footer: React.FC = () => {
             <img src={logo} alt="Jamu Jiva" className="h-[88px] w-auto" decoding="async" />
           </Link>
           <p className="text-[#2D4F3E]/60 font-medium">
-            Bringing the beauty and medicinal properties of Indonesian Jamu to a global scale. Food is medicine.
+            Rooted in Indonesian Jamu tradition, crafted for modern wellness.
           </p>
         </div>
 

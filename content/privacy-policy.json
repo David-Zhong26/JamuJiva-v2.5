@@ -1,81 +1,67 @@
 {
   "title": "Privacy Policy",
   "lastUpdated": "Last updated June 8, 2026",
+  "intro": "This Privacy Policy describes how Jiva Drinks LLC (“Jiva,” “Company,” “we,” “us,” or “our”) collects, uses, and shares information when you visit https://www.jivalivin.com/ (the “Site”), submit information through the Site, or interact with us online.",
   "sections": [
-    {
-      "id": "service-description",
-      "title": "Service Description",
-      "blocks": [
-        {
-          "type": "paragraph",
-          "text": "Through the Site, you may learn about Jiva Drinks LLC, its beverage products and brand, submit an email address through an interest form to receive updates, and, if made available in the future, create an account and purchase products through the Site."
-        }
-      ]
-    },
-    {
-      "id": "terms-of-use",
-      "title": "Terms of Use",
-      "blocks": [
-        {
-          "type": "paragraph",
-          "text": "Your use of the Site is also governed by our Terms of Use, available at https://www.jivalivin.com/terms-of-use."
-        }
-      ]
-    },
-    {
-      "id": "personal-information-collected",
-      "title": "Personal Information Collected",
-      "inNav": true,
-      "blocks": [
-        {
-          "type": "paragraph",
-          "text": "We may collect your email address, which you submit to us through our interest form or any account registration process on the Site. If we offer online purchases in the future, Personal Information may also include your name, shipping address, billing address, order details, and other information needed to process and fulfill purchases. We do not collect sensitive personal information such as date of birth, marital status, or government identification through the current interest form."
-        }
-      ]
-    },
     {
       "id": "information-you-provide",
       "title": "Information You Provide",
       "blocks": [
         {
           "type": "paragraph",
-          "text": "To use the current Service, you do not need to submit any Personal Information other than your email address if you choose to complete the interest form. To use the Service thereafter, you do not need to submit further Personal Information at this time. If we later add account registration or online purchasing, we may ask you to provide additional Personal Information, such as your name, email address, shipping address, billing address, order information, and account login information."
+          "text": "When you join our waitlist or contact us, we collect the information you submit, such as your email address and optional first name. We do not collect sensitive personal information such as date of birth, marital status, or government identification through the current interest form."
         }
       ]
     },
     {
-      "id": "cookies-and-tracking",
-      "title": "Cookies and Tracking",
+      "id": "information-collected-automatically",
+      "title": "Information Collected Automatically",
       "inNav": true,
       "blocks": [
         {
           "type": "paragraph",
-          "text": "We may use cookies and similar technologies to collect information about your activity on the Site, including:"
-        },
-        {
-          "type": "list",
-          "items": [
-            "pages viewed on the Site",
-            "time and date of visits",
-            "browser and device type",
-            "referring URL",
-            "general site usage and click activity",
-            "whether a user has previously visited the Site or submitted a form"
-          ]
-        },
-        {
-          "type": "paragraph",
-          "text": "For example, we may store a persistent cookie to remember whether you have previously visited the Site or to help measure aggregate site traffic."
+          "text": "When you visit the Site, we or our website, hosting, analytics, or form providers may automatically collect certain information, such as your browser type, device type, IP address, pages viewed, referring URL, general site usage, and the date and time of your visit. We use this information to help operate the Site, understand Site traffic, improve user experience, and protect the Site from misuse."
         }
       ]
     },
     {
-      "id": "account-registration",
-      "title": "Account Registration",
+      "id": "how-we-use-your-information",
+      "title": "How We Use Your Information",
+      "inNav": true,
       "blocks": [
         {
           "type": "paragraph",
-          "text": "At this time, users do not need to create an account or profile to use the Site. If we later offer account creation or online purchases, users may be asked to register by entering an email address, creating login credentials, and providing information necessary to process purchases. By registering, you authorize us to collect, store, and use your email address and related account information in accordance with this Privacy Policy."
+          "text": "We may use the information we collect to operate and improve the Site, respond to your requests, send updates or marketing communications if you choose to join our list, understand Site traffic and performance, prevent fraud or misuse, comply with legal obligations, and, if online purchases become available in the future, process payments, fulfill orders, and provide customer support."
+        }
+      ]
+    },
+    {
+      "id": "information-sharing",
+      "title": "Information Sharing / Service Providers",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "We do not sell your Personal Information. We may share Personal Information with service providers that help us operate the Site, host forms, send email updates, analyze website traffic, process payments, fulfill orders, or comply with legal obligations."
+        }
+      ]
+    },
+    {
+      "id": "payment-information",
+      "title": "Payment Information",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "If we offer online purchases in the future, payments may be processed by third-party payment processors. We do not intend to store full credit or debit card numbers on our own servers."
+        }
+      ]
+    },
+    {
+      "id": "data-retention",
+      "title": "Data Retention",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "We keep Personal Information only for as long as reasonably necessary for the purposes described in this Privacy Policy, unless a longer retention period is required or permitted by law."
         }
       ]
     },
@@ -90,13 +76,23 @@
       ]
     },
     {
-      "id": "marketing-communications",
-      "title": "Marketing Communications",
+      "id": "your-choices",
+      "title": "Your Choices",
       "inNav": true,
       "blocks": [
         {
           "type": "paragraph",
-          "text": "You can also opt out of marketing communications by contacting us at jamujiva@gmail.com. Please note that even if you opt out of promotional communications, we may continue to send you administrative emails, including, for example, periodic updates to our Privacy Policy."
+          "text": "You may opt out of marketing emails by contacting us at jamujiva@gmail.com. You may also contact us to request access, correction, or deletion of your Personal Information."
+        }
+      ]
+    },
+    {
+      "id": "changes-to-this-privacy-policy",
+      "title": "Changes to This Privacy Policy",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "We may update this Privacy Policy from time to time. The updated version will be posted on this page with a revised “Last updated” date."
         }
       ]
     },

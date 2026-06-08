@@ -13,9 +13,10 @@ type PrivacySection = {
   blocks: ContentBlock[];
 };
 
-const { title, lastUpdated, sections } = privacyContent as {
+const { title, lastUpdated, intro, sections } = privacyContent as {
   title: string;
   lastUpdated: string;
+  intro?: string;
   sections: PrivacySection[];
 };
 
@@ -72,6 +73,7 @@ const PrivacyPolicyPage: React.FC = () => (
       </header>
 
       <div className="space-y-10 text-sm leading-[1.7] text-[#2D4F3E] md:text-[15px]">
+        {intro ? <p>{renderInline(intro, 'intro')}</p> : null}
         {sections.map((section) => (
           <section key={section.id}>
             <h2 className="mb-4 font-serif text-xl font-bold text-[#2D4F3E] md:text-2xl">
