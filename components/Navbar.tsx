@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useMailingList } from '../contexts/MailingListContext';
-import logoTransparent from '../materials/jamu jiva logo1.png';
+import logoTransparent from '../materials/jamu jiva logo1 copy.png';
 
 const PAGE_BG = '#F5E8CA';
 
@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
   const { openMailingList } = useMailingList();
 
   const { scrollY } = useScroll();
-  const logoHeight = useTransform(scrollY, [0, 80], [158, 92]);
+  const logoHeight = useTransform(scrollY, [0, 80], [72, 44]);
 
   const [hideNav, setHideNav] = useState(false);
   const [pastProduct, setPastProduct] = useState(false);
@@ -77,7 +77,7 @@ const Navbar: React.FC = () => {
         <Link
           to="/"
           onClick={closeAll}
-          className="absolute left-4 top-0 z-10 md:left-10"
+          className="absolute left-5 top-3 z-10 md:left-12"
         >
           {isHome ? (
             <motion.img
@@ -91,7 +91,7 @@ const Navbar: React.FC = () => {
             <img
               src={logoTransparent}
               alt="Jamu Jiva"
-              className="h-[88px] w-auto"
+              className="h-[44px] w-auto"
               decoding="async"
             />
           )}
