@@ -6,6 +6,7 @@ import { useMailingList } from '../contexts/MailingListContext';
 import logoTransparent from '../materials/jamu jiva logo1 copy.png';
 
 const PAGE_BG = '#F5E8CA';
+const LOGO_SHRINK_SCROLL = 80;
 
 const Navbar: React.FC = () => {
   const location = useLocation();
@@ -13,13 +14,28 @@ const Navbar: React.FC = () => {
   const { openMailingList } = useMailingList();
 
   const { scrollY } = useScroll();
-  const logoHeight = useTransform(scrollY, [0, 80], [72, 44]);
+  const logoHeight = useTransform(scrollY, [0, LOGO_SHRINK_SCROLL], [72, 44]);
+  const navSolidFade = useTransform(scrollY, [0, LOGO_SHRINK_SCROLL], [0, 1]);
+  const shellBackgroundColor = useTransform(
+    navSolidFade,
+    (v) => `rgba(245, 232, 202, ${v})`
+  );
+  const navLinkColor = useTransform(scrollY, [0, LOGO_SHRINK_SCROLL], ['#FFFFFF', '#2D4F3E']);
+  const menuBorderColor = useTransform(scrollY, [0, LOGO_SHRINK_SCROLL], [
+    'rgba(255, 255, 255, 0.45)',
+    'rgba(45, 79, 62, 0.25)',
+  ]);
+  const ctaBackgroundColor = useTransform(scrollY, [0, LOGO_SHRINK_SCROLL], [
+    'rgba(255, 255, 255, 0.12)',
+    'rgb(45, 79, 62)',
+  ]);
+  const ctaBorderColor = useTransform(scrollY, [0, LOGO_SHRINK_SCROLL], [
+    'rgba(255, 255, 255, 0.45)',
+    'rgb(45, 79, 62)',
+  ]);
 
   const [hideNav, setHideNav] = useState(false);
-  const [pastProduct, setPastProduct] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const isSolidNav = !isHome || pastProduct;
 
   useEffect(() => {
     if (!isHome) {
@@ -32,13 +48,11 @@ const Navbar: React.FC = () => {
       const el = document.getElementById('benefits');
       if (!el) {
         setHideNav(sy > halfHero);
-        setPastProduct(false);
         return;
       }
       const sectionHeight = el.offsetHeight;
       const scrolledInto = sy - el.offsetTop;
       const past = scrolledInto >= sectionHeight * 0.75;
-      setPastProduct(past);
       setHideNav(sy > halfHero && !past);
     };
     check();
@@ -59,12 +73,8 @@ const Navbar: React.FC = () => {
     setMobileOpen(false);
   };
 
-  const linkClassHero =
+  const linkClass =
     'font-bold text-sm uppercase tracking-widest transition-colors hover:text-[#F47C3E]';
-  const linkClassSolid =
-    'font-bold text-sm uppercase tracking-widest text-[#2D4F3E] transition-colors hover:text-[#F47C3E]';
-
-  const shellStyle = isSolidNav ? { backgroundColor: PAGE_BG } : { backgroundColor: 'transparent' };
 
   return (
     <motion.nav
@@ -73,11 +83,14 @@ const Navbar: React.FC = () => {
       transition={{ duration: 0.35, ease: 'easeInOut' }}
       className="fixed top-0 right-0 z-50 w-full"
     >
-      <motion.div style={shellStyle} className="relative w-full transition-colors">
+      <motion.div
+        style={isHome ? { backgroundColor: shellBackgroundColor } : { backgroundColor: PAGE_BG }}
+        className="relative w-full"
+      >
         <Link
           to="/"
           onClick={closeAll}
-          className="absolute left-5 top-3 z-10 md:left-12"
+          className="absolute left-5 top-4 z-10 md:left-12"
         >
           {isHome ? (
             <motion.img
@@ -98,51 +111,69 @@ const Navbar: React.FC = () => {
         </Link>
 
         <div className="relative flex min-h-11 items-center justify-end gap-4 px-4 py-3 md:min-h-[2.75rem] md:gap-10 md:px-10 md:py-4">
-          <div
+          <motion.div
             className="hidden h-10 items-center gap-10 md:flex"
-            style={{ color: isSolidNav ? '#2D4F3E' : '#FFFFFF' }}
+            style={{ color: isHome ? navLinkColor : '#2D4F3E' }}
           >
-            <Link to="/shop" className={isSolidNav ? linkClassSolid : linkClassHero} onClick={closeAll}>
+            <Link to="/shop" className={linkClass} onClick={closeAll}>
               Shop All
             </Link>
-            <Link to="/merch" className={isSolidNav ? linkClassSolid : linkClassHero} onClick={closeAll}>
+            <Link to="/merch" className={linkClass} onClick={closeAll}>
               Merch
             </Link>
-            <Link to="/culture" className={isSolidNav ? linkClassSolid : linkClassHero} onClick={closeAll}>
+            <Link to="/culture" className={linkClass} onClick={closeAll}>
               About Us
             </Link>
-            <Link to="/journal" className={isSolidNav ? linkClassSolid : linkClassHero} onClick={closeAll}>
+            <Link to="/journal" className={linkClass} onClick={closeAll}>
               Jiva Journal
             </Link>
-          </div>
+          </motion.div>
 
-          <button
-            type="button"
-            className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border md:hidden ${
-              isSolidNav
-                ? 'border-[#2D4F3E]/25 text-[#2D4F3E]'
-                : 'border-white/45 bg-transparent text-white'
-            }`}
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-            onClick={() => setMobileOpen((v) => !v)}
-          >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+          {isHome ? (
+            <motion.button
+              type="button"
+              style={{ borderColor: menuBorderColor, color: navLinkColor }}
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-transparent md:hidden"
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              onClick={() => setMobileOpen((v) => !v)}
+            >
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </motion.button>
+          ) : (
+            <button
+              type="button"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#2D4F3E]/25 text-[#2D4F3E] md:hidden"
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              onClick={() => setMobileOpen((v) => !v)}
+            >
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
+          )}
 
-          <button
-            type="button"
-            onClick={() => {
-              closeAll();
-              openMailingList();
-            }}
-            className={`hidden shrink-0 rounded-full border px-6 py-2.5 font-black text-sm transition-all hover:border-[#F47C3E] hover:bg-[#F47C3E] md:inline-flex md:items-center md:justify-center ${
-              isSolidNav
-                ? 'border-[#2D4F3E] bg-[#2D4F3E] text-white'
-                : 'border-white/45 bg-white/12 text-white'
-            }`}
-          >
-            JOIN THE LIST
-          </button>
+          {isHome ? (
+            <motion.button
+              type="button"
+              onClick={() => {
+                closeAll();
+                openMailingList();
+              }}
+              style={{ backgroundColor: ctaBackgroundColor, borderColor: ctaBorderColor }}
+              className="hidden shrink-0 rounded-full border px-6 py-2.5 font-black text-sm text-white transition-all hover:border-[#F47C3E] hover:bg-[#F47C3E] md:inline-flex md:items-center md:justify-center"
+            >
+              JOIN THE LIST
+            </motion.button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                closeAll();
+                openMailingList();
+              }}
+              className="hidden shrink-0 rounded-full border border-[#2D4F3E] bg-[#2D4F3E] px-6 py-2.5 font-black text-sm text-white transition-all hover:border-[#F47C3E] hover:bg-[#F47C3E] md:inline-flex md:items-center md:justify-center"
+            >
+              JOIN THE LIST
+            </button>
+          )}
         </div>
       </motion.div>
 
