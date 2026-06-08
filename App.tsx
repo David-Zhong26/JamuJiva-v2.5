@@ -11,7 +11,6 @@ import RitualPage from './pages/RitualPage';
 import TermsPage from './pages/TermsPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import { MailingListProvider } from './contexts/MailingListContext';
-import { motion, useScroll, useSpring } from 'framer-motion';
 
 const MerchPlaceholder: React.FC = () => (
   <main className="flex min-h-screen items-center justify-center bg-[#F5E8CA] pt-28 pb-16">
@@ -23,22 +22,11 @@ const MerchPlaceholder: React.FC = () => (
 );
 
 const App: React.FC = () => {
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
-
   return (
     <BrowserRouter>
       <MailingListProvider>
         <HashScroll />
         <div className="relative">
-          <motion.div
-            className="fixed top-0 left-0 right-0 h-1 bg-[#F47C3E] z-[60] origin-left"
-            style={{ scaleX }}
-          />
           <Navbar />
           <main className="pt-0">
             <Routes>
