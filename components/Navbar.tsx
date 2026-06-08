@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useMailingList } from '../contexts/MailingListContext';
-import logoTransparent from '../materials/jamu jiva logo1 copy.png';
+import logoTransparent from '../materials/Jiva (8）.png';
 
 const PAGE_BG = '#F5E8CA';
 const LOGO_SHRINK_SCROLL = 80;

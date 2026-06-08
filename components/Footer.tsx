@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../materials/jamu jiva logo1 copy.png';
+import logo from '../materials/Jiva (8）.png';
 
 const Footer: React.FC = () => {
   return (
