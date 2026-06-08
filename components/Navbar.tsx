@@ -5,18 +5,21 @@ import { Menu, X } from 'lucide-react';
 import { useMailingList } from '../contexts/MailingListContext';
 import logoTransparent from '../materials/jamu jiva logo1.png';
 
+const PAGE_BG = '#F5E8CA';
+
 const Navbar: React.FC = () => {
   const location = useLocation();
   const isHome = location.pathname === '/';
   const { openMailingList } = useMailingList();
 
   const { scrollY } = useScroll();
-  const logoHeight = useTransform(scrollY, [0, 80], [132, 72]);
-  const logoOffsetY = useTransform(scrollY, [0, 80], [18, 0]);
+  const logoHeight = useTransform(scrollY, [0, 80], [158, 92]);
 
   const [hideNav, setHideNav] = useState(false);
   const [pastProduct, setPastProduct] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const isSolidNav = !isHome || pastProduct;
 
   useEffect(() => {
     if (!isHome) {
@@ -61,11 +64,7 @@ const Navbar: React.FC = () => {
   const linkClassSolid =
     'font-bold text-sm uppercase tracking-widest text-[#2D4F3E] transition-colors hover:text-[#F47C3E]';
 
-  const shellClass =
-    'w-full px-4 py-2 transition-colors backdrop-blur-[2px] md:px-10 md:py-4';
-  const shellStyle = isHome
-    ? { backgroundColor: pastProduct ? 'rgba(245, 232, 202, 0.96)' : 'transparent' }
-    : { backgroundColor: 'rgba(245, 242, 237, 0.97)' };
+  const shellStyle = isSolidNav ? { backgroundColor: PAGE_BG } : { backgroundColor: 'transparent' };
 
   return (
     <motion.nav
@@ -74,117 +73,76 @@ const Navbar: React.FC = () => {
       transition={{ duration: 0.35, ease: 'easeInOut' }}
       className="fixed top-0 right-0 z-50 w-full"
     >
-      <motion.div style={shellStyle} className={`${shellClass} ${!isHome || pastProduct ? 'border-b border-[#2D4F3E]/10' : ''}`}>
-        <div className="flex items-center justify-between gap-6">
-          <Link to="/" onClick={closeAll} className="relative shrink-0 flex items-center h-[58px] md:h-[88px]">
-            {isHome ? (
-              <motion.img
-                src={logoTransparent}
-                alt="Jamu Jiva"
-                style={{ height: logoHeight, y: logoOffsetY }}
-                className="w-auto origin-top-left"
-                decoding="async"
-              />
-            ) : (
-              <img
-                src={logoTransparent}
-                alt="Jamu Jiva"
-                className="h-[88px] w-auto"
-                decoding="async"
-              />
-            )}
-          </Link>
+      <motion.div style={shellStyle} className="relative w-full transition-colors">
+        <Link
+          to="/"
+          onClick={closeAll}
+          className="absolute left-4 top-0 z-10 md:left-10"
+        >
+          {isHome ? (
+            <motion.img
+              src={logoTransparent}
+              alt="Jamu Jiva"
+              style={{ height: logoHeight }}
+              className="w-auto origin-top-left"
+              decoding="async"
+            />
+          ) : (
+            <img
+              src={logoTransparent}
+              alt="Jamu Jiva"
+              className="h-[88px] w-auto"
+              decoding="async"
+            />
+          )}
+        </Link>
 
-          <div className="ml-auto flex items-center gap-4 md:gap-10">
-            <div
-              className="hidden md:flex items-center gap-10"
-              style={{ color: isHome && !pastProduct ? '#FFFFFF' : '#2D4F3E' }}
-            >
-              {isHome ? (
-                <>
-                  <Link to="/shop" className={linkClassHero} onClick={closeAll}>
-                    Shop All
-                  </Link>
-                  <Link to="/merch" className={linkClassHero} onClick={closeAll}>
-                    Merch
-                  </Link>
-                  <Link to="/culture" className={linkClassHero} onClick={closeAll}>
-                    About Us
-                  </Link>
-                  <Link to="/journal" className={linkClassHero} onClick={closeAll}>
-                    Jiva Journal
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link to="/shop" className={linkClassSolid} onClick={closeAll}>
-                    Shop All
-                  </Link>
-                  <Link to="/merch" className={linkClassSolid} onClick={closeAll}>
-                    Merch
-                  </Link>
-                  <Link to="/culture" className={linkClassSolid} onClick={closeAll}>
-                    About Us
-                  </Link>
-                  <Link to="/journal" className={linkClassSolid} onClick={closeAll}>
-                    Jiva Journal
-                  </Link>
-                </>
-              )}
-            </div>
-
-            {isHome ? (
-              <button
-                type="button"
-                className={`inline-flex h-10 w-10 items-center justify-center rounded-full border md:hidden ${
-                  pastProduct
-                    ? 'border-[#2D4F3E]/25 text-[#2D4F3E]'
-                    : 'border-white/45 text-white bg-transparent'
-                }`}
-                aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-                onClick={() => setMobileOpen((v) => !v)}
-              >
-                {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#2D4F3E]/25 text-[#2D4F3E] md:hidden"
-                aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-                onClick={() => setMobileOpen((v) => !v)}
-              >
-                {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </button>
-            )}
-
-            {isHome ? (
-              <button
-                type="button"
-                onClick={() => {
-                  closeAll();
-                  openMailingList();
-                }}
-                className={`hidden md:inline-flex items-center justify-center rounded-full border px-6 py-2.5 font-black text-sm transition-all hover:bg-[#F47C3E] hover:border-[#F47C3E] ${
-                  pastProduct
-                    ? 'border-[#2D4F3E] bg-[#2D4F3E] text-white'
-                    : 'border-white/45 bg-white/12 text-white'
-                }`}
-              >
-                JOIN THE LIST
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => {
-                  closeAll();
-                  openMailingList();
-                }}
-                className="hidden rounded-full border border-[#2D4F3E] bg-[#2D4F3E] px-6 py-2.5 font-black text-sm text-white transition-all hover:bg-[#F47C3E] hover:border-[#F47C3E] md:inline-flex md:items-center md:justify-center"
-              >
-                JOIN THE LIST
-              </button>
-            )}
+        <div className="relative flex min-h-11 items-center justify-end gap-4 px-4 py-3 md:min-h-[2.75rem] md:gap-10 md:px-10 md:py-4">
+          <div
+            className="hidden h-10 items-center gap-10 md:flex"
+            style={{ color: isSolidNav ? '#2D4F3E' : '#FFFFFF' }}
+          >
+            <Link to="/shop" className={isSolidNav ? linkClassSolid : linkClassHero} onClick={closeAll}>
+              Shop All
+            </Link>
+            <Link to="/merch" className={isSolidNav ? linkClassSolid : linkClassHero} onClick={closeAll}>
+              Merch
+            </Link>
+            <Link to="/culture" className={isSolidNav ? linkClassSolid : linkClassHero} onClick={closeAll}>
+              About Us
+            </Link>
+            <Link to="/journal" className={isSolidNav ? linkClassSolid : linkClassHero} onClick={closeAll}>
+              Jiva Journal
+            </Link>
           </div>
+
+          <button
+            type="button"
+            className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border md:hidden ${
+              isSolidNav
+                ? 'border-[#2D4F3E]/25 text-[#2D4F3E]'
+                : 'border-white/45 bg-transparent text-white'
+            }`}
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            onClick={() => setMobileOpen((v) => !v)}
+          >
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              closeAll();
+              openMailingList();
+            }}
+            className={`hidden shrink-0 rounded-full border px-6 py-2.5 font-black text-sm transition-all hover:border-[#F47C3E] hover:bg-[#F47C3E] md:inline-flex md:items-center md:justify-center ${
+              isSolidNav
+                ? 'border-[#2D4F3E] bg-[#2D4F3E] text-white'
+                : 'border-white/45 bg-white/12 text-white'
+            }`}
+          >
+            JOIN THE LIST
+          </button>
         </div>
       </motion.div>
 

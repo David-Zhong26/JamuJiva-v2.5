@@ -96,7 +96,7 @@ const ProductRevealSection: React.FC = () => {
   );
 
   return (
-    <section ref={sectionRef} id="benefits" className="relative bg-[#F5F2ED]" style={{ height: '220vh' }}>
+    <section ref={sectionRef} id="benefits" className="relative h-screen bg-[#F5F2ED]">
       <div className="sticky top-0 h-screen overflow-hidden">
         <motion.div style={{ width: gingerWidth }} className="absolute inset-y-0 left-0 overflow-hidden">
           <div className="absolute inset-y-0 left-0 w-screen">{renderFlavorLayer(goldenGlow)}</div>
@@ -191,7 +191,7 @@ const ScrollStory: React.FC = () => {
       {/* ——— Hero ——— */}
       <section
         id="hero"
-        className="relative min-h-screen flex flex-col justify-between overflow-hidden px-5 pb-10 pt-24 sm:px-8 md:px-12 md:pb-20 md:pt-28 lg:pl-32 lg:pr-20"
+        className="relative flex h-screen max-h-screen flex-col justify-end overflow-hidden px-5 pb-10 sm:px-8 md:px-12 md:pb-16 lg:pl-32 lg:pr-20"
       >
         <div className="absolute inset-0 z-0 bg-[#2D4F3E]" />
         <div className="absolute inset-0 z-0">
@@ -209,8 +209,8 @@ const ScrollStory: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-[#2D4F3E]/90 via-transparent to-black/20" />
         </div>
 
-        <div className="relative z-10 flex flex-col min-h-[calc(100vh-6rem)] justify-between pointer-events-none">
-          <div className="flex-1 flex flex-col justify-end gap-8 pb-4">
+        <div className="relative z-10 flex flex-col justify-end pointer-events-none">
+          <div className="flex flex-col justify-end gap-8 pb-4">
             <div>
               <h1 className="font-serif text-[clamp(1.75rem,5vw,4rem)] font-bold leading-tight text-white/95 tracking-tight">
                 DRINK THE <span className="text-[#E5C76B]">LIFE YOU DESERVE</span>
