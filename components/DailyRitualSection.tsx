@@ -9,7 +9,7 @@ const DailyRitualSection: React.FC = () => {
       className="relative overflow-hidden bg-[#F5E8CA] px-5 py-12 md:px-10 md:py-20"
     >
       <div className="relative z-10 mx-auto max-w-6xl">
-        <div className="grid translate-x-3 items-center gap-8 sm:translate-x-4 md:translate-x-6 md:gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:translate-x-8 lg:gap-14">
+        <div className="grid items-center gap-8 md:translate-x-6 md:gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:translate-x-8 lg:gap-14">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -31,7 +31,7 @@ const DailyRitualSection: React.FC = () => {
             transition={{ duration: 0.55, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
             className="flex min-h-[180px] items-center justify-center lg:min-h-[360px] lg:pl-4 xl:pl-8"
           >
-            <h2 className="font-serif text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.08] tracking-tight text-[#2D4F3E] lg:-translate-x-2">
+            <h2 className="text-center font-serif text-[clamp(2rem,4.5vw,3rem)] font-bold leading-[1.08] tracking-tight text-[#2D4F3E] lg:-translate-x-2 lg:text-left">
               Coming soon.
             </h2>
           </motion.div>

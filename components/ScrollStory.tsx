@@ -51,8 +51,21 @@ const ProductRevealSection: React.FC = () => {
         <img
           src={demoJivaBottle}
           alt={flavor.name}
-          className="pointer-events-none absolute left-1/2 top-1/2 z-0 h-[50vh] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:h-[58vh] md:h-[95vh]"
+          className="pointer-events-none absolute left-1/2 top-[38%] z-0 h-[50vh] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:h-[58vh] md:top-1/2 md:h-[95vh]"
         />
+        <div
+          className="pointer-events-none absolute right-5 top-[max(1.25rem,env(safe-area-inset-top))] z-20 flex items-center gap-1.5 whitespace-nowrap text-[0.62rem] font-medium uppercase tracking-widest md:hidden"
+          style={{ color: flavor.bodyColor }}
+          aria-hidden
+        >
+          Scroll to explore
+          <motion.div
+            animate={{ y: [0, 4, 0] }}
+            transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
+          >
+            <ChevronDown className="h-3.5 w-3.5" />
+          </motion.div>
+        </div>
         <div className="relative z-10 grid w-full gap-6 md:grid-cols-2 md:items-center md:gap-8">
           <div className="text-left">
             <h2
@@ -215,11 +228,11 @@ const ScrollStory: React.FC = () => {
               <h1 className="font-serif text-[clamp(1.75rem,5vw,4rem)] font-bold leading-tight text-white/95 tracking-tight">
                 DRINK THE <span className="text-[#E5C76B]">LIFE YOU DESERVE</span>
               </h1>
-              <div className="pt-4 flex items-center gap-4 text-[#E5C76B]/90 font-medium tracking-widest text-xs uppercase">
-                <span className="w-12 h-px bg-[#E5C76B]/70" />
+              <div className="hidden items-center gap-4 pt-4 text-xs font-medium uppercase tracking-widest text-[#E5C76B]/90 md:flex">
+                <span className="h-px w-12 bg-[#E5C76B]/70" />
                 Scroll to explore
                 <motion.div animate={{ y: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}>
-                  <ChevronDown className="w-4 h-4 inline" />
+                  <ChevronDown className="inline h-4 w-4" />
                 </motion.div>
               </div>
             </div>
