@@ -1,0 +1,111 @@
+{
+  "title": "Privacy Policy",
+  "lastUpdated": "Last updated June 8, 2026",
+  "sections": [
+    {
+      "id": "service-description",
+      "title": "Service Description",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Through the Site, you may learn about Jiva Drinks LLC, its beverage products and brand, submit an email address through an interest form to receive updates, and, if made available in the future, create an account and purchase products through the Site."
+        }
+      ]
+    },
+    {
+      "id": "terms-of-use",
+      "title": "Terms of Use",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Your use of the Site is also governed by our Terms of Use, available at https://www.jivalivin.com/terms-of-use."
+        }
+      ]
+    },
+    {
+      "id": "personal-information-collected",
+      "title": "Personal Information Collected",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "We may collect your email address, which you submit to us through our interest form or any account registration process on the Site. If we offer online purchases in the future, Personal Information may also include your name, shipping address, billing address, order details, and other information needed to process and fulfill purchases. We do not collect sensitive personal information such as date of birth, marital status, or government identification through the current interest form."
+        }
+      ]
+    },
+    {
+      "id": "information-you-provide",
+      "title": "Information You Provide",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "To use the current Service, you do not need to submit any Personal Information other than your email address if you choose to complete the interest form. To use the Service thereafter, you do not need to submit further Personal Information at this time. If we later add account registration or online purchasing, we may ask you to provide additional Personal Information, such as your name, email address, shipping address, billing address, order information, and account login information."
+        }
+      ]
+    },
+    {
+      "id": "cookies-and-tracking",
+      "title": "Cookies and Tracking",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "We may use cookies and similar technologies to collect information about your activity on the Site, including:"
+        },
+        {
+          "type": "list",
+          "items": [
+            "pages viewed on the Site",
+            "time and date of visits",
+            "browser and device type",
+            "referring URL",
+            "general site usage and click activity",
+            "whether a user has previously visited the Site or submitted a form"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "For example, we may store a persistent cookie to remember whether you have previously visited the Site or to help measure aggregate site traffic."
+        }
+      ]
+    },
+    {
+      "id": "account-registration",
+      "title": "Account Registration",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "At this time, users do not need to create an account or profile to use the Site. If we later offer account creation or online purchases, users may be asked to register by entering an email address, creating login credentials, and providing information necessary to process purchases. By registering, you authorize us to collect, store, and use your email address and related account information in accordance with this Privacy Policy."
+        }
+      ]
+    },
+    {
+      "id": "childrens-privacy",
+      "title": "Children's Privacy",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "The Site is not intended for children under 13 years of age. We do not knowingly collect Personal Information from children under 13. If you believe we have collected information from a child under 13, please contact us at jamujiva@gmail.com."
+        }
+      ]
+    },
+    {
+      "id": "marketing-communications",
+      "title": "Marketing Communications",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "You can also opt out of marketing communications by contacting us at jamujiva@gmail.com. Please note that even if you opt out of promotional communications, we may continue to send you administrative emails, including, for example, periodic updates to our Privacy Policy."
+        }
+      ]
+    },
+    {
+      "id": "contact-us",
+      "title": "Contact Us",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "If you have any questions regarding this Privacy Policy or the practices of this Site, please contact us by sending an email to jamujiva@gmail.com."
+        }
+      ]
+    }
+  ]
+}
