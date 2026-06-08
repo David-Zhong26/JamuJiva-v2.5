@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
         <p className="text-[#2D4F3E]/40 text-sm font-medium">© 2026 JAMU JIVA CO. ALL RIGHTS RESERVED.</p>
         <div className="flex gap-8 text-[#2D4F3E]/40 text-sm font-medium">
           <a href="#" className="hover:text-[#2D4F3E]">Privacy Policy</a>
-          <a href="#" className="hover:text-[#2D4F3E]">Terms of Service</a>
+          <Link to="/terms" className="hover:text-[#2D4F3E]">Terms of Use</Link>
         </div>
       </div>
     </footer>
