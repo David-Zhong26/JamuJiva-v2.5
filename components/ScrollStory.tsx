@@ -96,7 +96,7 @@ const ProductRevealSection: React.FC = () => {
   );
 
   return (
-    <section ref={sectionRef} id="benefits" className="relative h-screen bg-[#F5F2ED]">
+    <section ref={sectionRef} id="benefits" className="relative bg-[#F5F2ED]" style={{ height: '220vh' }}>
       <div className="sticky top-0 h-screen overflow-hidden">
         <motion.div style={{ width: gingerWidth }} className="absolute inset-y-0 left-0 overflow-hidden">
           <div className="absolute inset-y-0 left-0 w-screen">{renderFlavorLayer(goldenGlow)}</div>
