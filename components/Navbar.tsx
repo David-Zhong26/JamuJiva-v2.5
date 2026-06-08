@@ -1,49 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useMailingList } from '../contexts/MailingListContext';
 import logoTransparent from '../materials/Jiva (8）.png';
 
 const PAGE_BG = '#F5E8CA';
-const LOGO_SHRINK_SCROLL = 80;
+const HERO_LOGO_HEIGHT = 72;
+const COMPACT_LOGO_HEIGHT = 44;
+const NAV_TRANSITION = { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const };
 
 const Navbar: React.FC = () => {
   const location = useLocation();
   const isHome = location.pathname === '/';
   const { openMailingList } = useMailingList();
 
-  const { scrollY } = useScroll();
-  const logoHeight = useTransform(scrollY, [0, LOGO_SHRINK_SCROLL], [72, 44]);
-  const navSolidFade = useTransform(scrollY, [0, LOGO_SHRINK_SCROLL], [0, 1]);
-  const shellBackgroundColor = useTransform(
-    navSolidFade,
-    (v) => `rgba(245, 232, 202, ${v})`
-  );
-  const navLinkColor = useTransform(scrollY, [0, LOGO_SHRINK_SCROLL], ['#FFFFFF', '#2D4F3E']);
-  const menuBorderColor = useTransform(scrollY, [0, LOGO_SHRINK_SCROLL], [
-    'rgba(255, 255, 255, 0.45)',
-    'rgba(45, 79, 62, 0.25)',
-  ]);
-  const ctaBackgroundColor = useTransform(scrollY, [0, LOGO_SHRINK_SCROLL], [
-    'rgba(255, 255, 255, 0.12)',
-    'rgb(45, 79, 62)',
-  ]);
-  const ctaBorderColor = useTransform(scrollY, [0, LOGO_SHRINK_SCROLL], [
-    'rgba(255, 255, 255, 0.45)',
-    'rgb(45, 79, 62)',
-  ]);
-
+  const [navCompact, setNavCompact] = useState(!isHome);
   const [hideNav, setHideNav] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const showCompactNav = !isHome || navCompact;
+
   useEffect(() => {
     if (!isHome) {
+      setNavCompact(true);
       setHideNav(false);
       return;
     }
+
     const check = () => {
       const sy = window.scrollY;
+      setNavCompact(sy > 0);
+
       const halfHero = window.innerHeight * 0.5;
       const el = document.getElementById('benefits');
       if (!el) {
@@ -55,10 +43,11 @@ const Navbar: React.FC = () => {
       const past = scrolledInto >= sectionHeight * 0.75;
       setHideNav(sy > halfHero && !past);
     };
+
     check();
     window.addEventListener('scroll', check, { passive: true });
     return () => window.removeEventListener('scroll', check);
-  }, [isHome]);
+  }, [isHome, location.pathname]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -84,7 +73,10 @@ const Navbar: React.FC = () => {
       className="fixed top-0 right-0 z-50 w-full"
     >
       <motion.div
-        style={isHome ? { backgroundColor: shellBackgroundColor } : { backgroundColor: PAGE_BG }}
+        animate={{
+          backgroundColor: showCompactNav ? PAGE_BG : 'rgba(245, 232, 202, 0)',
+        }}
+        transition={NAV_TRANSITION}
         className="relative w-full"
       >
         <Link
@@ -96,8 +88,11 @@ const Navbar: React.FC = () => {
             <motion.img
               src={logoTransparent}
               alt="Jamu Jiva"
-              style={{ height: logoHeight }}
-              className="w-auto origin-top-left"
+              className="block w-auto origin-top-left"
+              animate={{
+                height: showCompactNav ? COMPACT_LOGO_HEIGHT : HERO_LOGO_HEIGHT,
+              }}
+              transition={NAV_TRANSITION}
               decoding="async"
             />
           ) : (
@@ -113,7 +108,8 @@ const Navbar: React.FC = () => {
         <div className="relative flex min-h-11 items-center justify-end gap-4 px-4 py-3 md:min-h-[2.75rem] md:gap-10 md:px-10 md:py-4">
           <motion.div
             className="hidden h-10 items-center gap-10 md:flex"
-            style={{ color: isHome ? navLinkColor : '#2D4F3E' }}
+            animate={{ color: showCompactNav ? '#2D4F3E' : '#FFFFFF' }}
+            transition={NAV_TRANSITION}
           >
             <Link to="/shop" className={linkClass} onClick={closeAll}>
               Shop All
@@ -132,7 +128,11 @@ const Navbar: React.FC = () => {
           {isHome ? (
             <motion.button
               type="button"
-              style={{ borderColor: menuBorderColor, color: navLinkColor }}
+              animate={{
+                borderColor: showCompactNav ? 'rgba(45, 79, 62, 0.25)' : 'rgba(255, 255, 255, 0.45)',
+                color: showCompactNav ? '#2D4F3E' : '#FFFFFF',
+              }}
+              transition={NAV_TRANSITION}
               className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-transparent md:hidden"
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
               onClick={() => setMobileOpen((v) => !v)}
@@ -157,7 +157,11 @@ const Navbar: React.FC = () => {
                 closeAll();
                 openMailingList();
               }}
-              style={{ backgroundColor: ctaBackgroundColor, borderColor: ctaBorderColor }}
+              animate={{
+                backgroundColor: showCompactNav ? 'rgb(45, 79, 62)' : 'rgba(255, 255, 255, 0.12)',
+                borderColor: showCompactNav ? 'rgb(45, 79, 62)' : 'rgba(255, 255, 255, 0.45)',
+              }}
+              transition={NAV_TRANSITION}
               className="hidden shrink-0 rounded-full border px-6 py-2.5 font-black text-sm text-white transition-all hover:border-[#F47C3E] hover:bg-[#F47C3E] md:inline-flex md:items-center md:justify-center"
             >
               JOIN THE LIST
