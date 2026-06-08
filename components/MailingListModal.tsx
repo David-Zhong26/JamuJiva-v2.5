@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { X } from 'lucide-react';
-import { PRODUCT_DRINKS } from '../constants/productDrinks';
+import { ArrowRight, X } from 'lucide-react';
 import { supabase } from '../supabase';
 
 interface MailingListModalProps {
@@ -9,54 +8,54 @@ interface MailingListModalProps {
   onClose: () => void;
 }
 
+const fieldClass =
+  'w-full rounded-2xl border border-[#2D4F3E]/15 bg-white px-5 py-4 text-[#2D4F3E] outline-none transition-colors placeholder:text-[#2D4F3E]/35 focus:border-[#2D4F3E]';
+
+const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+
 const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) => {
   const [email, setEmail] = useState('');
-  const [interests, setInterests] = useState<string[]>([]);
+  const [firstName, setFirstName] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     if (!open) return;
     setSubmitted(false);
     setEmail('');
-    setInterests([]);
+    setFirstName('');
   }, [open]);
 
-  const toggleInterest = (productName: string) => {
-    setInterests((current) =>
-      current.includes(productName)
-        ? current.filter((name) => name !== productName)
-        : [...current, productName]
-    );
-  };
+  const progress = useMemo(() => {
+    if (submitted) return 100;
+
+    const emailDone = isValidEmail(email);
+    const firstNameDone = firstName.trim().length > 0;
+
+    if (emailDone && firstNameDone) return 100;
+    if (emailDone || firstNameDone) return 50;
+    return 0;
+  }, [email, firstName, submitted]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const cleanedEmail = email.trim().toLowerCase();
+    const cleanedFirstName = firstName.trim();
 
     if (!cleanedEmail) {
       alert('Please enter your email.');
       return;
     }
 
-    if (interests.length === 0) {
-      alert('Please select at least one product.');
+    if (!isValidEmail(cleanedEmail)) {
+      alert('Please enter a valid email address.');
       return;
     }
-
-    const flavorMap: Record<string, string> = {
-      'Golden Glow': 'golden_glow',
-      'Spiced Ivory': 'spiced_ivory',
-    };
-
-    const mappedFlavors = interests.map(
-      (name) => flavorMap[name] || name.toLowerCase().replace(/\s+/g, '_')
-    );
 
     const { error } = await supabase.from('subscribers').insert([
       {
         email: cleanedEmail,
-        flavors: mappedFlavors,
+        first_name: cleanedFirstName || null,
       },
     ]);
 
@@ -87,101 +86,88 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ duration: 0.35, ease: 'easeOut' }}
-            className="relative w-full max-w-md rounded-[2rem] bg-[#F5F2ED] p-8 shadow-[0_24px_80px_rgba(0,0,0,0.24)]"
+            className="relative w-full max-w-md overflow-hidden rounded-[2rem] bg-[#F5F2ED] p-8 shadow-[0_24px_80px_rgba(0,0,0,0.24)]"
           >
+            <div className="absolute left-0 right-0 top-0 h-1 bg-[#2D4F3E]/15">
+              <motion.div
+                className="h-full bg-[#2D4F3E]"
+                initial={false}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+              />
+            </div>
+
             <button
               type="button"
               aria-label="Close mailing list modal"
               onClick={onClose}
-              className="absolute right-5 top-5 inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#2D4F3E]/10 bg-white text-[#2D4F3E] transition-colors hover:bg-[#F9D067]"
+              className="absolute right-5 top-5 inline-flex h-10 w-10 items-center justify-center rounded-full text-[#2D4F3E]/70 transition-colors hover:bg-white hover:text-[#2D4F3E]"
             >
               <X className="h-4 w-4" />
             </button>
 
             {!submitted ? (
               <>
-                <span className="mb-3 block text-xs font-black uppercase tracking-[0.22em] text-[#F47C3E]">
-                  Join The Mailing List
-                </span>
-                <h3 className="font-serif text-3xl font-black leading-tight text-[#2D4F3E]">
-                  Be the first to hear about the next drop.
+                <h3 className="pr-10 font-serif text-3xl font-black leading-tight text-[#2D4F3E]">
+                  Join the waitlist
                 </h3>
-                <p className="mt-4 text-base leading-relaxed text-[#2D4F3E]/75">
-                  Enter your email and we&apos;ll keep you posted on launches, restocks, and special releases.
+                <p className="mt-3 text-base leading-relaxed text-[#2D4F3E]/70">
+                  Be the first to hear about launches, restocks, and special releases from Jiva.
                 </p>
 
-                <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="w-full rounded-full border border-[#2D4F3E]/15 bg-white px-6 py-4 text-[#2D4F3E] outline-none transition-colors placeholder:text-[#2D4F3E]/40 focus:border-[#2D4F3E]"
-                  />
-                  <div className="rounded-[1.5rem] border border-[#2D4F3E]/10 bg-white/70 p-5">
-                    <p className="text-sm font-black uppercase tracking-[0.16em] text-[#2D4F3E]">
-                      Which products are you interested in?
-                    </p>
-                    <p className="mt-2 text-sm leading-relaxed text-[#2D4F3E]/65">
-                      Select what you&apos;d like to hear about so we can send exclusive deals when we manufacture it.
-                    </p>
-                    <div className="mt-4 space-y-3">
-                      {PRODUCT_DRINKS.map((drink) => {
-                        const isChecked = interests.includes(drink.name);
-                        return (
-                          <label
-                            key={drink.name}
-                            className={`flex cursor-pointer items-center justify-between rounded-2xl border px-4 py-3 transition-colors ${
-                              isChecked
-                                ? 'border-[#2D4F3E] bg-[#F9D067]/35'
-                                : 'border-[#2D4F3E]/10 bg-white hover:border-[#2D4F3E]/25'
-                            }`}
-                          >
-                            <div>
-                              <span className="block font-black text-[#2D4F3E]">{drink.name}</span>
-                              <span className="block text-sm text-[#2D4F3E]/65">{drink.eyebrow}</span>
-                            </div>
-                            <input
-                              type="checkbox"
-                              checked={isChecked}
-                              onChange={() => toggleInterest(drink.name)}
-                              className="h-5 w-5 rounded border-[#2D4F3E]/30 text-[#2D4F3E] focus:ring-[#2D4F3E]"
-                            />
-                          </label>
-                        );
-                      })}
-                    </div>
-                    {interests.length === 0 ? (
-                      <p className="mt-3 text-xs font-medium text-[#F47C3E]">Select at least one product.</p>
-                    ) : null}
-                  </div>
+                <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+                  <label className="block">
+                    <span className="mb-2 block text-[11px] font-black uppercase tracking-[0.18em] text-[#2D4F3E]">
+                      Email <span className="text-[#2D4F3E]/50">(required)</span>
+                    </span>
+                    <input
+                      type="email"
+                      placeholder="your@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      className={fieldClass}
+                    />
+                  </label>
+
+                  <label className="block">
+                    <span className="mb-2 block text-[11px] font-black uppercase tracking-[0.18em] text-[#2D4F3E]">
+                      First name <span className="text-[#2D4F3E]/50">(optional)</span>
+                    </span>
+                    <input
+                      type="text"
+                      placeholder="What should we call you?"
+                      value={firstName}
+                      onChange={(e) => setFirstName(e.target.value)}
+                      autoComplete="given-name"
+                      className={fieldClass}
+                    />
+                  </label>
+
                   <button
                     type="submit"
-                    className="flex w-full items-center justify-center rounded-full bg-[#2D4F3E] px-6 py-4 font-black uppercase tracking-[0.16em] text-white transition-colors hover:bg-[#F47C3E]"
+                    className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#2D4F3E] px-6 py-4 font-black text-white transition-colors hover:bg-[#F47C3E]"
                   >
-                    Confirm Signup
+                    Continue
+                    <ArrowRight className="h-4 w-4" />
                   </button>
                 </form>
               </>
             ) : (
-              <div className="py-8 text-center">
+              <div className="py-6 text-left">
                 <span className="mb-3 block text-xs font-black uppercase tracking-[0.22em] text-[#F47C3E]">
-                  You&apos;re In
+                  You&apos;re in
                 </span>
                 <h3 className="font-serif text-3xl font-black leading-tight text-[#2D4F3E]">
-                  Congratulations, you&apos;re on the list.
+                  {firstName.trim() ? `Thanks, ${firstName.trim()}.` : "You're on the list."}
                 </h3>
                 <p className="mt-4 text-base leading-relaxed text-[#2D4F3E]/75">
                   We&apos;ll let you know when the next product drop is ready.
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-[#2D4F3E]/70">
-                  Interested in: <span className="font-black text-[#2D4F3E]">{interests.join(', ')}</span>
-                </p>
                 <button
                   type="button"
                   onClick={onClose}
-                  className="mt-8 inline-flex items-center justify-center rounded-full bg-[#F47C3E] px-8 py-4 font-black uppercase tracking-[0.16em] text-white transition-colors hover:bg-[#2D4F3E]"
+                  className="mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-[#F47C3E] px-8 py-4 font-black text-white transition-colors hover:bg-[#2D4F3E]"
                 >
                   Close
                 </button>

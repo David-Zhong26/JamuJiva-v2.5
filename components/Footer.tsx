@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
               About Us
             </Link>
             <ul className="space-y-4 text-[#2D4F3E]/60 font-medium">
-              <li><Link to="/ritual" className="hover:text-[#F47C3E]">Days Ritual</Link></li>
+              <li><a href="mailto:jamujiva@gmail.com" className="hover:text-[#F47C3E]">Contact</a></li>
               <li><Link to="/journal" className="hover:text-[#F47C3E]">Jiva Journal</Link></li>
             </ul>
           </div>
@@ -37,7 +37,8 @@ const Footer: React.FC = () => {
             <h4 className="font-serif text-lg font-bold text-[#2D4F3E] mb-6">Social</h4>
             <ul className="space-y-4 text-[#2D4F3E]/60 font-medium">
               <li><a href="https://www.instagram.com/jamujiva/" target="_blank" rel="noopener noreferrer" className="hover:text-[#F47C3E]">Instagram</a></li>
-              <li><a href="mailto:jamujiva@gmail.com" className="hover:text-[#F47C3E]">Email</a></li>
+              <li><a href="https://www.linkedin.com/company/jivalivin/" target="_blank" rel="noopener noreferrer" className="hover:text-[#F47C3E]">LinkedIn</a></li>
+              <li><a href="https://www.tiktok.com/@jamu.jiva" target="_blank" rel="noopener noreferrer" className="hover:text-[#F47C3E]">TikTok</a></li>
             </ul>
           </div>
         </div>
