@@ -125,13 +125,15 @@ const Navbar: React.FC = () => {
       <div className="relative isolate md:hidden">
         <motion.div
           aria-hidden
-          className="pointer-events-none absolute inset-x-0 bottom-0 backdrop-blur-md backdrop-saturate-150"
+          className="pointer-events-none absolute inset-x-0 bottom-0 backdrop-blur-sm"
           style={{
             top: 'calc(-1 * max(0.75rem, env(safe-area-inset-top)) - 1.25rem)',
-            WebkitBackdropFilter: 'blur(16px) saturate(1.5)',
+            WebkitBackdropFilter: 'blur(8px)',
           }}
           animate={{
-            backgroundColor: showCompactNav ? 'rgba(255, 255, 255, 0.42)' : 'rgba(0, 0, 0, 0.14)',
+            opacity: showCompactNav ? 1 : 0,
+            visibility: showCompactNav ? 'visible' : 'hidden',
+            backgroundColor: showCompactNav ? 'rgba(255, 255, 255, 0.28)' : 'rgba(0, 0, 0, 0)',
           }}
           transition={NAV_TRANSITION}
         />
