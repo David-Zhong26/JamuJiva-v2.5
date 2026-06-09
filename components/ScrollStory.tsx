@@ -55,7 +55,7 @@ const ProductRevealSection: React.FC = () => {
         <img
           src={demoJivaBottle}
           alt={flavor.name}
-          className="pointer-events-none absolute left-1/2 top-[38%] z-0 h-[50vh] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:h-[58vh] md:top-1/2 md:h-[95vh]"
+          className="pointer-events-none absolute left-1/2 top-[38%] z-0 jj-vh-can h-[50vh] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:jj-vh-can-sm sm:h-[58vh] md:top-1/2 md:h-[95vh]"
         />
         <div
           className={`pointer-events-none absolute top-[max(2.75rem,calc(env(safe-area-inset-top)+1.5rem))] z-20 flex items-center gap-1.5 whitespace-nowrap text-[0.62rem] font-bold uppercase tracking-widest md:hidden ${
@@ -129,8 +129,8 @@ const ProductRevealSection: React.FC = () => {
   );
 
   return (
-    <section ref={sectionRef} id="benefits" className="relative bg-[#F5F2ED]" style={{ height: '220vh' }}>
-      <div className="sticky top-0 h-screen overflow-hidden">
+    <section ref={sectionRef} id="benefits" className="relative bg-[#F5F2ED] jj-vh-section-220">
+      <div className="sticky top-0 jj-vh-screen overflow-hidden">
         <motion.div style={{ width: gingerWidth }} className="absolute inset-y-0 left-0 overflow-hidden">
           <div className="absolute inset-y-0 left-0 w-screen">{renderFlavorLayer(goldenGlow)}</div>
         </motion.div>
@@ -224,7 +224,7 @@ const ScrollStory: React.FC = () => {
       {/* ——— Hero ——— */}
       <section
         id="hero"
-        className="relative flex h-screen max-h-screen flex-col justify-end overflow-hidden px-5 pb-10 sm:px-8 md:px-12 md:pb-16 lg:pl-32 lg:pr-20"
+        className="relative flex jj-vh-screen flex-col justify-end overflow-hidden px-5 pb-10 sm:px-8 md:px-12 md:pb-16 lg:pl-32 lg:pr-20"
       >
         <div className="absolute inset-0 z-0 bg-[#2D4F3E]" />
         <div className="absolute inset-0 z-0">
