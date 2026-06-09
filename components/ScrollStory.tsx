@@ -47,7 +47,11 @@ const ProductRevealSection: React.FC = () => {
       }}
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.14),transparent_52%)]" />
-      <div className="relative z-10 flex h-full flex-col justify-end gap-5 overflow-visible px-5 pb-10 pt-24 sm:px-8 md:justify-center md:gap-8 md:px-14 md:py-12">
+      <div
+        className={`relative z-10 flex h-full flex-col justify-end gap-5 overflow-visible px-5 pb-10 pt-24 sm:px-8 md:justify-center md:gap-8 md:px-14 md:py-12${
+          flavor.slug === 'spiced-ivory' ? ' md:translate-x-2' : ''
+        }`}
+      >
         <img
           src={demoJivaBottle}
           alt={flavor.name}
