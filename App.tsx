@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar';
 import ScrollStory from './components/ScrollStory';
 import Footer from './components/Footer';
@@ -42,6 +43,7 @@ const App: React.FC = () => {
           </main>
           <Footer />
         </div>
+        <Analytics />
       </MailingListProvider>
     </BrowserRouter>
   );
