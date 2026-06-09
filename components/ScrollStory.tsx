@@ -58,9 +58,7 @@ const ProductRevealSection: React.FC = () => {
           className="pointer-events-none absolute left-1/2 top-[38%] z-0 h-[50vh] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:h-[58vh] md:top-1/2 md:h-[95vh]"
         />
         <div
-          className={`pointer-events-none absolute top-[max(2.75rem,calc(env(safe-area-inset-top)+1.5rem))] z-20 flex items-center gap-1.5 whitespace-nowrap text-[0.62rem] font-bold uppercase tracking-widest md:hidden ${
-            flavor.slug === 'bali-gold' ? 'right-7' : 'right-5'
-          }`}
+          className="pointer-events-none absolute right-7 top-[max(2.75rem,calc(env(safe-area-inset-top)+1.5rem))] z-20 flex items-center gap-1.5 whitespace-nowrap text-[0.62rem] font-bold uppercase tracking-widest md:hidden"
           style={{ color: flavor.bodyColor }}
           aria-hidden
         >
