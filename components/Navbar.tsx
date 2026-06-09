@@ -115,6 +115,7 @@ const Navbar: React.FC = () => {
 
   return (
     <>
+      <div className="mobile-top-bg md:hidden" aria-hidden />
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: hideNav ? '-100%' : 0 }}
@@ -122,7 +123,10 @@ const Navbar: React.FC = () => {
         className="fixed top-0 right-0 z-50 w-full"
       >
       {/* Mobile header */}
-      <div className="relative md:hidden">
+      <div
+        className="relative md:hidden"
+        style={{ backgroundColor: showCompactNav ? PAGE_BG : 'transparent' }}
+      >
         <div
           className="relative flex items-center justify-between px-5 pb-3"
           style={{ paddingTop: MOBILE_HEADER_PADDING_TOP }}
