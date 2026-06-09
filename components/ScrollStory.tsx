@@ -59,7 +59,7 @@ const ProductRevealSection: React.FC = () => {
         />
         <div
           className={`pointer-events-none absolute top-[max(2.75rem,calc(env(safe-area-inset-top)+1.5rem))] z-20 flex items-center gap-1.5 whitespace-nowrap text-[0.62rem] font-bold uppercase tracking-widest md:hidden ${
-            flavor.slug === 'spiced-ivory' ? 'right-6' : 'right-5'
+            flavor.slug === 'spiced-ivory' ? 'right-[1.375rem]' : 'right-5'
           }`}
           style={{ color: flavor.bodyColor }}
           aria-hidden
