@@ -55,9 +55,7 @@ const ProductRevealSection: React.FC = () => {
         <img
           src={demoJivaBottle}
           alt={flavor.name}
-          className={`pointer-events-none absolute left-1/2 top-[38%] z-0 h-[50vh] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:h-[58vh] md:top-1/2 md:h-[95vh]${
-            flavor.slug === 'spiced-ivory' ? ' max-md:left-[calc(50%+0.5rem)]' : ''
-          }`}
+          className="pointer-events-none absolute left-1/2 top-[38%] z-0 h-[50vh] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:h-[58vh] md:top-1/2 md:h-[95vh]"
         />
         <div
           className={`pointer-events-none absolute top-[max(2.75rem,calc(env(safe-area-inset-top)+1.5rem))] z-20 flex items-center gap-1.5 whitespace-nowrap text-[0.62rem] font-bold uppercase tracking-widest md:hidden ${
@@ -76,7 +74,7 @@ const ProductRevealSection: React.FC = () => {
         </div>
         <div
           className={`relative z-10 grid w-full gap-6 md:grid-cols-2 md:items-center md:gap-8 md:pl-0${
-            flavor.slug === 'spiced-ivory' ? ' pl-6' : flavor.slug === 'bali-gold' ? ' pl-4' : ''
+            flavor.slug === 'spiced-ivory' ? ' pl-4' : flavor.slug === 'bali-gold' ? ' pl-4' : ''
           }`}
         >
           <div className="text-left">
