@@ -116,30 +116,37 @@ const Navbar: React.FC = () => {
   return (
     <>
       <div
-        className="pointer-events-none fixed inset-x-0 top-0 z-[60]"
-        style={{ height: 'env(safe-area-inset-top)', backgroundColor: PAGE_BG }}
+        className="pointer-events-none fixed inset-x-0 top-0 z-[60] md:hidden"
+        style={{ height: 'calc(env(safe-area-inset-top) + 0.5rem)', backgroundColor: PAGE_BG }}
         aria-hidden
       />
       <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: hideNav ? '-100%' : 0 }}
-      transition={{ duration: 0.35, ease: 'easeInOut' }}
-      className="fixed top-0 right-0 z-50 w-full"
-    >
-      {/* Mobile header */}
-      <motion.div
-        animate={{
-          backgroundColor: showCompactNav ? PAGE_BG : 'rgba(245, 232, 202, 0)',
-        }}
-        transition={NAV_TRANSITION}
-        className="flex items-center justify-between px-5 pb-3 md:hidden"
-        style={{ paddingTop: MOBILE_HEADER_PADDING_TOP }}
+        initial={{ y: -100 }}
+        animate={{ y: hideNav ? '-100%' : 0 }}
+        transition={{ duration: 0.35, ease: 'easeInOut' }}
+        className="fixed top-0 right-0 z-50 w-full"
       >
-        <Link to="/" onClick={closeAll} className="inline-flex shrink-0">
-          {renderLogo('block w-auto origin-top-left')}
-        </Link>
-        {renderMobileMenuButton()}
-      </motion.div>
+      {/* Mobile header */}
+      <div className="relative md:hidden">
+        <motion.div
+          animate={{
+            backgroundColor: showCompactNav ? PAGE_BG : 'rgba(245, 232, 202, 0)',
+          }}
+          transition={NAV_TRANSITION}
+          className="pointer-events-none absolute inset-x-0 bottom-0"
+          style={{ top: 'calc(-1 * max(0.75rem, env(safe-area-inset-top)) - 0.5rem)' }}
+          aria-hidden
+        />
+        <div
+          className="relative flex items-center justify-between px-5 pb-3"
+          style={{ paddingTop: MOBILE_HEADER_PADDING_TOP }}
+        >
+          <Link to="/" onClick={closeAll} className="inline-flex shrink-0">
+            {renderLogo('block w-auto origin-top-left')}
+          </Link>
+          {renderMobileMenuButton()}
+        </div>
+      </div>
 
       {/* Desktop header */}
       <motion.div
