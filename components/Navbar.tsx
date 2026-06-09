@@ -122,7 +122,19 @@ const Navbar: React.FC = () => {
         className="fixed top-0 right-0 z-50 w-full"
       >
       {/* Mobile header */}
-      <div className="relative md:hidden">
+      <div className="relative isolate md:hidden">
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 backdrop-blur-md backdrop-saturate-150"
+          style={{
+            top: 'calc(-1 * max(0.75rem, env(safe-area-inset-top)) - 1.25rem)',
+            WebkitBackdropFilter: 'blur(16px) saturate(1.5)',
+          }}
+          animate={{
+            backgroundColor: showCompactNav ? 'rgba(255, 255, 255, 0.42)' : 'rgba(0, 0, 0, 0.14)',
+          }}
+          transition={NAV_TRANSITION}
+        />
         <div
           className="relative flex items-center justify-between px-5 pb-3"
           style={{ paddingTop: MOBILE_HEADER_PADDING_TOP }}
