@@ -114,7 +114,13 @@ const Navbar: React.FC = () => {
     );
 
   return (
-    <motion.nav
+    <>
+      <div
+        className="pointer-events-none fixed inset-x-0 top-0 z-[60]"
+        style={{ height: 'env(safe-area-inset-top)', backgroundColor: PAGE_BG }}
+        aria-hidden
+      />
+      <motion.nav
       initial={{ y: -100 }}
       animate={{ y: hideNav ? '-100%' : 0 }}
       transition={{ duration: 0.35, ease: 'easeInOut' }}
@@ -261,6 +267,7 @@ const Navbar: React.FC = () => {
         ) : null}
       </AnimatePresence>
     </motion.nav>
+    </>
   );
 };
 
