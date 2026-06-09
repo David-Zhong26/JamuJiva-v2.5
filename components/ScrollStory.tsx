@@ -91,9 +91,19 @@ const ProductRevealSection: React.FC = () => {
             </p>
           </div>
 
-          <div className="max-w-sm text-left md:col-start-2 md:justify-self-end">
-            <p className="text-sm leading-relaxed sm:text-base md:text-lg" style={{ color: flavor.bodyColor }}>
-              {flavor.description}
+          <div className="max-w-sm text-left md:col-start-2 md:mr-8 md:justify-self-end lg:mr-12">
+            <p
+              className="text-sm leading-relaxed sm:text-base md:min-h-[6.75rem] md:text-lg lg:min-h-[7.25rem]"
+              style={{ color: flavor.bodyColor }}
+            >
+              {'descriptionDesktop' in flavor && flavor.descriptionDesktop ? (
+                <>
+                  <span className="md:hidden">{flavor.description}</span>
+                  <span className="hidden md:inline">{flavor.descriptionDesktop}</span>
+                </>
+              ) : (
+                flavor.description
+              )}
             </p>
             <Link
               to="/shop"
@@ -102,7 +112,7 @@ const ProductRevealSection: React.FC = () => {
                 color: flavor.buttonText,
                 borderColor: flavor.buttonBorder,
               }}
-              className="mt-5 inline-flex items-center justify-center rounded-full border px-6 py-3 text-xs font-black uppercase tracking-[0.14em] transition-all hover:brightness-105 sm:mt-8 sm:px-8 sm:py-4 sm:text-sm"
+              className="mt-5 inline-flex items-center justify-center rounded-full border px-6 py-3 text-xs font-black uppercase tracking-[0.14em] transition-all hover:brightness-105 sm:mt-8 sm:px-8 sm:py-4 sm:text-sm md:mt-6"
             >
               Shop now
             </Link>
