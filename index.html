@@ -4,21 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <script>
-      (function () {
-        var mq = window.matchMedia('(max-width: 767px)');
-        var setVh = function () {
-          if (mq.matches) {
-            document.documentElement.style.setProperty('--jj-vh', window.innerHeight + 'px');
-          } else {
-            document.documentElement.style.removeProperty('--jj-vh');
-          }
-        };
-        setVh();
-        mq.addEventListener('change', setVh);
-        window.addEventListener('orientationchange', setVh);
-      })();
-    </script>
     <title>Jamu Jiva | Ancestral Vitality</title>
     <link rel="icon" href="/favicon.ico?v=3" sizes="any">
     <link rel="shortcut icon" href="/favicon.ico?v=3">
@@ -82,22 +67,31 @@
         .jj-vh-section-220 {
             height: 220vh;
         }
-        /* Mobile — stable viewport (all browsers: Chrome, Safari, etc.) */
+        /* Mobile — fill largest viewport to avoid gaps when browser chrome hides (IG, Chrome, etc.) */
         @media (max-width: 767px) {
             .jj-vh-screen {
-                height: var(--jj-vh, 100svh);
-                max-height: var(--jj-vh, 100svh);
+                height: 100vh;
+                height: 100lvh;
+                min-height: 100vh;
+                min-height: 100lvh;
+                max-height: none;
             }
             .jj-vh-section-220 {
-                height: calc(var(--jj-vh, 100svh) * 2.2);
+                height: 220vh;
+                height: 220lvh;
             }
             .jj-vh-can {
-                height: calc(var(--jj-vh, 100svh) * 0.5);
+                height: 50vh;
+                height: 50lvh;
+            }
+            #benefits {
+                background: linear-gradient(180deg, #eb9c35 0%, #d1eaf5 100%);
             }
         }
         @media (min-width: 640px) and (max-width: 767px) {
             .jj-vh-can-sm {
-                height: calc(var(--jj-vh, 100svh) * 0.58);
+                height: 58vh;
+                height: 58lvh;
             }
         }
         /* Benefits section — infinite horizontal marquee */
