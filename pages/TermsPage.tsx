@@ -146,7 +146,7 @@ const TermsPage: React.FC = () => {
                     </h2>
                     <p>
                       {renderInline(
-                        'If you have any questions regarding these Terms or the practices of this Site, please contact us by sending an email to jamujiva@gmail.com.',
+                        'If you have any questions regarding these Terms or the practices of this Site, please contact us by sending an email to info@jivalivin.com.',
                         key,
                       )}
                     </p>

@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
                 </Link>
                 <ul className="space-y-4">
                   <li>
-                    <a href="mailto:jamujiva@gmail.com" className={linkClass}>
+                    <a href="mailto:info@jivalivin.com" className={linkClass}>
                       Contact
                     </a>
                   </li>
