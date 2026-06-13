@@ -59,24 +59,39 @@
             scroll-behavior: smooth;
             background-color: #F5E8CA;
         }
-        /* Stable mobile viewport — avoids Chrome address-bar resize jank */
+        /* Full-height sections — default uses normal vh (Safari, desktop, etc.) */
         .jj-vh-screen {
             height: 100vh;
-            height: 100svh;
             max-height: 100vh;
-            max-height: 100svh;
         }
         .jj-vh-section-220 {
             height: 220vh;
-            height: 220svh;
         }
-        @media (min-width: 768px) {
+        /* Mobile — fill largest viewport to avoid gaps when browser chrome hides (IG, Chrome, etc.) */
+        @media (max-width: 767px) {
             .jj-vh-screen {
                 height: 100vh;
-                max-height: 100vh;
+                height: 100lvh;
+                min-height: 100vh;
+                min-height: 100lvh;
+                max-height: none;
             }
             .jj-vh-section-220 {
                 height: 220vh;
+                height: 220lvh;
+            }
+            .jj-vh-can {
+                height: 50vh;
+                height: 50lvh;
+            }
+            #benefits {
+                background: linear-gradient(180deg, #eb9c35 0%, #d1eaf5 100%);
+            }
+        }
+        @media (min-width: 640px) and (max-width: 767px) {
+            .jj-vh-can-sm {
+                height: 58vh;
+                height: 58lvh;
             }
         }
         /* Benefits section — infinite horizontal marquee */
@@ -124,7 +139,7 @@
   }
 }
 </script>
-  <script type="module" crossorigin src="/assets/index-Czezc8kC.js"></script>
+  <script type="module" crossorigin src="/assets/index-BNvlDcei.js"></script>
 </head>
 <body class="grainy-texture">
     <div id="root"></div>
