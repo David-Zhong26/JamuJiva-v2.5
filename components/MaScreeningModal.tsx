@@ -113,11 +113,14 @@ const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose }) =>
                   Before you shop
                 </p>
                 <h2 className="mt-2 pr-8 font-serif text-2xl font-black text-[#2D4F3E]">
-                  Are you located in Massachusetts?
+                  Do we deliver to your area?
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-[#2D4F3E]/75">
-                  We currently deliver in the Boston area. Outside MA, you can join the waitlist for
-                  when we ship nationwide.
+                  We&apos;re accepting preorders in select areas of Massachusetts. Enter your ZIP code
+                  to check availability.
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-[#2D4F3E]/75">
+                  Outside our delivery area? Join the waitlist for nationwide updates.
                 </p>
                 {error ? (
                   <p className="mt-4 text-center text-sm text-[#B45309]">{error}</p>
@@ -151,6 +154,9 @@ const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose }) =>
                 >
                   ← Back
                 </button>
+                <p className="mt-4 text-xs font-black uppercase tracking-widest text-[#F47C3E]">
+                  Before you shop
+                </p>
                 <h2 className="mt-4 pr-8 font-serif text-2xl font-black text-[#2D4F3E]">
                   What&apos;s your ZIP code?
                 </h2>
