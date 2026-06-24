@@ -52,6 +52,11 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
       return;
     }
 
+    if (!supabase) {
+      alert('Mailing list is temporarily unavailable. Please try again later.');
+      return;
+    }
+
     const { error } = await supabase.from('subscribers').insert([
       {
         email: cleanedEmail,
