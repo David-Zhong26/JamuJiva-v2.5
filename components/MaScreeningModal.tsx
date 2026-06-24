@@ -7,11 +7,12 @@ import { useShopAccess } from '../contexts/ShopAccessContext';
 type MaScreeningModalProps = {
   open: boolean;
   onClose: () => void;
+  initialStep?: Step;
 };
 
 type Step = 'location' | 'zip';
 
-const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose }) => {
+const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose, initialStep = 'location' }) => {
   const { openMailingList } = useMailingList();
   const { grantAccess } = useShopAccess();
   const [step, setStep] = useState<Step>('location');
@@ -22,7 +23,7 @@ const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose }) =>
 
   useEffect(() => {
     if (!open) return;
-    setStep('location');
+    setStep(initialStep);
     setZip('');
     setError(null);
     setZipsLoaded(false);
@@ -36,7 +37,7 @@ const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose }) =>
         setDeliveryZips([]);
         setZipsLoaded(true);
       });
-  }, [open]);
+  }, [open, initialStep]);
 
   const handleClose = () => {
     onClose();
@@ -95,7 +96,7 @@ const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose }) =>
             initial={{ y: 24, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 24, opacity: 0 }}
-            className="relative w-full max-w-md rounded-2xl border border-[#2D4F3E]/15 bg-[#F5E8CA] p-6 shadow-2xl sm:p-8"
+            className="relative w-full max-w-xl rounded-2xl border border-[#2D4F3E]/15 bg-[#F5E8CA] p-6 shadow-2xl sm:p-8"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -109,22 +110,17 @@ const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose }) =>
 
             {step === 'location' ? (
               <>
-                <h1 className="pr-12 font-serif text-4xl font-black leading-none text-[#2D4F3E] sm:text-5xl">
-                  SHOP
-                </h1>
                 <p className="text-xs font-black uppercase tracking-widest text-[#F47C3E]">
                   Before you shop
                 </p>
                 <h2 className="mt-2 pr-8 font-serif text-2xl font-black text-[#2D4F3E]">
-                  We'd love to bring Jiva to you
+                  We'd love to bring Jiva to you!
                 </h2>
-                <p className="mt-3 text-sm leading-relaxed text-[#2D4F3E]/75">
-                  We&apos;re accepting preorders in select areas of Massachusetts. Enter your ZIP code
-                  to check availability.
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-[#2D4F3E]/75">
-                  Outside our delivery area? Join the waitlist for nationwide updates!
-                </p>
+                <div className="mt-5 space-y-2 text-sm leading-relaxed text-[#2D4F3E]/75">
+                  <p>We&apos;re accepting preorders in select areas of Massachusetts.</p>
+                  <p>Enter your ZIP code to check availability.</p>
+                  <p>Outside our delivery area? Join the waitlist for nationwide updates!</p>
+                </div>
                 {error ? (
                   <p className="mt-4 text-center text-sm text-[#B45309]">{error}</p>
                 ) : null}
@@ -134,14 +130,14 @@ const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose }) =>
                     onClick={handleInMa}
                     className="flex-1 rounded-full bg-[#2D4F3E] py-3.5 text-xs font-black uppercase tracking-widest text-white transition-colors hover:bg-[#F47C3E]"
                   >
-                    Yes, I&apos;m in MA
+                    Yes, I&apos;m in MA!
                   </button>
                   <button
                     type="button"
                     onClick={handleNotInMa}
                     className="flex-1 rounded-full border border-[#2D4F3E]/30 py-3.5 text-xs font-black uppercase tracking-widest text-[#2D4F3E] transition-colors hover:border-[#2D4F3E]"
                   >
-                    No — join waitlist
+                    No :( - join waitlist
                   </button>
                 </div>
               </>
@@ -157,9 +153,6 @@ const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose }) =>
                 >
                   ← Back
                 </button>
-                <h1 className="mt-4 pr-12 font-serif text-4xl font-black leading-none text-[#2D4F3E] sm:text-5xl">
-                  SHOP
-                </h1>
                 <p className="mt-4 text-xs font-black uppercase tracking-widest text-[#F47C3E]">
                   Before you shop
                 </p>
