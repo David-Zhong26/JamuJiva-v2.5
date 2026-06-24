@@ -16,11 +16,16 @@ const ShopContent: React.FC = () => {
   if (!isEligible) {
     return (
       <>
-        <main className="flex min-h-[70vh] items-center justify-center bg-[#F5E8CA] px-8 pb-16 pt-28">
-          <div className="max-w-md text-center">
-            <h1 className="font-serif text-4xl font-black text-[#2D4F3E] md:text-5xl">Shop</h1>
-            <p className="mt-4 text-[#2D4F3E]/75">
-              Tell us where you&apos;re located so we can show delivery options or the waitlist.
+        <main className="flex min-h-screen items-center justify-center bg-[#F5E8CA] px-8 pb-16 pt-28">
+          <div className="max-w-lg text-center">
+            <p className="text-base leading-relaxed text-[#2D4F3E]/85 md:text-lg">
+              We&apos;re currently accepting preorders in select areas of Massachusetts.
+              <br />
+              Enter your ZIP code to see if we deliver to you.
+            </p>
+            <p className="mt-6 text-base leading-relaxed text-[#2D4F3E]/75 md:text-lg">
+              Not in our delivery area yet? Join the waitlist, and we&apos;ll let you know when Jiva is
+              available near you.
             </p>
             {!screeningOpen ? (
               <button
