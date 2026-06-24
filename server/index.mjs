@@ -6,6 +6,7 @@ import {
   getDeliveryZipsPayload,
   getHealthPayload,
 } from './shopApi.mjs';
+import { subscribeToMailingList } from './mailingList.mjs';
 
 const PORT = Number(process.env.API_PORT) || 3001;
 const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:3000';
@@ -34,6 +35,18 @@ app.post('/api/checkout', async (req, res) => {
     console.error('[checkout]', err);
     return res.status(500).json({
       error: err instanceof Error ? err.message : 'Checkout failed.',
+    });
+  }
+});
+
+app.post('/api/subscribe', async (req, res) => {
+  try {
+    const result = await subscribeToMailingList(req.body);
+    return res.status(result.status).json(result.body);
+  } catch (err) {
+    console.error('[subscribe]', err);
+    return res.status(500).json({
+      error: err instanceof Error ? err.message : 'Subscription failed.',
     });
   }
 });

@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowRight, X } from 'lucide-react';
-import { supabase } from '../supabase';
 
 interface MailingListModalProps {
   open: boolean;
@@ -52,28 +51,27 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
       return;
     }
 
-    if (!supabase) {
-      alert('Mailing list is temporarily unavailable. Please try again later.');
-      return;
-    }
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: cleanedEmail,
+          firstName: cleanedFirstName || null,
+        }),
+      });
 
-    const { error } = await supabase.from('subscribers').insert([
-      {
-        email: cleanedEmail,
-        first_name: cleanedFirstName || null,
-      },
-    ]);
+      const data = await res.json().catch(() => ({}));
 
-    if (error) {
-      if (error.message.toLowerCase().includes('duplicate')) {
-        alert('This email is already on the list.');
-      } else {
-        alert(error.message);
+      if (!res.ok) {
+        alert(typeof data.error === 'string' ? data.error : 'Something went wrong. Please try again.');
+        return;
       }
-      return;
-    }
 
-    setSubmitted(true);
+      setSubmitted(true);
+    } catch {
+      alert('Something went wrong. Please try again.');
+    }
   };
 
   return (
