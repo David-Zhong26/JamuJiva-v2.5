@@ -116,14 +116,14 @@ const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose }) =>
                   Before you shop
                 </p>
                 <h2 className="mt-2 pr-8 font-serif text-2xl font-black text-[#2D4F3E]">
-                  Do we deliver to your area?
+                  We'd love to bring Jiva to you
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-[#2D4F3E]/75">
                   We&apos;re accepting preorders in select areas of Massachusetts. Enter your ZIP code
                   to check availability.
                 </p>
                 <p className="mt-2 text-sm leading-relaxed text-[#2D4F3E]/75">
-                  Outside our delivery area? Join the waitlist for nationwide updates.
+                  Outside our delivery area? Join the waitlist for nationwide updates!
                 </p>
                 {error ? (
                   <p className="mt-4 text-center text-sm text-[#B45309]">{error}</p>

@@ -33,7 +33,7 @@ const ShopContent: React.FC = () => {
                 onClick={() => setScreeningOpen(true)}
                 className="mt-8 rounded-full bg-[#2D4F3E] px-8 py-3.5 text-xs font-black uppercase tracking-widest text-white hover:bg-[#F47C3E]"
               >
-                Check delivery area
+                CHECK MY ZIP CODE
               </button>
             ) : null}
             <button

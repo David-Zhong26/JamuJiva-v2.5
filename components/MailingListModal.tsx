@@ -115,7 +115,7 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
                   Join the waitlist
                 </h3>
                 <p className="mt-3 text-base leading-relaxed text-[#2D4F3E]/70">
-                  Be the first to hear about launches, restocks, and special releases from Jiva.
+                  Be the first to hear about launches, restocks, and special releases from Jiva!
                 </p>
 
                 <form onSubmit={handleSubmit} className="mt-8 space-y-5">
