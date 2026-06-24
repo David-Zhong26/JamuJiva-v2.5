@@ -109,6 +109,9 @@ const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose }) =>
 
             {step === 'location' ? (
               <>
+                <h1 className="pr-12 font-serif text-4xl font-black leading-none text-[#2D4F3E] sm:text-5xl">
+                  SHOP
+                </h1>
                 <p className="text-xs font-black uppercase tracking-widest text-[#F47C3E]">
                   Before you shop
                 </p>
@@ -154,10 +157,13 @@ const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose }) =>
                 >
                   ← Back
                 </button>
+                <h1 className="mt-4 pr-12 font-serif text-4xl font-black leading-none text-[#2D4F3E] sm:text-5xl">
+                  SHOP
+                </h1>
                 <p className="mt-4 text-xs font-black uppercase tracking-widest text-[#F47C3E]">
                   Before you shop
                 </p>
-                <h2 className="mt-4 pr-8 font-serif text-2xl font-black text-[#2D4F3E]">
+                <h2 className="mt-2 pr-8 font-serif text-2xl font-black text-[#2D4F3E]">
                   What&apos;s your ZIP code?
                 </h2>
                 <p className="mt-3 text-sm text-[#2D4F3E]/75">
