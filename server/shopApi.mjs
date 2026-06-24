@@ -90,13 +90,13 @@ function isZipEligible(zip, deliveryZips) {
 function buildCheckoutCustomFields() {
   return [
     {
-      key: 'delivery_date',
+      key: 'phone_number',
       label: {
         type: 'custom',
-        custom: 'Preferred dates (mm/dd/yy - mm/dd/yy)',
+        custom: 'Phone number',
       },
       type: 'text',
-      text: { maximum_length: 80 },
+      text: { maximum_length: 20 },
       optional: false,
     },
     {
