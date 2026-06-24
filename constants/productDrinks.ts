@@ -11,10 +11,11 @@ export const PRODUCT_DRINKS = [
     name: 'Golden Glow',
     shortLabel: 'Golden Glow',
     eyebrow: 'Turmeric rooted daily glow',
+    bottleSize: '8 oz',
     description:
-      'A bright blend of turmeric and tamarind with a zesty lime finish and a touch of salt.',
+      'A bright blend of turmeric and tamarind with a zesty lime finish and a touch of salt to spark your day.',
     descriptionDesktop:
-      'A bright, tangy blend of golden turmeric and tamarind with a zesty lime finish and a touch of salt.',
+      'A bright blend of turmeric and tamarind with a zesty lime finish and a touch of salt to spark your day.',
     word: 'gold',
     background: 'from-[#EB9C35] via-[#F0B154] to-[#E7A243]',
     accent: '#8A4F12',
@@ -41,8 +42,9 @@ export const PRODUCT_DRINKS = [
     name: 'Spiced Ivory',
     shortLabel: 'Spiced Ivory',
     eyebrow: 'Ginger vanilla spiced',
+    bottleSize: '8 oz',
     description:
-      'A creamy, grounding blend of vanilla and rice with the fiery warmth of kencur and ginger.',
+      'A creamy, grounding blend of vanilla and rice with the fiery warmth of galangal and ginger.',
     word: 'ivory',
     background: 'from-[#D1EAF5] via-[#C8E6F4] to-[#BFE0F0]',
     backgroundGradient: 'linear-gradient(135deg, #D1EAF5 0%, #C8E6F4 45%, #B8DDF0 100%)',

@@ -95,6 +95,12 @@ const ProductRevealSection: React.FC = () => {
             >
               {flavor.eyebrow}
             </p>
+            <p
+              className="mt-2 text-xs font-black uppercase tracking-[0.2em] opacity-80 md:text-sm"
+              style={{ color: flavor.bodyColor }}
+            >
+              {flavor.bottleSize} per bottle
+            </p>
           </div>
 
           <div className="max-w-sm text-left md:col-start-2 md:mr-8 md:justify-self-end lg:mr-12">

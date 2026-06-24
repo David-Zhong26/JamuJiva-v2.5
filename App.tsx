@@ -7,6 +7,8 @@ import ScrollStory from './components/ScrollStory';
 import Footer from './components/Footer';
 import HashScroll from './components/HashScroll';
 import ShopPage from './pages/ShopPage';
+import ShopCancelPage from './pages/ShopCancelPage';
+import ShopSuccessPage from './pages/ShopSuccessPage';
 import CulturePage from './pages/CulturePage';
 import JournalPage from './pages/JournalPage';
 import RitualPage from './pages/RitualPage';
@@ -33,7 +35,9 @@ const App: React.FC = () => {
           <main className="pt-0">
             <Routes>
               <Route path="/" element={<ScrollStory />} />
-              <Route path="/shop" element={<ShopPage />} />
+              <Route path="/shop/success" element={<ShopSuccessPage />} />
+              <Route path="/shop/cancel" element={<ShopCancelPage />} />
+              <Route path="/shop/*" element={<ShopPage />} />
               <Route path="/culture" element={<CulturePage />} />
               <Route path="/ritual" element={<RitualPage />} />
               <Route path="/journal" element={<JournalPage />} />
