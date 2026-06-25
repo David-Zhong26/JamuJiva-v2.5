@@ -262,13 +262,12 @@ const ScrollStory: React.FC = () => {
               </div>
             </div>
             <div className="pointer-events-auto">
-              <button
-                type="button"
-                onClick={openMailingList}
+              <Link
+                to="/shop"
                 className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/20 px-6 py-3 text-sm font-black text-white backdrop-blur-xl transition-all hover:bg-white/25 sm:gap-3 sm:px-8 sm:py-4"
               >
-                JOIN THE DROP <Send className="w-4 h-4" />
-              </button>
+                SHOP NOW <Send className="w-4 h-4" />
+              </Link>
             </div>
           </div>
         </div>
