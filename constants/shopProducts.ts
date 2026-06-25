@@ -1,5 +1,5 @@
-import goldenGlowBottle from '../materials/golden glow bottle.png';
-import spicedIvoryBottle from '../materials/spiced ivory bottle.png';
+import goldenGlowBottle from '../materials/golden glow bottle transparent.png';
+import spicedIvoryBottle from '../materials/spiced ivory bottle transparent.png';
 import bestSellerBottles from '../materials/best seller bottles.png';
 
 /** Stripe cart line IDs (maps to server checkout) */

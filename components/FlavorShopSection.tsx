@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import demoJivaBottle from '../materials/jiva can.png';
 import { PRODUCT_DRINKS, type ProductDrink } from '../constants/productDrinks';
 
 interface FlavorShopSectionProps {
@@ -32,7 +31,7 @@ const FlavorShopSection: React.FC<FlavorShopSectionProps> = ({ onOpenMailingList
             <div className="relative flex min-h-[320px] items-center justify-center md:min-h-[420px]">
               <motion.img
                 key={drink.slug}
-                src={demoJivaBottle}
+                src={drink.bottleImage}
                 alt={drink.name}
                 initial={{ opacity: 0, y: 10, scale: 0.985 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}

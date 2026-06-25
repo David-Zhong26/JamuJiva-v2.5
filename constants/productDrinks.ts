@@ -4,6 +4,8 @@ import ginger1 from '../materials/ginger 1.png';
 import ginger2 from '../materials/ginger 2.png';
 import mint1 from '../materials/mint 1.png';
 import mint2 from '../materials/mint 2.png';
+import goldenGlowBottle from '../materials/golden glow bottle transparent.png';
+import spicedIvoryBottle from '../materials/spiced ivory bottle transparent.png';
 
 export const PRODUCT_DRINKS = [
   {
@@ -30,6 +32,7 @@ export const PRODUCT_DRINKS = [
     priceOneTime: 40,
     priceSubscribe: 34,
     perUnit: '$2.83 per bottle',
+    bottleImage: goldenGlowBottle,
     thumb: modelGinger,
     elements: [
       { src: modelGinger, className: 'left-[-2%] top-[8%] w-[13rem] md:w-[17rem] lg:w-[19rem] rotate-[-14deg]' },
@@ -58,6 +61,7 @@ export const PRODUCT_DRINKS = [
     priceOneTime: 40,
     priceSubscribe: 34,
     perUnit: '$2.83 per bottle',
+    bottleImage: spicedIvoryBottle,
     thumb: modelMint,
     elements: [
       { src: modelMint, className: 'left-[-1%] top-[10%] w-[12rem] md:w-[16rem] lg:w-[18rem] rotate-[-10deg]' },

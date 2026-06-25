@@ -5,7 +5,6 @@ import { Send, ChevronDown } from 'lucide-react';
 import backgroundImg from '../materials/background.png';
 import background3Img from '../materials/background 3.png';
 import background4Img from '../materials/background 4.png';
-import demoJivaBottle from '../materials/jiva can.png';
 import artworkImg from '../materials/Artwork.png';
 import DailyRitualSection from './DailyRitualSection';
 import { PRODUCT_DRINKS } from '../constants/productDrinks';
@@ -53,9 +52,9 @@ const ProductRevealSection: React.FC = () => {
         }`}
       >
         <img
-          src={demoJivaBottle}
+          src={flavor.bottleImage}
           alt={flavor.name}
-          className="pointer-events-none absolute left-1/2 top-[38%] z-0 jj-vh-can h-[50vh] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:jj-vh-can-sm sm:h-[58vh] md:top-1/2 md:h-[95vh]"
+          className="pointer-events-none absolute left-1/2 top-[38%] z-0 jj-vh-can h-[44vh] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:jj-vh-can-sm sm:h-[52vh] md:top-1/2 md:h-[86vh]"
         />
         <div
           className={`pointer-events-none absolute top-[max(2.75rem,calc(env(safe-area-inset-top)+1.5rem))] z-20 flex items-center gap-1.5 whitespace-nowrap text-[0.62rem] font-bold uppercase tracking-widest md:hidden ${
@@ -103,7 +102,7 @@ const ProductRevealSection: React.FC = () => {
             </p>
           </div>
 
-          <div className="max-w-sm text-left md:col-start-2 md:mr-8 md:justify-self-end lg:mr-12">
+          <div className="max-w-sm translate-x-3 text-left md:col-start-2 md:mr-8 md:translate-x-5 md:justify-self-end lg:mr-12 lg:translate-x-6">
             <p
               className="text-sm leading-relaxed sm:text-base md:min-h-[6.75rem] md:text-lg lg:min-h-[7.25rem]"
               style={{ color: flavor.bodyColor }}
