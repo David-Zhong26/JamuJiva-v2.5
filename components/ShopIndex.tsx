@@ -10,7 +10,7 @@ const ShopIndex: React.FC = () => (
         Shop All
       </h1>
       <p className="mt-3 max-w-xl text-sm text-[#2D4F3E]/75 md:text-base">
-        Boston-area delivery. Pick a flavor to choose your size and add to cart.
+        Massachusetts-area delivery. Pick a flavor to choose your size and add to cart.
       </p>
 
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

@@ -30,7 +30,7 @@ const ShopCatalog: React.FC = () => {
           shop all
         </h1>
         <p className="mt-3 max-w-xl text-sm text-[#2D4F3E]/75 md:text-base">
-          Boston-area delivery. Pick your flavor and size, then add to cart when you&apos;re ready.
+          Massachusetts-area delivery. I-area delivery. I-area delivery. Pick your flavor and size, then add to cart when you&apos;re ready.
         </p>
 
         <div className="mt-10 space-y-8">

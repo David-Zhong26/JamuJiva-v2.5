@@ -118,7 +118,7 @@ const ShopContent: React.FC = () => {
                 What&apos;s your ZIP code?
               </h2>
               <p className="mt-3 text-sm text-[#2D4F3E]/75 sm:text-base">
-                We deliver to select MA-area ZIP codes.
+                We deliver to select Massachusetts-area ZIP codes.
               </p>
               <form onSubmit={handleZipSubmit} className="mt-6 space-y-4">
                 <input
