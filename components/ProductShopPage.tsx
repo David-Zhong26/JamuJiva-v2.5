@@ -21,9 +21,9 @@ const FlavorCard: React.FC<{ group: ShopGroup; compact?: boolean }> = ({ group, 
         compact ? 'min-w-[7.5rem] md:min-w-[8.5rem]' : ''
       }`}
     >
-      {group.id === 'mixed' ? (
-        <span className="absolute left-2 top-2 z-10 bg-[#2D4F3E] px-2 py-0.5 text-[0.58rem] font-black uppercase tracking-widest text-[#F9D067]">
-          Best seller
+      {group.badge ? (
+        <span className="absolute left-2 top-2 z-10 rounded-md bg-[#2D4F3E] px-2 py-0.5 text-[0.58rem] font-black uppercase tracking-widest text-white">
+          {group.badge}
         </span>
       ) : null}
       <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-xl bg-[#F5E8CA] p-2">

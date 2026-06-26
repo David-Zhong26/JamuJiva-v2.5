@@ -73,7 +73,7 @@ const FlavorShopSection: React.FC<FlavorShopSectionProps> = ({ onOpenMailingList
                     }`}
                   >
                     {item.badge ? (
-                      <span className="absolute left-2 top-2 z-10 bg-[#2D4F3E] px-2 py-0.5 text-[0.58rem] font-black uppercase tracking-widest text-[#F9D067]">
+                      <span className="absolute left-2 top-2 z-10 rounded-md bg-[#2D4F3E] px-2 py-0.5 text-[0.58rem] font-black uppercase tracking-widest text-white">
                         {item.badge}
                       </span>
                     ) : null}

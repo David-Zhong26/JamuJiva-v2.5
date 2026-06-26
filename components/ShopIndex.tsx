@@ -18,8 +18,13 @@ const ShopIndex: React.FC = () => (
           <Link
             key={group.id}
             to={`/shop/${group.slug}`}
-            className="group overflow-hidden rounded-2xl border border-[#2D4F3E]/15 bg-[#F9EFD4]/40 transition-colors hover:border-[#2D4F3E]/35"
+            className="group relative overflow-hidden rounded-2xl border border-[#2D4F3E]/15 bg-[#F9EFD4]/40 transition-colors hover:border-[#2D4F3E]/35"
           >
+            {group.badge ? (
+              <span className="absolute right-4 top-4 z-10 rounded-md bg-[#2D4F3E] px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.18em] text-white">
+                {group.badge}
+              </span>
+            ) : null}
             <div className="flex min-h-[200px] items-center justify-center bg-[#F5E8CA] p-8">
               <img
                 src={group.image}

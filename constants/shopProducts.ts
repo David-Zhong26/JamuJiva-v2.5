@@ -76,6 +76,7 @@ export type ShopGroup = {
   id: ShopGroupId;
   slug: string;
   name: string;
+  badge?: 'Best seller';
   eyebrow: string;
   description: string;
   image: string;
@@ -124,6 +125,7 @@ export const SHOP_GROUPS: ShopGroup[] = [
     id: 'mixed',
     slug: 'mixed-duo',
     name: 'Best of Both',
+    badge: 'Best seller',
     eyebrow: '',
     description: 'One Golden Glow and one Spiced Ivory.',
     image: bestSellerBottles,
