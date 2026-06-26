@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 const ShopSuccessPage: React.FC = () => (
   <main className="flex min-h-screen items-center justify-center bg-[#F5E8CA] px-8 pb-16 pt-28">
     <div className="max-w-md text-center">
-      <h1 className="font-serif text-4xl font-black text-[#2D4F3E]">Thank you!</h1>
+      <h1 className="font-serif text-4xl font-black text-[#2D4F3E]">Thank you for your order!</h1>
       <p className="mt-4 text-[#2D4F3E]/75">
-        Your payment was received. We&apos;ll be in touch about delivery details soon.
+        Your order has been confirmed, and your payment was successfully received. A receipt will be sent to your email. Our team will contact you shortly to coordinate your delivery date and time.
       </p>
       <Link
         to="/"
