@@ -42,7 +42,14 @@ function getStripe() {
 
 const priceCache = new Map();
 
-async function resolvePriceId(stripe, productKey) {
+function calculateOnlineOrderFee(subtotalCents) {
+  const percentageFee = 0.029;
+  const fixedFeeCents = 30;
+
+  return Math.ceil((subtotalCents + fixedFeeCents) / (1 - percentageFee) - subtotalCents);
+}
+
+async function resolvePriceInfo(stripe, productKey) {
   const label = PRODUCT_LABELS[productKey] ?? productKey;
   const envKeys = PRODUCT_ENV_KEYS[productKey] ?? [];
   const stripeRef = getStripeRef(productKey);
@@ -57,10 +64,12 @@ async function resolvePriceId(stripe, productKey) {
   }
 
   let priceId;
+  let unitAmountCents;
 
   if (stripeRef.startsWith('price_')) {
-    await stripe.prices.retrieve(stripeRef);
+    const price = await stripe.prices.retrieve(stripeRef);
     priceId = stripeRef;
+    unitAmountCents = price.unit_amount;
   } else if (stripeRef.startsWith('prod_')) {
     const product = await stripe.products.retrieve(stripeRef, { expand: ['default_price'] });
     const defaultPrice = product.default_price;
@@ -72,14 +81,20 @@ async function resolvePriceId(stripe, productKey) {
     }
 
     priceId = typeof defaultPrice === 'string' ? defaultPrice : defaultPrice.id;
+    unitAmountCents = typeof defaultPrice === 'string' ? null : defaultPrice.unit_amount;
   } else {
     throw new Error(
       `${label}: expected prod_... or price_... in .env, got "${stripeRef}".`
     );
   }
 
-  priceCache.set(stripeRef, priceId);
-  return priceId;
+  if (!Number.isInteger(unitAmountCents)) {
+    throw new Error(`${label}: Stripe price is missing a valid unit amount.`);
+  }
+
+  const priceInfo = { priceId, unitAmountCents };
+  priceCache.set(stripeRef, priceInfo);
+  return priceInfo;
 }
 
 function isZipEligible(zip, deliveryZips) {
@@ -155,6 +170,7 @@ export async function createCheckoutSession(body) {
   }
 
   const line_items = [];
+  let subtotalCents = 0;
   for (const item of items) {
     const { productId, quantity } = item;
     if (!getStripeRef(productId)) {
@@ -165,12 +181,27 @@ export async function createCheckoutSession(body) {
       return { status: 400, body: { error: 'Invalid quantity.' } };
     }
     try {
-      const price = await resolvePriceId(stripe, productId);
-      line_items.push({ price, quantity: qty });
+      const { priceId, unitAmountCents } = await resolvePriceInfo(stripe, productId);
+      subtotalCents += unitAmountCents * qty;
+      line_items.push({ price: priceId, quantity: qty });
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Invalid Stripe product config.';
       return { status: 400, body: { error: message } };
     }
+  }
+
+  const onlineOrderFeeCents = calculateOnlineOrderFee(subtotalCents);
+  if (onlineOrderFeeCents > 0) {
+    line_items.push({
+      price_data: {
+        currency: 'usd',
+        product_data: {
+          name: 'Online order fee',
+        },
+        unit_amount: onlineOrderFeeCents,
+      },
+      quantity: 1,
+    });
   }
 
   const session = await stripe.checkout.sessions.create({
