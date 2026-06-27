@@ -33,13 +33,13 @@ const FaqPage: React.FC = () => (
         {FAQ_ITEMS.map((item) => (
           <details
             key={item.question}
-            className="group rounded-2xl border border-[#2D4F3E]/12 bg-white/35 px-5 py-4 text-[#2D4F3E]"
+            className="group rounded-2xl border border-[#2D4F3E]/12 bg-white/35 text-[#2D4F3E] transition-colors duration-300 hover:bg-[#2D4F3E] hover:text-white"
           >
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-serif text-xl font-bold marker:content-none md:text-2xl">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-serif text-lg font-bold marker:content-none md:text-xl">
               <span>{item.question}</span>
               <ChevronDown className="h-5 w-5 shrink-0 transition-transform duration-200 group-open:rotate-180" />
             </summary>
-            <p className="pt-4 text-base leading-relaxed text-[#2D4F3E]/80 md:text-lg">{item.answer}</p>
+            <p className="px-5 pb-4 text-sm leading-relaxed text-inherit md:text-base">{item.answer}</p>
           </details>
         ))}
 

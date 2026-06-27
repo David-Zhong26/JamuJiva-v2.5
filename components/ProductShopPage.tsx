@@ -17,7 +17,7 @@ import { useCart } from '../contexts/CartContext';
 const FlavorCard: React.FC<{ group: ShopGroup; compact?: boolean }> = ({ group, compact }) => (
     <Link
       to={`/shop/${group.slug}`}
-      className={`group relative flex flex-col overflow-hidden rounded-xl border border-[#2D4F3E]/30 text-left transition-all duration-200 hover:border-[#2D4F3E]/55 ${
+      className={`group relative flex flex-col overflow-hidden rounded-xl border border-[#2D4F3E]/30 bg-[#F9EFD4]/35 text-left transition-all duration-300 hover:border-[#2D4F3E]/55 hover:bg-[#F4D8AE] ${
         compact ? 'min-w-[7.5rem] md:min-w-[8.5rem]' : ''
       }`}
     >
@@ -26,14 +26,14 @@ const FlavorCard: React.FC<{ group: ShopGroup; compact?: boolean }> = ({ group, 
           {group.badge}
         </span>
       ) : null}
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-xl bg-[#F5E8CA] p-2">
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-xl bg-[#F5E8CA] p-2 transition-colors duration-300 group-hover:bg-[#F2D2A2]">
         <img
           src={group.image}
           alt={group.name}
           className="absolute inset-0 m-auto h-[88%] w-auto rounded-xl object-contain transition-transform duration-300 group-hover:scale-[1.03]"
         />
       </div>
-      <div className="border-t border-[#2D4F3E]/20 bg-[#F9D067]/35 px-3 py-2">
+      <div className="border-t border-[#2D4F3E]/20 bg-[#F9D067]/35 px-3 py-2 transition-colors duration-300 group-hover:bg-[#F4D8AE]">
         <span className="text-[0.65rem] font-black uppercase tracking-widest text-[#2D4F3E]">
           {group.name}
         </span>
