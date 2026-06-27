@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { SHOP_BOTTLE_SIZE_CLASS, SHOP_GROUPS, shopGroupSizeLabel } from '../constants/shopProducts';
+import { SHOP_GROUPS } from '../constants/shopProducts';
 
 const ShopIndex: React.FC = () => (
   <section className="py-10 md:py-14">
@@ -38,11 +38,12 @@ const ShopIndex: React.FC = () => (
                   {group.eyebrow}
                 </p>
               ) : null}
-              <p className={`mt-1 ${SHOP_BOTTLE_SIZE_CLASS}`}>
-                {shopGroupSizeLabel(group, 'card')}
-              </p>
               <p className="mt-2 text-sm leading-relaxed text-[#2D4F3E]/75">{group.description}</p>
-              <span className="mt-4 inline-block text-xs font-black uppercase tracking-widest text-[#F47C3E] group-hover:text-[#2D4F3E]">
+              <span
+                className={`inline-block text-xs font-black uppercase tracking-widest text-[#F47C3E] group-hover:text-[#2D4F3E] ${
+                  group.id === 'mixed' ? 'mt-12' : 'mt-4'
+                }`}
+              >
                 Shop now →
               </span>
             </div>
