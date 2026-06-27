@@ -76,9 +76,9 @@ const ProductRevealSection: React.FC = () => {
             flavor.slug === 'spiced-ivory' ? ' pl-4' : flavor.slug === 'bali-gold' ? ' pl-4' : ''
           }`}
         >
-          <div className="translate-x-2 text-left md:translate-x-3 lg:translate-x-4">
+          <div className="text-left md:translate-x-3 lg:translate-x-4">
             <h2
-              className="font-serif text-4xl font-black leading-[0.9] sm:text-5xl md:text-7xl"
+              className="-translate-x-2 font-serif text-4xl font-black leading-[0.9] sm:text-5xl md:translate-x-0 md:text-7xl"
               style={{ color: flavor.textColor }}
             >
               {flavor.name.split(' ').map((word, index, words) => (
@@ -89,13 +89,13 @@ const ProductRevealSection: React.FC = () => {
               ))}
             </h2>
             <p
-              className="mt-5 text-sm font-black uppercase tracking-[0.2em] md:text-base"
+              className="-translate-x-1 mt-5 text-sm font-black uppercase tracking-[0.2em] md:translate-x-0 md:text-base"
               style={{ color: flavor.bodyColor }}
             >
               {flavor.eyebrow}
             </p>
             <p
-              className="mt-2 text-xs font-black uppercase tracking-[0.2em] opacity-80 md:text-sm"
+              className="-translate-x-1 mt-2 text-xs font-black uppercase tracking-[0.2em] opacity-80 md:translate-x-0 md:text-sm"
               style={{ color: flavor.bodyColor }}
             >
               {flavor.bottleSize} per bottle
