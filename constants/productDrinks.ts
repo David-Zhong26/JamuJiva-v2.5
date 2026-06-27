@@ -1,9 +1,3 @@
-import modelMint from '../materials/model mint.png';
-import modelGinger from '../materials/model ginger.png';
-import ginger1 from '../materials/ginger 1.png';
-import ginger2 from '../materials/ginger 2.png';
-import mint1 from '../materials/mint 1.png';
-import mint2 from '../materials/mint 2.png';
 import goldenGlowBottle from '../materials/golden glow bottle transparent.png';
 import spicedIvoryBottle from '../materials/spiced ivory bottle transparent.png';
 
@@ -33,12 +27,8 @@ export const PRODUCT_DRINKS = [
     priceSubscribe: 34,
     perUnit: '$2.83 per bottle',
     bottleImage: goldenGlowBottle,
-    thumb: modelGinger,
-    elements: [
-      { src: modelGinger, className: 'left-[-2%] top-[8%] w-[13rem] md:w-[17rem] lg:w-[19rem] rotate-[-14deg]' },
-      { src: ginger1, className: 'left-[8%] bottom-[14%] w-[9rem] md:w-[12rem] lg:w-[14rem] rotate-[8deg]' },
-      { src: ginger2, className: 'right-[4%] top-[14%] w-[10rem] md:w-[13rem] lg:w-[15rem] rotate-[14deg]' },
-    ],
+    thumb: goldenGlowBottle,
+    elements: [],
   },
   {
     slug: 'spiced-ivory' as const,
@@ -62,12 +52,8 @@ export const PRODUCT_DRINKS = [
     priceSubscribe: 34,
     perUnit: '$2.83 per bottle',
     bottleImage: spicedIvoryBottle,
-    thumb: modelMint,
-    elements: [
-      { src: modelMint, className: 'left-[-1%] top-[10%] w-[12rem] md:w-[16rem] lg:w-[18rem] rotate-[-10deg]' },
-      { src: mint1, className: 'left-[10%] bottom-[12%] w-[8rem] md:w-[10rem] lg:w-[12rem] rotate-[10deg]' },
-      { src: mint2, className: 'right-[5%] top-[16%] w-[8rem] md:w-[11rem] lg:w-[13rem] rotate-[18deg]' },
-    ],
+    thumb: spicedIvoryBottle,
+    elements: [],
   },
 ] as const;
 
