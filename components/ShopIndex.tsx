@@ -5,7 +5,6 @@ import { SHOP_BOTTLE_SIZE_CLASS, SHOP_GROUPS, shopGroupSizeLabel } from '../cons
 const ShopIndex: React.FC = () => (
   <section className="py-10 md:py-14">
     <div className="mx-auto max-w-5xl px-5 md:px-10">
-      <p className="text-xs font-black uppercase tracking-widest text-[#F47C3E]">Shop</p>
       <h1 className="mt-2 font-serif text-4xl font-black text-[#2D4F3E] md:text-5xl">
         Shop All
       </h1>

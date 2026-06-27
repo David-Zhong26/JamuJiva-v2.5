@@ -76,7 +76,7 @@ const ProductRevealSection: React.FC = () => {
             flavor.slug === 'spiced-ivory' ? ' pl-4' : flavor.slug === 'bali-gold' ? ' pl-4' : ''
           }`}
         >
-          <div className="text-left">
+          <div className="translate-x-2 text-left md:translate-x-3 lg:translate-x-4">
             <h2
               className="font-serif text-4xl font-black leading-[0.9] sm:text-5xl md:text-7xl"
               style={{ color: flavor.textColor }}
@@ -102,7 +102,7 @@ const ProductRevealSection: React.FC = () => {
             </p>
           </div>
 
-          <div className="max-w-sm translate-x-3 text-left md:col-start-2 md:mr-8 md:translate-x-5 md:justify-self-end lg:mr-12 lg:translate-x-6">
+          <div className="max-w-sm -translate-x-1 text-left sm:translate-x-0 md:col-start-2 md:mr-8 md:translate-x-7 md:justify-self-end lg:mr-12 lg:translate-x-8">
             <p
               className="text-sm leading-relaxed sm:text-base md:min-h-[6.75rem] md:text-lg lg:min-h-[7.25rem]"
               style={{ color: flavor.bodyColor }}
