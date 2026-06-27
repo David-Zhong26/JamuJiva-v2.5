@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Send, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import backgroundImg from '../materials/background.png';
 import background3Img from '../materials/background 3.png';
 import background4Img from '../materials/background 4.png';
@@ -257,9 +257,9 @@ const ScrollStory: React.FC = () => {
             <div className="pointer-events-auto">
               <Link
                 to="/shop"
-                className="inline-flex items-center gap-3 rounded-full border border-white/30 bg-white/20 px-8 py-4 text-base font-black text-white backdrop-blur-xl transition-all hover:bg-white/25 sm:px-10 sm:py-5 sm:text-lg"
+                className="inline-flex items-center rounded-full border border-white/30 bg-white/20 px-8 py-4 text-base font-black text-white backdrop-blur-xl transition-all hover:bg-white/25 sm:px-10 sm:py-5 sm:text-lg"
               >
-                SHOP NOW <Send className="h-5 w-5" />
+                SHOP NOW
               </Link>
             </div>
           </div>

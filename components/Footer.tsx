@@ -15,9 +15,9 @@ const headingClass = 'mb-4 font-serif text-xl font-bold text-[#2D4F3E] md:text-l
 const Footer: React.FC = () => {
   return (
     <footer className="border-t border-[#2D4F3E]/10 px-5 py-12 md:px-6 md:py-20">
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-6xl">
         <div className="md:flex md:items-start md:justify-between md:gap-12">
-          <div className="max-w-xs md:pl-0">
+          <div className="max-w-xs md:translate-x-6 md:pl-0">
             <Link to="/" className="mb-2 inline-block pl-4 md:pl-0">
               <img src={logo} alt="Jamu Jiva" className="h-[44px] w-auto" decoding="async" />
             </Link>
@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
             </p>
           </div>
 
-          <div className="mt-8 w-full md:mt-0 md:w-auto md:-translate-x-6">
+          <div className="mt-8 w-full md:mt-0 md:w-auto md:-translate-x-10">
             <div className="grid grid-cols-2 gap-x-8 md:flex md:gap-x-16">
               <div className="pl-6 md:pl-0">
                 <h4 className={headingClass}>Shop</h4>
@@ -52,6 +52,11 @@ const Footer: React.FC = () => {
                     <a href="mailto:info@jivalivin.com" className={linkClass}>
                       Contact
                     </a>
+                  </li>
+                  <li>
+                    <Link to="/faq" className={linkClass}>
+                      FAQ
+                    </Link>
                   </li>
                   <li>
                     <Link to="/journal" className={linkClass}>
@@ -135,11 +140,8 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-[#2D4F3E]/5 pt-8 md:mt-20 md:flex md:items-center md:justify-between md:pt-10">
+        <div className="mt-12 border-t border-[#2D4F3E]/5 pt-8 md:mt-20 md:pt-10">
           <p className="pl-6 text-sm font-medium text-[#2F4F3A]/50 md:hidden md:pl-0">© 2026 Jiva Drinks LLC.</p>
-          <p className="hidden text-sm font-medium text-[#2F4F3A]/50 md:block">
-            © 2026 Jiva Drinks LLC. All rights reserved.
-          </p>
           <div className="mt-2 pl-6 md:mt-0 md:pl-0">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium text-[#2F4F3A]/50 md:hidden">
               <Link to="/privacy" className="hover:text-[#F47C3E]">
@@ -150,10 +152,13 @@ const Footer: React.FC = () => {
                 Terms of Use
               </Link>
             </div>
-            <div className="hidden gap-8 text-sm font-medium text-[#2F4F3A]/50 md:flex">
+            <div className="hidden items-center gap-4 text-sm font-medium text-[#2F4F3A]/50 md:flex">
+              <p>© 2026 Jiva Drinks LLC. All rights reserved.</p>
+              <Dot />
               <Link to="/privacy" className="hover:text-[#F47C3E]">
                 Privacy Policy
               </Link>
+              <Dot />
               <Link to="/terms" className="hover:text-[#F47C3E]">
                 Terms of Use
               </Link>

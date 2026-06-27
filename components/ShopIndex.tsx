@@ -9,7 +9,7 @@ const ShopIndex: React.FC = () => (
       <h1 className="mt-2 font-serif text-4xl font-black text-[#2D4F3E] md:text-5xl">
         Shop All
       </h1>
-      <p className="mt-3 max-w-xl text-sm text-[#2D4F3E]/75 md:text-base">
+      <p className="mt-3 text-sm text-[#2D4F3E]/75 md:text-base md:whitespace-nowrap">
         Massachusetts-area delivery. Pick a flavor to choose your size and add to cart.
       </p>
 

@@ -10,6 +10,7 @@ import ShopPage from './pages/ShopPage';
 import ShopCancelPage from './pages/ShopCancelPage';
 import ShopSuccessPage from './pages/ShopSuccessPage';
 import CulturePage from './pages/CulturePage';
+import FaqPage from './pages/FaqPage';
 import JournalPage from './pages/JournalPage';
 import RitualPage from './pages/RitualPage';
 import TermsPage from './pages/TermsPage';
@@ -39,6 +40,7 @@ const App: React.FC = () => {
               <Route path="/shop/cancel" element={<ShopCancelPage />} />
               <Route path="/shop/*" element={<ShopPage />} />
               <Route path="/culture" element={<CulturePage />} />
+              <Route path="/faq" element={<FaqPage />} />
               <Route path="/ritual" element={<RitualPage />} />
               <Route path="/journal" element={<JournalPage />} />
               <Route path="/merch" element={<MerchPlaceholder />} />

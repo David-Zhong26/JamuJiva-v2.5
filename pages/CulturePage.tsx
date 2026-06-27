@@ -152,9 +152,9 @@ const CulturePage: React.FC = () => (
       >
         <Link
           to="/shop"
-          className="inline-block rounded-full bg-[#2D4F3E] px-10 py-4 font-black uppercase tracking-widest text-sm text-[#F5E8CA] transition-all hover:bg-[#1a3328]"
+          className="inline-block rounded-full bg-[#2D4F3E] px-14 py-5 font-black uppercase tracking-widest text-[1.15rem] text-[#F5E8CA] transition-all hover:bg-[#1a3328]"
         >
-          Try Jamu Jiva
+          Try Jiva
         </Link>
       </motion.div>
     </section>
