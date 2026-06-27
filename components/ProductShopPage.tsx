@@ -101,9 +101,6 @@ const ProductShopPage: React.FC = () => {
           </div>
 
           <div className="relative z-10">
-            <p className="text-xs font-bold uppercase tracking-widest text-[#2D4F3E]/65">
-              {group.id === 'mixed' ? 'Combo' : 'Single flavor'}
-            </p>
             <h1 className="mt-2 font-serif text-4xl font-bold tracking-tight text-[#2D4F3E] md:text-5xl">
               {group.name}
             </h1>
