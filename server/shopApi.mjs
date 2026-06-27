@@ -196,7 +196,7 @@ export async function createCheckoutSession(body) {
       price_data: {
         currency: 'usd',
         product_data: {
-          name: 'Service fee',
+          name: 'Shipping',
         },
         unit_amount: onlineOrderFeeCents,
       },
