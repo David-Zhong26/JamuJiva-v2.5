@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
             <Link to="/" className="mb-2 inline-block pl-4 md:pl-0">
               <img src={logo} alt="Jamu Jiva" className="h-[44px] w-auto" decoding="async" />
             </Link>
-            <p className="pl-6 font-medium text-[#2F4F3A]/80 md:pl-0">
+            <p className="pl-7 text-lg font-medium text-[#2F4F3A]/80 md:pl-2">
               Rooted in Indonesian Jamu tradition, crafted for modern wellness.
             </p>
           </div>
