@@ -253,20 +253,13 @@ const ScrollStory: React.FC = () => {
               <h1 className="font-serif text-[clamp(1.75rem,5vw,4rem)] font-bold leading-tight text-white/95 tracking-tight">
                 DRINK THE <span className="text-[#E5C76B]">LIFE YOU DESERVE</span>
               </h1>
-              <div className="hidden items-center gap-4 pt-4 text-xs font-medium uppercase tracking-widest text-[#E5C76B]/90 md:flex">
-                <span className="h-px w-12 bg-[#E5C76B]/70" />
-                Scroll to explore
-                <motion.div animate={{ y: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}>
-                  <ChevronDown className="inline h-4 w-4" />
-                </motion.div>
-              </div>
             </div>
             <div className="pointer-events-auto">
               <Link
                 to="/shop"
-                className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/20 px-6 py-3 text-sm font-black text-white backdrop-blur-xl transition-all hover:bg-white/25 sm:gap-3 sm:px-8 sm:py-4"
+                className="inline-flex items-center gap-3 rounded-full border border-white/30 bg-white/20 px-8 py-4 text-base font-black text-white backdrop-blur-xl transition-all hover:bg-white/25 sm:px-10 sm:py-5 sm:text-lg"
               >
-                SHOP NOW <Send className="w-4 h-4" />
+                SHOP NOW <Send className="h-5 w-5" />
               </Link>
             </div>
           </div>

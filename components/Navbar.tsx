@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import { useMailingList } from '../contexts/MailingListContext';
 import logoTransparent from '../materials/Jiva (8）.png';
 
 const PAGE_BG = '#F5E8CA';
@@ -14,7 +13,6 @@ const MOBILE_HEADER_PADDING_TOP = 'max(0.75rem, env(safe-area-inset-top))';
 const Navbar: React.FC = () => {
   const location = useLocation();
   const isHome = location.pathname === '/';
-  const { openMailingList } = useMailingList();
 
   const [navCompact, setNavCompact] = useState(!isHome);
   const [hideNav, setHideNav] = useState(false);
@@ -184,34 +182,6 @@ const Navbar: React.FC = () => {
             </Link>
           </motion.div>
 
-          {isHome ? (
-            <motion.button
-              type="button"
-              onClick={() => {
-                closeAll();
-                openMailingList();
-              }}
-              animate={{
-                backgroundColor: showCompactNav ? 'rgb(45, 79, 62)' : 'rgba(255, 255, 255, 0.12)',
-                borderColor: showCompactNav ? 'rgb(45, 79, 62)' : 'rgba(255, 255, 255, 0.45)',
-              }}
-              transition={NAV_TRANSITION}
-              className="inline-flex shrink-0 items-center justify-center rounded-full border px-6 py-2.5 font-black text-sm text-white transition-all hover:border-[#F47C3E] hover:bg-[#F47C3E]"
-            >
-              JOIN THE LIST
-            </motion.button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => {
-                closeAll();
-                openMailingList();
-              }}
-              className="inline-flex shrink-0 items-center justify-center rounded-full border border-[#2D4F3E] bg-[#2D4F3E] px-6 py-2.5 font-black text-sm text-white transition-all hover:border-[#F47C3E] hover:bg-[#F47C3E]"
-            >
-              JOIN THE LIST
-            </button>
-          )}
         </div>
       </motion.div>
 
@@ -258,17 +228,6 @@ const Navbar: React.FC = () => {
                   Jiva Journal
                 </Link>
               </nav>
-              <button
-                type="button"
-                onClick={() => {
-                  closeAll();
-                  openMailingList();
-                }}
-                className="mt-auto inline-flex w-full items-center justify-center rounded-full bg-[#2D4F3E] py-3.5 font-black text-xs text-white"
-                style={{ marginBottom: 'env(safe-area-inset-bottom)' }}
-              >
-                JOIN THE LIST
-              </button>
             </motion.div>
           </motion.div>
         ) : null}
