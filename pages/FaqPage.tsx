@@ -48,7 +48,7 @@ const FaqPage: React.FC = () => (
           <a className="font-bold text-[#2D4F3E] underline underline-offset-4" href="mailto:support@jivalivin.com">
             support@jivalivin.com
           </a>
-          . We&apos;d love to hear from you.
+          . We&apos;d love to hear from you!
         </p>
       </div>
     </section>
