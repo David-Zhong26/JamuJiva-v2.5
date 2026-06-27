@@ -9,8 +9,8 @@ const Dot: React.FC = () => (
   </span>
 );
 
-const linkClass = 'text-lg font-medium text-[#2F4F3A]/80 hover:text-[#F47C3E] md:text-base';
-const headingClass = 'mb-4 font-serif text-xl font-bold text-[#2D4F3E] md:text-lg';
+const linkClass = 'text-base font-medium text-[#2F4F3A]/80 hover:text-[#F47C3E] md:text-base';
+const headingClass = 'mb-4 font-serif text-lg font-bold text-[#2D4F3E] md:text-lg';
 
 const Footer: React.FC = () => {
   return (
@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
 
           <div className="mt-8 w-full md:mt-0 md:w-auto md:-translate-x-10">
             <div className="grid grid-cols-2 gap-x-8 md:flex md:gap-x-16">
-              <div className="pl-6 md:pl-0">
+              <div className="pl-8 md:pl-0">
                 <h4 className={headingClass}>Shop</h4>
                 <ul className="space-y-4">
                   <li>
@@ -102,7 +102,7 @@ const Footer: React.FC = () => {
               </div>
             </div>
 
-            <div className="mt-8 pl-6 md:hidden md:pl-0">
+            <div className="mt-8 pl-8 md:hidden md:pl-0">
               <h4 className={headingClass}>Social</h4>
               <ul className="space-y-4">
                 <li>

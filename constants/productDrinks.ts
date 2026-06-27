@@ -15,7 +15,7 @@ export const PRODUCT_DRINKS = [
     eyebrow: 'Turmeric rooted daily glow',
     bottleSize: '8 oz',
     description:
-      'A bright blend of turmeric and tamarind with a zesty lime finish and a touch of salt to spark your day.',
+      'Blend of turmeric and tamarind with a zesty lime finish and a touch of salt to spark your day.',
     descriptionDesktop:
       'A bright blend of turmeric and tamarind with a zesty lime finish and a touch of salt to spark your day.',
     word: 'gold',
