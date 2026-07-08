@@ -55,6 +55,10 @@ const ShopContent: React.FC = () => {
       return;
     }
 
+    if (isEligible) {
+      clearAccess();
+    }
+
     if (!isEligible) {
       setScreeningStep('location');
       setError(null);
