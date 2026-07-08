@@ -216,6 +216,7 @@ export async function createCheckoutSession(body) {
     line_items,
     success_url: `${clientUrl}/shop/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${clientUrl}/shop/cancel`,
+    allow_promotion_codes: true,
     custom_fields: buildCheckoutCustomFields(isPickup),
     metadata: {
       delivery_zip: String(zip ?? '').trim(),
