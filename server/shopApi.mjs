@@ -102,8 +102,8 @@ function isZipEligible(zip, deliveryZips) {
   return deliveryZips.includes(normalized);
 }
 
-function buildCheckoutCustomFields() {
-  return [
+function buildCheckoutCustomFields(isPickup = false) {
+  const fields = [
     {
       key: 'phone_number',
       label: {
@@ -114,7 +114,10 @@ function buildCheckoutCustomFields() {
       text: { maximum_length: 20 },
       optional: false,
     },
-    {
+  ];
+
+  if (!isPickup) {
+    fields.push({
       key: 'delivery_time',
       label: { type: 'custom', custom: 'Preferred delivery time' },
       type: 'dropdown',
@@ -127,15 +130,18 @@ function buildCheckoutCustomFields() {
         ],
       },
       optional: false,
-    },
-    {
-      key: 'additional_notes',
-      label: { type: 'custom', custom: 'Additional notes' },
-      type: 'text',
-      text: { maximum_length: 150 },
-      optional: true,
-    },
-  ];
+    });
+  }
+
+  fields.push({
+    key: 'additional_notes',
+    label: { type: 'custom', custom: 'Additional notes' },
+    type: 'text',
+    text: { maximum_length: 150 },
+    optional: true,
+  });
+
+  return fields;
 }
 
 export function getHealthPayload() {
@@ -159,9 +165,10 @@ export async function createCheckoutSession(body) {
 
   const deliveryZips = getDeliveryZips();
   const clientUrl = getClientUrl();
-  const { items, zip } = body ?? {};
+  const { items, zip, fulfillmentType, accessLabel } = body ?? {};
+  const isPickup = fulfillmentType === 'pickup';
 
-  if (!isZipEligible(zip, deliveryZips)) {
+  if (!isPickup && !isZipEligible(zip, deliveryZips)) {
     return { status: 400, body: { error: 'Delivery is not available for this ZIP code yet.' } };
   }
 
@@ -191,7 +198,7 @@ export async function createCheckoutSession(body) {
   }
 
   const onlineOrderFeeCents = calculateOnlineOrderFee(subtotalCents);
-  if (onlineOrderFeeCents > 0) {
+  if (!isPickup && onlineOrderFeeCents > 0) {
     line_items.push({
       price_data: {
         currency: 'usd',
@@ -204,24 +211,32 @@ export async function createCheckoutSession(body) {
     });
   }
 
-  const session = await stripe.checkout.sessions.create({
+  const sessionConfig = {
     mode: 'payment',
     line_items,
     success_url: `${clientUrl}/shop/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${clientUrl}/shop/cancel`,
-    shipping_address_collection: { allowed_countries: ['US'] },
-    custom_fields: buildCheckoutCustomFields(),
-    custom_text: {
-      shipping_address: {
-        message:
-          'Local delivery is available in select Massachusetts ZIP codes. Tell us what days or time ranges work best — we will contact you to confirm your final delivery date and time. E.g. weekday evenings after 5 PM, Saturday afternoon, Sunday morning.',
-      },
-    },
+    custom_fields: buildCheckoutCustomFields(isPickup),
     metadata: {
-      delivery_zip: String(zip).trim(),
+      delivery_zip: String(zip ?? '').trim(),
+      fulfillment_type: isPickup ? 'pickup' : 'delivery',
+      pickup_location: isPickup ? String(accessLabel ?? 'NY Indonesian Food Bazaar') : '',
       source: 'jamu-jiva-shop',
     },
-  });
+    ...(isPickup
+      ? {}
+      : {
+          shipping_address_collection: { allowed_countries: ['US'] },
+          custom_text: {
+            shipping_address: {
+              message:
+                'Local delivery is available in select Massachusetts ZIP codes. Tell us what days or time ranges work best — we will contact you to confirm your final delivery date and time. E.g. weekday evenings after 5 PM, Saturday afternoon, Sunday morning.',
+            },
+          },
+        }),
+  };
+
+  const session = await stripe.checkout.sessions.create(sessionConfig);
 
   return { status: 200, body: { url: session.url } };
 }

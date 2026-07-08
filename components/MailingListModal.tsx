@@ -14,32 +14,32 @@ const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.
 
 const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) => {
   const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
+  const [name, setName] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     if (!open) return;
     setSubmitted(false);
     setEmail('');
-    setFirstName('');
+    setName('');
   }, [open]);
 
   const progress = useMemo(() => {
     if (submitted) return 100;
 
     const emailDone = isValidEmail(email);
-    const firstNameDone = firstName.trim().length > 0;
+    const nameDone = name.trim().length > 0;
 
-    if (emailDone && firstNameDone) return 100;
-    if (emailDone || firstNameDone) return 50;
+    if (emailDone && nameDone) return 100;
+    if (emailDone || nameDone) return 50;
     return 0;
-  }, [email, firstName, submitted]);
+  }, [email, name, submitted]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const cleanedEmail = email.trim().toLowerCase();
-    const cleanedFirstName = firstName.trim();
+    const cleanedName = name.trim();
 
     if (!cleanedEmail) {
       alert('Please enter your email.');
@@ -51,13 +51,18 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
       return;
     }
 
+    if (!cleanedName) {
+      alert('Please enter your name.');
+      return;
+    }
+
     try {
       const res = await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           email: cleanedEmail,
-          firstName: cleanedFirstName || null,
+          firstName: cleanedName,
         }),
       });
 
@@ -135,14 +140,15 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
 
                   <label className="block">
                     <span className="mb-2 block text-[11px] font-black uppercase tracking-[0.18em] text-[#2D4F3E]">
-                      First name <span className="text-[#2D4F3E]/50">(optional)</span>
+                      Name <span className="text-[#2D4F3E]/50">(required)</span>
                     </span>
                     <input
                       type="text"
                       placeholder="What should we call you?"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      autoComplete="given-name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      autoComplete="name"
+                      required
                       className={fieldClass}
                     />
                   </label>
@@ -162,7 +168,7 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
                   You&apos;re in
                 </span>
                 <h3 className="font-serif text-3xl font-black leading-tight text-[#2D4F3E]">
-                  {firstName.trim() ? `Thanks, ${firstName.trim()}!` : "You're on the list!"}
+                  {name.trim() ? `Thanks, ${name.trim()}!` : "You're on the list!"}
                 </h3>
                 <p className="mt-4 text-base leading-relaxed text-[#2D4F3E]/75">
                   We&apos;ll let you know when the next product drop is ready!

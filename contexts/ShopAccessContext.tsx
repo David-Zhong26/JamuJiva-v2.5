@@ -2,15 +2,21 @@ import React, { createContext, useCallback, useContext, useMemo, useState } from
 
 const STORAGE_KEY = 'jiva_shop_access';
 
+type ShopAccessMode = 'delivery' | 'pickup';
+
 type ShopAccess = {
   zip: string;
   grantedAt: number;
+  mode?: ShopAccessMode;
+  label?: string | null;
 };
 
 type ShopAccessContextValue = {
   isEligible: boolean;
   zip: string | null;
-  grantAccess: (zip: string) => void;
+  accessMode: ShopAccessMode;
+  accessLabel: string | null;
+  grantAccess: (zip: string, mode?: ShopAccessMode, label?: string | null) => void;
   clearAccess: () => void;
 };
 
@@ -31,8 +37,8 @@ function readAccess(): ShopAccess | null {
 export const ShopAccessProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [access, setAccess] = useState<ShopAccess | null>(() => readAccess());
 
-  const grantAccess = useCallback((zip: string) => {
-    const next = { zip: zip.trim(), grantedAt: Date.now() };
+  const grantAccess = useCallback((zip: string, mode: ShopAccessMode = 'delivery', label: string | null = null) => {
+    const next = { zip: zip.trim(), grantedAt: Date.now(), mode, label };
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(next));
     setAccess(next);
   }, []);
@@ -46,6 +52,8 @@ export const ShopAccessProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     () => ({
       isEligible: Boolean(access?.zip),
       zip: access?.zip ?? null,
+      accessMode: access?.mode ?? 'delivery',
+      accessLabel: access?.label ?? null,
       grantAccess,
       clearAccess,
     }),

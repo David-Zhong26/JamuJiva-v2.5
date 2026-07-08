@@ -311,7 +311,7 @@ const ScrollStory: React.FC = () => {
           onClick={openMailingList}
           className="inline-flex items-center justify-center rounded-full bg-[#2D4F3E] px-10 py-4 font-black text-white hover:bg-[#F47C3E] transition-all"
         >
-          SECURE ACCESS
+          JOIN MAILING LIST
         </button>
       </section>
 

@@ -46,6 +46,11 @@ const ShopContent: React.FC = () => {
     setError(null);
   };
 
+  const handleNycBazaar = () => {
+    grantAccess('nyc-food-bazaar', 'pickup', 'NY Indonesian Food Bazaar');
+    setError(null);
+  };
+
   const handleZipSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const normalized = zip.trim();
@@ -85,18 +90,25 @@ const ShopContent: React.FC = () => {
               {error ? (
                 <p className="mt-4 text-center text-sm text-[#B45309]">{error}</p>
               ) : null}
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-8 grid gap-3 sm:grid-cols-3">
                 <button
                   type="button"
                   onClick={handleInMa}
-                  className="flex-1 rounded-full bg-[#2D4F3E] py-3.5 text-xs font-black uppercase tracking-widest text-white transition-colors hover:bg-[#F47C3E]"
+                  className="rounded-full bg-[#2D4F3E] py-3.5 text-xs font-black uppercase tracking-widest text-white transition-colors hover:bg-[#F47C3E]"
                 >
                   Yes, I&apos;m in MA!
                 </button>
                 <button
                   type="button"
+                  onClick={handleNycBazaar}
+                  className="rounded-full border border-[#2D4F3E] bg-[#F9EFD4] px-4 py-3.5 text-[11px] font-black uppercase leading-tight tracking-[0.1em] text-[#2D4F3E] transition-colors hover:bg-[#F5E8CA] whitespace-nowrap"
+                >
+                  NY Indonesian Food Bazaar
+                </button>
+                <button
+                  type="button"
                   onClick={openMailingList}
-                  className="flex-1 rounded-full border border-[#2D4F3E]/30 py-3.5 text-xs font-black uppercase tracking-widest text-[#2D4F3E] transition-colors hover:border-[#2D4F3E]"
+                  className="rounded-full border border-[#2D4F3E]/30 py-3.5 text-xs font-black uppercase tracking-widest text-[#2D4F3E] transition-colors hover:border-[#2D4F3E]"
                 >
                   No :( - join waitlist
                 </button>

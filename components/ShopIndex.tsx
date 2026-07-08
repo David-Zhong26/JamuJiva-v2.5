@@ -1,15 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { SHOP_GROUPS } from '../constants/shopProducts';
+import { useShopAccess } from '../contexts/ShopAccessContext';
 
-const ShopIndex: React.FC = () => (
-  <section className="py-10 md:py-14">
-    <div className="mx-auto max-w-5xl px-5 md:px-10">
-      <h1 className="mt-2 font-serif text-4xl font-black text-[#2D4F3E] md:text-5xl">
+const ShopIndex: React.FC = () => {
+  const { accessMode, clearAccess } = useShopAccess();
+
+  return (
+    <section className="pb-10 pt-6 md:pb-12 md:pt-8">
+      <div className="mx-auto max-w-5xl px-5 md:px-10">
+      <div className="-mt-7 flex justify-start md:-mt-9">
+        <button
+          type="button"
+          onClick={clearAccess}
+          className="mb-1 text-left text-[11px] font-black uppercase tracking-[0.16em] text-[#2D4F3E]/60 underline underline-offset-4 hover:text-[#2D4F3E]"
+        >
+          {accessMode === 'pickup' ? 'Change pickup or delivery option' : 'Change delivery or pickup option'}
+        </button>
+      </div>
+      <h1 className="mt-6 font-serif text-4xl font-black text-[#2D4F3E] md:mt-8 md:text-5xl">
         Shop All
       </h1>
       <p className="mt-3 text-sm text-[#2D4F3E]/75 md:text-base md:whitespace-nowrap">
-        Massachusetts-area delivery. Pick a flavor to choose your size and add to cart.
+        {accessMode === 'pickup'
+          ? 'Pick up at the NY Indonesian Food Bazaar on July 11, from 11 AM to 6 PM.'
+          : 'Massachusetts-area delivery. Pick a flavor to choose your size and add to cart.'}
       </p>
 
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -50,8 +65,9 @@ const ShopIndex: React.FC = () => (
           </Link>
         ))}
       </div>
-    </div>
-  </section>
-);
+      </div>
+    </section>
+  );
+};
 
 export default ShopIndex;

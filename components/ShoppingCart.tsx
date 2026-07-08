@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowRight, Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
 import { cartLineLabel, useCart } from '../contexts/CartContext';
 import { cartLineTotal, formatShopPrice, shopProductById } from '../constants/shopProducts';
@@ -35,14 +35,20 @@ const CartPanel: React.FC<{
   onClose: () => void;
 }> = ({ onClose }) => {
   const { lines, itemCount, setQuantity, removeItem, clearCart } = useCart();
-  const { zip } = useShopAccess();
+  const { zip, accessMode, accessLabel } = useShopAccess();
   const [checkingOut, setCheckingOut] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const visibleError =
+    accessMode === 'pickup' && error?.toLowerCase().includes('zip code') ? null : error;
 
   const subtotal = lines.reduce(
     (sum, line) => sum + cartLineTotal(line.productId, line.quantity),
     0
   );
+
+  useEffect(() => {
+    setError(null);
+  }, [accessMode, accessLabel, zip]);
 
   const handleCheckout = async () => {
     if (lines.length === 0) return;
@@ -54,6 +60,8 @@ const CartPanel: React.FC<{
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           zip,
+          fulfillmentType: accessMode,
+          accessLabel,
           items: lines.map((l) => ({ productId: l.productId, quantity: l.quantity })),
         }),
       });
@@ -160,7 +168,15 @@ const CartPanel: React.FC<{
       >
         {zip ? (
           <p className="mb-3 text-center text-xs text-[#2D4F3E]/55">
-            Delivering to <span className="font-mono font-bold text-[#2D4F3E]">{zip}</span>
+            {accessMode === 'pickup' ? (
+              <>
+                Pickup at <span className="font-bold text-[#2D4F3E]">{accessLabel || 'NY Indonesian Food Bazaar'}</span>
+              </>
+            ) : (
+              <>
+                Delivering to <span className="font-mono font-bold text-[#2D4F3E]">{zip}</span>
+              </>
+            )}
           </p>
         ) : null}
 
@@ -173,7 +189,7 @@ const CartPanel: React.FC<{
           </span>
         </div>
 
-        {error ? <p className="mb-3 text-center text-sm text-[#B45309]">{error}</p> : null}
+        {visibleError ? <p className="mb-3 text-center text-sm text-[#B45309]">{visibleError}</p> : null}
 
         <button
           type="button"

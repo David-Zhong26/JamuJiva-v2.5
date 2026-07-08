@@ -76,7 +76,7 @@ const ProductShopPage: React.FC = () => {
   const otherFlavors = SHOP_GROUPS.filter((g) => g.id !== group.id);
 
   return (
-    <section className="border-y-2 border-[#2D4F3E]/10 py-10 md:py-14">
+    <section className="border-b-2 border-[#2D4F3E]/10 py-10 md:py-14">
       <div className="mx-auto max-w-6xl px-5 md:px-10">
         <Link
           to="/shop"
