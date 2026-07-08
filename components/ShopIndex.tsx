@@ -1,9 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { SHOP_GROUPS } from '../constants/shopProducts';
 import { useShopAccess } from '../contexts/ShopAccessContext';
 
 const ShopIndex: React.FC = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const { accessMode, clearAccess } = useShopAccess();
 
   return (
@@ -12,7 +14,10 @@ const ShopIndex: React.FC = () => {
       <div className="-mt-7 flex justify-start md:-mt-9">
         <button
           type="button"
-          onClick={clearAccess}
+          onClick={() => {
+            clearAccess();
+            navigate('/shop');
+          }}
           className="mb-1 text-left text-[11px] font-black uppercase tracking-[0.16em] text-[#2D4F3E]/60 underline underline-offset-4 hover:text-[#2D4F3E]"
         >
           {accessMode === 'pickup' ? 'Change pickup or delivery option' : 'Change delivery or pickup option'}
@@ -31,7 +36,7 @@ const ShopIndex: React.FC = () => {
         {SHOP_GROUPS.map((group) => (
           <Link
             key={group.id}
-            to={`/shop/${group.slug}`}
+            to={`/shop/${group.slug}${location.search}`}
             className="group relative overflow-hidden rounded-2xl border border-[#2D4F3E]/15 bg-[#F9EFD4]/40 transition-colors duration-300 hover:border-[#2D4F3E]/35"
           >
             {group.badge ? (

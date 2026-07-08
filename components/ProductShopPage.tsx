@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useLocation, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { PRODUCT_DRINKS } from '../constants/productDrinks';
 import {
@@ -14,9 +14,12 @@ import {
 } from '../constants/shopProducts';
 import { useCart } from '../contexts/CartContext';
 
-const FlavorCard: React.FC<{ group: ShopGroup; compact?: boolean }> = ({ group, compact }) => (
+const FlavorCard: React.FC<{ group: ShopGroup; compact?: boolean }> = ({ group, compact }) => {
+  const location = useLocation();
+
+  return (
     <Link
-      to={`/shop/${group.slug}`}
+      to={`/shop/${group.slug}${location.search}`}
       className={`group relative flex flex-col overflow-hidden rounded-xl border border-[#2D4F3E]/30 bg-[#F9EFD4]/35 text-left transition-all duration-300 hover:border-[#2D4F3E]/55 hover:bg-[#F6E7B8] ${
         compact ? 'min-w-[7.5rem] md:min-w-[8.5rem]' : ''
       }`}
@@ -42,9 +45,11 @@ const FlavorCard: React.FC<{ group: ShopGroup; compact?: boolean }> = ({ group, 
         </span>
       </div>
     </Link>
-);
+  );
+};
 
 const ProductShopPage: React.FC = () => {
+  const location = useLocation();
   const { slug } = useParams<{ slug: string }>();
   const group = slug ? shopGroupBySlug(slug) : undefined;
   const { addItem } = useCart();
@@ -62,7 +67,7 @@ const ProductShopPage: React.FC = () => {
   }, [group?.id, group?.options]);
 
   if (!group) {
-    return <Navigate to="/shop" replace />;
+    return <Navigate to={`/shop${location.search}`} replace />;
   }
 
   const drinkMeta =
@@ -79,7 +84,7 @@ const ProductShopPage: React.FC = () => {
     <section className="border-b-2 border-[#2D4F3E]/10 py-10 md:py-14">
       <div className="mx-auto max-w-6xl px-5 md:px-10">
         <Link
-          to="/shop"
+          to={`/shop${location.search}`}
           className="text-xs font-bold uppercase tracking-widest text-[#2D4F3E]/55 hover:text-[#2D4F3E]"
         >
           ← Shop All

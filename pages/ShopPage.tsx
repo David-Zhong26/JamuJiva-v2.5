@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import ProductShopPage from '../components/ProductShopPage';
 import ShopIndex from '../components/ShopIndex';
 import ShoppingCart from '../components/ShoppingCart';
@@ -8,13 +8,16 @@ import { useMailingList } from '../contexts/MailingListContext';
 import { ShopAccessProvider, useShopAccess } from '../contexts/ShopAccessContext';
 
 const ShopContent: React.FC = () => {
-  const { isEligible, grantAccess } = useShopAccess();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { isEligible, grantAccess, clearAccess, accessMode } = useShopAccess();
   const { openMailingList } = useMailingList();
   const [screeningStep, setScreeningStep] = useState<'location' | 'zip'>('location');
   const [zip, setZip] = useState('');
   const [deliveryZips, setDeliveryZips] = useState<string[]>([]);
   const [zipsLoaded, setZipsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const shopMode = useMemo(() => new URLSearchParams(location.search).get('shop'), [location.search]);
 
   useEffect(() => {
     if (isEligible) return;
@@ -31,22 +34,40 @@ const ShopContent: React.FC = () => {
       });
   }, [isEligible]);
 
+  useEffect(() => {
+    if (shopMode === 'ny') {
+      setScreeningStep('location');
+      setError(null);
+
+      if (!isEligible || accessMode !== 'pickup') {
+        grantAccess('nyc-food-bazaar', 'pickup', 'NY Indonesian Food Bazaar');
+      }
+      return;
+    }
+
+    if (shopMode === 'ma') {
+      setScreeningStep('zip');
+      setError(null);
+
+      if (isEligible && accessMode === 'pickup') {
+        clearAccess();
+      }
+      return;
+    }
+
+    if (!isEligible) {
+      setScreeningStep('location');
+      setError(null);
+    }
+  }, [shopMode, isEligible, accessMode, grantAccess, clearAccess]);
+
   const handleInMa = () => {
-    if (!zipsLoaded) {
-      setError('Still loading delivery areas. Try again in a moment.');
-      return;
-    }
-    if (deliveryZips.length === 0) {
-      setError(
-        'Delivery ZIP list is empty. Add DELIVERY_ZIPS to .env and restart with npm run dev (both web + API).'
-      );
-      return;
-    }
-    setScreeningStep('zip');
+    navigate('/shop?shop=ma');
     setError(null);
   };
 
   const handleNycBazaar = () => {
+    navigate('/shop?shop=ny');
     grantAccess('nyc-food-bazaar', 'pickup', 'NY Indonesian Food Bazaar');
     setError(null);
   };
@@ -119,7 +140,7 @@ const ShopContent: React.FC = () => {
               <button
                 type="button"
                 onClick={() => {
-                  setScreeningStep('location');
+                  navigate('/shop');
                   setError(null);
                 }}
                 className="text-xs font-bold uppercase tracking-widest text-[#2D4F3E]/55 hover:text-[#2D4F3E]"
