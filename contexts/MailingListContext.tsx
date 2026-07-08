@@ -1,5 +1,6 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import MailingListModal from '../components/MailingListModal';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 type MailingListContextValue = {
   openMailingList: () => void;
@@ -9,10 +10,36 @@ type MailingListContextValue = {
 const MailingListContext = createContext<MailingListContextValue | null>(null);
 
 export const MailingListProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(true);
 
   const openMailingList = useCallback(() => setOpen(true), []);
-  const closeMailingList = useCallback(() => setOpen(false), []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('waitlist') === '1') {
+      setOpen(true);
+    }
+  }, [location.search]);
+
+  const closeMailingList = useCallback(() => {
+    setOpen(false);
+
+    const params = new URLSearchParams(location.search);
+    if (params.get('waitlist') !== '1') return;
+
+    params.delete('waitlist');
+    const search = params.toString();
+    navigate(
+      {
+        pathname: location.pathname,
+        search: search ? `?${search}` : '',
+        hash: location.hash,
+      },
+      { replace: true }
+    );
+  }, [location.hash, location.pathname, location.search, navigate]);
 
   const value = useMemo(
     () => ({ openMailingList, closeMailingList }),

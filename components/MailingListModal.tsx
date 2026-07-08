@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { AnimatePresence, animate, motion, useMotionValue } from 'framer-motion';
 import { ArrowRight, X } from 'lucide-react';
 
 interface MailingListModalProps {
@@ -16,12 +16,37 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const modalY = useMotionValue(0);
+  const bounceBackTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!open) return;
     setSubmitted(false);
     setEmail('');
     setName('');
+  }, [open]);
+
+  useEffect(() => {
+    return () => {
+      if (bounceBackTimerRef.current !== null) {
+        window.clearTimeout(bounceBackTimerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
   }, [open]);
 
   const progress = useMemo(() => {
@@ -79,6 +104,24 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
     }
   };
 
+  const nudgeModal = (deltaY: number) => {
+    const nextY = Math.max(-32, Math.min(32, modalY.get() + deltaY * 0.08));
+    modalY.set(nextY);
+
+    if (bounceBackTimerRef.current !== null) {
+      window.clearTimeout(bounceBackTimerRef.current);
+    }
+
+    bounceBackTimerRef.current = window.setTimeout(() => {
+      animate(modalY, 0, {
+        type: 'spring',
+        stiffness: 280,
+        damping: 18,
+        mass: 0.7,
+      });
+    }, 70);
+  };
+
   return (
     <AnimatePresence>
       {open ? (
@@ -88,12 +131,21 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25, ease: 'easeOut' }}
           className="fixed inset-0 z-[80] flex items-center justify-center bg-[#2D4F3E]/45 p-4 backdrop-blur-sm"
+          onWheel={(e) => {
+            e.preventDefault();
+            nudgeModal(e.deltaY);
+          }}
         >
           <motion.div
             initial={{ opacity: 0, y: 24, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ duration: 0.35, ease: 'easeOut' }}
+            drag="y"
+            dragConstraints={{ top: 0, bottom: 0 }}
+            dragElastic={0.28}
+            dragSnapToOrigin
+            style={{ y: modalY }}
             className="relative w-full max-w-md overflow-hidden rounded-[2rem] bg-[#F5F2ED] p-8 shadow-[0_24px_80px_rgba(0,0,0,0.24)]"
           >
             <div className="absolute left-0 right-0 top-0 h-1 bg-[#2D4F3E]/15">
@@ -126,7 +178,7 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
                 <form onSubmit={handleSubmit} className="mt-8 space-y-5">
                   <label className="block">
                     <span className="mb-2 block text-[11px] font-black uppercase tracking-[0.18em] text-[#2D4F3E]">
-                      Email <span className="text-[#2D4F3E]/50">(required)</span>
+                      Email
                     </span>
                     <input
                       type="email"
@@ -140,7 +192,7 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
 
                   <label className="block">
                     <span className="mb-2 block text-[11px] font-black uppercase tracking-[0.18em] text-[#2D4F3E]">
-                      Name <span className="text-[#2D4F3E]/50">(required)</span>
+                      Name
                     </span>
                     <input
                       type="text"
@@ -173,6 +225,17 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
                 <p className="mt-4 text-base leading-relaxed text-[#2D4F3E]/75">
                   We&apos;ll let you know when the next product drop is ready!
                 </p>
+                <div className="mt-5 rounded-2xl bg-[#F9EFD4] px-5 py-4 text-[#2D4F3E]">
+                  <span className="block text-[11px] font-black uppercase tracking-[0.18em] text-[#2D4F3E]/60">
+                    Your discount code
+                  </span>
+                  <p className="mt-2 font-serif text-2xl font-black tracking-[0.08em] text-[#2D4F3E]">
+                    JIVADAY1
+                  </p>
+                  <p className="mt-2 text-sm leading-relaxed text-[#2D4F3E]/75">
+                    Use it at checkout for 10% off your order.
+                  </p>
+                </div>
                 <button
                   type="button"
                   onClick={onClose}
