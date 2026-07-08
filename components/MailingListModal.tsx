@@ -168,38 +168,30 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
 
             {!submitted ? (
               <>
-                <h3 className="pr-10 font-serif text-3xl font-black leading-tight text-[#2D4F3E]">
-                  Join the waitlist
-                </h3>
-                <p className="mt-3 text-base leading-relaxed text-[#2D4F3E]/70">
-                  Be the first to hear about launches, restocks, and special releases from Jiva!
+                <p className="mx-auto mt-5 max-w-[32rem] text-center text-base font-semibold leading-relaxed text-[#2D4F3E]/70">
+                  Join our early members club to be the first to hear about launches, restocks, and
+                  special releases from Jiva!
                 </p>
 
-                <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+                <form onSubmit={handleSubmit} className="mt-5 space-y-5">
                   <label className="block">
-                    <span className="mb-2 block text-[11px] font-black uppercase tracking-[0.18em] text-[#2D4F3E]">
-                      Email
-                    </span>
                     <input
-                      type="email"
-                      placeholder="your@email.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      type="text"
+                      placeholder="Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      autoComplete="name"
                       required
                       className={fieldClass}
                     />
                   </label>
 
                   <label className="block">
-                    <span className="mb-2 block text-[11px] font-black uppercase tracking-[0.18em] text-[#2D4F3E]">
-                      Name
-                    </span>
                     <input
-                      type="text"
-                      placeholder="What should we call you?"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      autoComplete="name"
+                      type="email"
+                      placeholder="your@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       required
                       className={fieldClass}
                     />
