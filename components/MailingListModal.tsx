@@ -215,7 +215,7 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
                 </form>
               </>
             ) : (
-              <div className="py-6 text-left">
+              <div className="flex flex-col items-center py-6 text-center">
                 <span className="mb-3 block text-xs font-black uppercase tracking-[0.22em] text-[#F47C3E]">
                   You&apos;re in
                 </span>
@@ -223,9 +223,11 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
                   {name.trim() ? `Thanks, ${name.trim()}!` : "You're on the list!"}
                 </h3>
                 <p className="mt-4 text-base leading-relaxed text-[#2D4F3E]/75">
-                  We&apos;ll let you know when the next product drop is ready!
+                  We&apos;ll let you know when the
+                  <br />
+                  next product drop is ready!
                 </p>
-                <div className="mt-5 rounded-2xl bg-[#F9EFD4] px-5 py-4 text-[#2D4F3E]">
+                <div className="mt-5 w-full rounded-2xl bg-[#F9EFD4] px-5 py-4 text-center text-[#2D4F3E]">
                   <span className="block text-[11px] font-black uppercase tracking-[0.18em] text-[#2D4F3E]/60">
                     Your discount code
                   </span>
