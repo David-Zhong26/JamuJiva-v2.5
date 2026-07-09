@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { SHOP_GROUPS } from '../constants/shopProducts';
+import { SHOP_GROUPS, formatShopPrice, shopGroupDisplayPrice } from '../constants/shopProducts';
 import { useShopAccess } from '../contexts/ShopAccessContext';
 
 const ShopIndex: React.FC = () => {
@@ -53,6 +53,9 @@ const ShopIndex: React.FC = () => {
             </div>
             <div className="p-6 transition-colors duration-300">
               <h2 className="font-serif text-2xl font-bold text-[#2D4F3E]">{group.name}</h2>
+              <p className="mt-1 text-sm font-black text-[#2D4F3E]">
+                {formatShopPrice(shopGroupDisplayPrice(group))}
+              </p>
               {group.eyebrow ? (
                 <p className="mt-1 text-[0.65rem] font-black uppercase tracking-[0.2em] text-[#2D4F3E]/65">
                   {group.eyebrow}
