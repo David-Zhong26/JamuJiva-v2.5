@@ -89,7 +89,7 @@ const ShopContent: React.FC = () => {
     }
     if (!deliveryZips.includes(normalized)) {
       setError(
-        `We do not deliver to ${normalized} yet. Add it to DELIVERY_ZIPS in .env if this should work, then restart the server.`
+        `We do not deliver to ${normalized} yet.`
       );
       return;
     }
