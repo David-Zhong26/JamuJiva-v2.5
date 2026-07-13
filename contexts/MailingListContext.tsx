@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import MailingListModal from '../components/MailingListModal';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -12,13 +12,49 @@ const MailingListContext = createContext<MailingListContextValue | null>(null);
 export const MailingListProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+  const autoOpenedRef = useRef(false);
 
-  const openMailingList = useCallback(() => setOpen(true), []);
+  const openMailingList = useCallback(() => {
+    autoOpenedRef.current = true;
+    setOpen(true);
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    if (params.get('waitlist') === '1' || autoOpenedRef.current) return;
+
+    const triggerAutoOpen = () => {
+      if (autoOpenedRef.current) return;
+      autoOpenedRef.current = true;
+      setOpen(true);
+      window.removeEventListener('scroll', handleScroll);
+    };
+
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollableHeight =
+        document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+      if (scrollableHeight <= 0) return;
+      if (scrollTop / scrollableHeight >= 0.1) {
+        triggerAutoOpen();
+      }
+    };
+
+    const timerId = window.setTimeout(triggerAutoOpen, 3000);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.clearTimeout(timerId);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [location.search]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     if (params.get('waitlist') === '1') {
+      autoOpenedRef.current = true;
       setOpen(true);
     }
   }, [location.search]);
