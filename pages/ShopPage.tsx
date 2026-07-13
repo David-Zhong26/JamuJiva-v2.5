@@ -89,7 +89,7 @@ const ShopContent: React.FC = () => {
     }
     if (!deliveryZips.includes(normalized)) {
       setError(
-        `We do not deliver to ${normalized} yet.`
+        `We do not deliver to ${normalized} yet. Join the waitlist for updates!`
       );
       return;
     }
@@ -109,7 +109,7 @@ const ShopContent: React.FC = () => {
               <div className="mt-5 space-y-2 text-sm leading-relaxed text-[#2D4F3E]/75 sm:text-base">
                 <p>We&apos;re accepting preorders in select areas of Massachusetts.</p>
                 <p>Enter your ZIP code to check availability.</p>
-                <p>Outside our delivery area? Join the waitlist for nationwide updates!</p>
+                <p>Outside our delivery area? Join the waitlist for updates!</p>
               </div>
               </div>
               {error ? (

@@ -75,7 +75,7 @@ const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose, init
     }
     if (!deliveryZips.includes(normalized)) {
       setError(
-        `We do not deliver to ${normalized} yet.`
+        `We do not deliver to ${normalized} yet. Join the waitlist for updates!`
       );
       return;
     }
@@ -119,7 +119,7 @@ const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose, init
                 <div className="mt-5 space-y-2 text-sm leading-relaxed text-[#2D4F3E]/75">
                   <p>We&apos;re accepting preorders in select areas of Massachusetts.</p>
                   <p>Enter your ZIP code to check availability.</p>
-                  <p>Outside our delivery area? Join the waitlist for nationwide updates!</p>
+                  <p>Outside our delivery area? Join the waitlist for updates!</p>
                 </div>
                 {error ? (
                   <p className="mt-4 text-center text-sm text-[#B45309]">{error}</p>
