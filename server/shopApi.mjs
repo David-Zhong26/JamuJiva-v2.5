@@ -4,16 +4,37 @@ const PRODUCT_ENV_KEYS = {
   golden: ['STRIPE_PRODUCT_GOLDEN', 'STRIPE_PRICE_GOLDEN'],
   spiced: ['STRIPE_PRODUCT_SPICED', 'STRIPE_PRICE_SPICED'],
   mixed_duo: ['STRIPE_PRODUCT_MIXED_DUO', 'STRIPE_PRICE_MIXED_DUO'],
+  mixed_four: [
+    'STRIPE_PRODUCT_MIXED_FOUR',
+    'STRIPE_PRICE_MIXED_FOUR',
+    'STRIPE_PRODUCT_TWO_MIXED_DUO',
+    'STRIPE_PRICE_TWO_MIXED_DUO',
+  ],
   two_golden: ['STRIPE_PRODUCT_TWO_GOLDEN', 'STRIPE_PRICE_TWO_GOLDEN'],
   two_spiced: ['STRIPE_PRODUCT_TWO_SPICED', 'STRIPE_PRICE_TWO_SPICED'],
+  four_golden: [
+    'STRIPE_PRODUCT_FOUR_GOLDEN',
+    'STRIPE_PRICE_FOUR_GOLDEN',
+    'STRIPE_PRODUCT_Four_GOLDEN',
+    'STRIPE_PRICE_Four_GOLDEN',
+  ],
+  four_spiced: [
+    'STRIPE_PRODUCT_FOUR_SPICED',
+    'STRIPE_PRICE_FOUR_SPICED',
+    'STRIPE_PRODUCT_Four_SPICED',
+    'STRIPE_PRICE_Four_SPICED',
+  ],
 };
 
 const PRODUCT_LABELS = {
   golden: 'Golden Glow — 1 Bottle',
   spiced: 'Spiced Ivory — 1 Bottle',
   mixed_duo: 'Mixed Duo',
+  mixed_four: 'Mixed Four Pack',
   two_golden: 'Golden Glow — 2 Bottles',
   two_spiced: 'Spiced Ivory — 2 Bottles',
+  four_golden: 'Golden Glow — 4 Bottles',
+  four_spiced: 'Spiced Ivory — 4 Bottles',
 };
 
 function getStripeRef(productKey) {

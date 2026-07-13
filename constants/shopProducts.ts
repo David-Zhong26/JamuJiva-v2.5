@@ -6,9 +6,12 @@ import bestSellerBottles from '../materials/best seller bottles.png';
 export const SHOP_PRODUCT_IDS = [
   'golden',
   'two_golden',
+  'four_golden',
   'spiced',
   'two_spiced',
+  'four_spiced',
   'mixed_duo',
+  'mixed_four',
 ] as const;
 
 export type ShopProductId = (typeof SHOP_PRODUCT_IDS)[number];
@@ -22,9 +25,11 @@ export type ShopProduct = {
   price: number;
 };
 
-export const SHOP_SINGLE_BOTTLE_PRICE = 5;
-export const SHOP_TWIN_PACK_PRICE = 8;
-export const SHOP_COMBO_PRICE = 8;
+export const SHOP_SINGLE_BOTTLE_PRICE = 6.99;
+export const SHOP_TWIN_PACK_PRICE = 12.99;
+export const SHOP_FOUR_PACK_PRICE = 23.99;
+export const SHOP_COMBO_PRICE = 12.99;
+export const SHOP_COMBO_FOUR_PRICE = 23.99;
 export const SHOP_BOTTLE_SIZE = '8 oz';
 
 export const SHOP_PRODUCTS: ShopProduct[] = [
@@ -45,6 +50,14 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     price: SHOP_TWIN_PACK_PRICE,
   },
   {
+    id: 'four_golden',
+    name: 'Golden Glow',
+    variantLabel: '4 bottles (8 oz each)',
+    description: 'Turmeric rooted daily glow — four pack.',
+    image: goldenGlowBottle,
+    price: SHOP_FOUR_PACK_PRICE,
+  },
+  {
     id: 'spiced',
     name: 'Spiced Ivory',
     variantLabel: '1 bottle (8 oz)',
@@ -61,12 +74,28 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
     price: SHOP_TWIN_PACK_PRICE,
   },
   {
+    id: 'four_spiced',
+    name: 'Spiced Ivory',
+    variantLabel: '4 bottles (8 oz each)',
+    description: 'Ginger vanilla spiced — four pack.',
+    image: spicedIvoryBottle,
+    price: SHOP_FOUR_PACK_PRICE,
+  },
+  {
     id: 'mixed_duo',
     name: 'Best of Both',
     variantLabel: '1 Golden Glow + 1 Spiced Ivory (8 oz each)',
     description: 'One of each flavor.',
     image: bestSellerBottles,
     price: SHOP_COMBO_PRICE,
+  },
+  {
+    id: 'mixed_four',
+    name: 'Best of Both',
+    variantLabel: '2 Golden Glow + 2 Spiced Ivory (8 oz each)',
+    description: 'Two of each flavor.',
+    image: bestSellerBottles,
+    price: SHOP_COMBO_FOUR_PRICE,
   },
 ];
 
@@ -101,6 +130,12 @@ export const SHOP_GROUPS: ShopGroup[] = [
         price: SHOP_TWIN_PACK_PRICE,
         compareAtPrice: SHOP_SINGLE_BOTTLE_PRICE * 2,
       },
+      {
+        label: `4 Bottles (${SHOP_BOTTLE_SIZE} each)`,
+        productId: 'four_golden',
+        price: SHOP_FOUR_PACK_PRICE,
+        compareAtPrice: SHOP_SINGLE_BOTTLE_PRICE * 4,
+      },
     ],
   },
   {
@@ -119,6 +154,12 @@ export const SHOP_GROUPS: ShopGroup[] = [
         price: SHOP_TWIN_PACK_PRICE,
         compareAtPrice: SHOP_SINGLE_BOTTLE_PRICE * 2,
       },
+      {
+        label: `4 Bottles (${SHOP_BOTTLE_SIZE} each)`,
+        productId: 'four_spiced',
+        price: SHOP_FOUR_PACK_PRICE,
+        compareAtPrice: SHOP_SINGLE_BOTTLE_PRICE * 4,
+      },
     ],
   },
   {
@@ -134,6 +175,12 @@ export const SHOP_GROUPS: ShopGroup[] = [
         label: `1 Golden Glow + 1 Spiced Ivory (${SHOP_BOTTLE_SIZE} each)`,
         productId: 'mixed_duo',
         price: SHOP_COMBO_PRICE,
+      },
+      {
+        label: `2 Golden Glow + 2 Spiced Ivory (${SHOP_BOTTLE_SIZE} each)`,
+        productId: 'mixed_four',
+        price: SHOP_COMBO_FOUR_PRICE,
+        compareAtPrice: SHOP_COMBO_PRICE * 2,
       },
     ],
   },
@@ -154,9 +201,7 @@ export const shopGroupDisplayPrice = (group: ShopGroup): number =>
 
 export const shopGroupSizeLabel = (group: ShopGroup, variant: 'card' | 'product' = 'card') => {
   if (group.id === 'mixed') {
-    return variant === 'product'
-      ? `2 x ${SHOP_BOTTLE_SIZE} bottles`
-      : `2 x ${SHOP_BOTTLE_SIZE}`;
+    return variant === 'product' ? `${SHOP_BOTTLE_SIZE} bottles` : `2+ x ${SHOP_BOTTLE_SIZE}`;
   }
   return variant === 'product' ? `${SHOP_BOTTLE_SIZE} per bottle` : SHOP_BOTTLE_SIZE;
 };
