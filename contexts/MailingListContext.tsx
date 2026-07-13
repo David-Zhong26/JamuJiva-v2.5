@@ -42,7 +42,7 @@ export const MailingListProvider: React.FC<{ children: React.ReactNode }> = ({ c
       }
     };
 
-    const timerId = window.setTimeout(triggerAutoOpen, 3000);
+    const timerId = window.setTimeout(triggerAutoOpen, 8000);
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
