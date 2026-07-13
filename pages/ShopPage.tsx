@@ -7,6 +7,17 @@ import { CartProvider } from '../contexts/CartContext';
 import { useMailingList } from '../contexts/MailingListContext';
 import { ShopAccessProvider, useShopAccess } from '../contexts/ShopAccessContext';
 
+const PICKUP_EVENTS = [
+  {
+    id: 'nyc-food-bazaar',
+    label: 'NY Indonesian Food Bazaar',
+    accessLabel: 'NY Indonesian Food Bazaar',
+    shopParam: 'ny',
+    active: false,
+    archivedAt: '2026-07-13',
+  },
+] as const;
+
 const ShopContent: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -18,6 +29,8 @@ const ShopContent: React.FC = () => {
   const [zipsLoaded, setZipsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const shopMode = useMemo(() => new URLSearchParams(location.search).get('shop'), [location.search]);
+  const activePickupEvents = useMemo(() => PICKUP_EVENTS.filter((event) => event.active), []);
+  const nyPickupEvent = PICKUP_EVENTS.find((event) => event.shopParam === 'ny') ?? null;
 
   useEffect(() => {
     if (isEligible) return;
@@ -36,11 +49,19 @@ const ShopContent: React.FC = () => {
 
   useEffect(() => {
     if (shopMode === 'ny') {
+      if (!nyPickupEvent?.active) {
+        clearAccess();
+        setScreeningStep('location');
+        setError(null);
+        navigate('/shop', { replace: true });
+        return;
+      }
+
       setScreeningStep('location');
       setError(null);
 
       if (!isEligible || accessMode !== 'pickup') {
-        grantAccess('nyc-food-bazaar', 'pickup', 'NY Indonesian Food Bazaar');
+        grantAccess(nyPickupEvent.id, 'pickup', nyPickupEvent.accessLabel);
       }
       return;
     }
@@ -70,9 +91,9 @@ const ShopContent: React.FC = () => {
     setError(null);
   };
 
-  const handleNycBazaar = () => {
-    navigate('/shop?shop=ny');
-    grantAccess('nyc-food-bazaar', 'pickup', 'NY Indonesian Food Bazaar');
+  const handlePickupEvent = (eventId: string, accessLabel: string, shopParam: string) => {
+    navigate(`/shop?shop=${shopParam}`);
+    grantAccess(eventId, 'pickup', accessLabel);
     setError(null);
   };
 
@@ -115,7 +136,7 @@ const ShopContent: React.FC = () => {
               {error ? (
                 <p className="mt-4 text-center text-sm text-[#B45309]">{error}</p>
               ) : null}
-              <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              <div className={`mt-8 grid gap-3 ${activePickupEvents.length > 0 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
                 <button
                   type="button"
                   onClick={handleInMa}
@@ -123,13 +144,16 @@ const ShopContent: React.FC = () => {
                 >
                   Yes, I&apos;m in MA!
                 </button>
-                <button
-                  type="button"
-                  onClick={handleNycBazaar}
-                  className="rounded-full border border-[#2D4F3E] bg-[#F9EFD4] px-4 py-3.5 text-[11px] font-black uppercase leading-tight tracking-[0.1em] text-[#2D4F3E] transition-colors hover:bg-[#F5E8CA] whitespace-nowrap"
-                >
-                  NY Indonesian Food Bazaar
-                </button>
+                {activePickupEvents.map((event) => (
+                  <button
+                    key={event.id}
+                    type="button"
+                    onClick={() => handlePickupEvent(event.id, event.accessLabel, event.shopParam)}
+                    className="rounded-full border border-[#2D4F3E] bg-[#F9EFD4] px-4 py-3.5 text-[11px] font-black uppercase leading-tight tracking-[0.1em] text-[#2D4F3E] transition-colors hover:bg-[#F5E8CA] whitespace-nowrap"
+                  >
+                    {event.label}
+                  </button>
+                ))}
                 <button
                   type="button"
                   onClick={openMailingList}
