@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import logoTransparent from '../materials/Jiva (8）.png';
+import colorLogo from '../materials/Jiva (8）.png';
+import whiteLogo from '../materials/white jiva logo.png';
 
 const PAGE_BG = '#F5E8CA';
 const HERO_LOGO_HEIGHT = 72;
@@ -67,7 +68,7 @@ const Navbar: React.FC = () => {
   const renderLogo = (className: string) =>
     isHome ? (
       <motion.img
-        src={logoTransparent}
+        src={showCompactNav ? colorLogo : whiteLogo}
         alt="Jamu Jiva"
         className={className}
         animate={{
@@ -78,7 +79,7 @@ const Navbar: React.FC = () => {
       />
     ) : (
       <img
-        src={logoTransparent}
+        src={colorLogo}
         alt="Jamu Jiva"
         className={`${className} h-[44px]`}
         decoding="async"
