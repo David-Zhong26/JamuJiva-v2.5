@@ -35,7 +35,7 @@ const Story: React.FC = () => {
               In the misty mornings of Solo, the Mbok Jamu begins her ritual. Carrying baskets of hand-ground tonics, she is the keeper of her village's health.
             </p>
             <p>
-              Jamu Jiva was born from a desire to bring this act of care to the fast-paced streets of NYC and LA. We don't just sell a drink; we share a lifestyle of intentional vitality.
+              Jiva was born from a desire to bring this act of care to the fast-paced streets of NYC and LA. We don't just sell a drink; we share a lifestyle of intentional vitality.
             </p>
           </div>
         </div>

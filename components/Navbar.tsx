@@ -69,7 +69,7 @@ const Navbar: React.FC = () => {
     isHome ? (
       <motion.img
         src={showCompactNav ? colorLogo : whiteLogo}
-        alt="Jamu Jiva"
+        alt="Jiva"
         className={className}
         animate={{
           height: showCompactNav ? COMPACT_LOGO_HEIGHT : HERO_LOGO_HEIGHT,
@@ -80,7 +80,7 @@ const Navbar: React.FC = () => {
     ) : (
       <img
         src={colorLogo}
-        alt="Jamu Jiva"
+        alt="Jiva"
         className={`${className} h-[44px]`}
         decoding="async"
       />

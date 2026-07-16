@@ -64,7 +64,7 @@ const Hero: React.FC<HeroProps> = ({ email, setEmail, onJoin, joined }) => {
              {/* Mockup Placeholder */}
             <img 
               src="https://picsum.photos/seed/jamujiva/800/1200" 
-              alt="Jamu Jiva Drink Can" 
+              alt="Jiva drink can" 
               className="rounded-3xl shadow-2xl border-8 border-white object-cover aspect-[2/3]"
             />
             {/* Vitality Badge */}

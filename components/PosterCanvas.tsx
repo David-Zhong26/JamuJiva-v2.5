@@ -47,7 +47,7 @@ const PosterCanvas: React.FC<PosterCanvasProps> = ({
       <motion.div style={{ scale: imageScale, opacity: bgOpacity }} className="absolute inset-0 z-0">
         <motion.img 
           src={posterUrl} 
-          alt="Jamu Jiva Lifestyle" 
+          alt="Jiva lifestyle" 
           className="w-full h-full object-cover"
           animate={{ opacity: isGenerating ? 0.3 : 1 }}
           transition={{ duration: 0.5, ease: "easeInOut" }}

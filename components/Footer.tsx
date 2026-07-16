@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
         <div className="md:flex md:items-start md:justify-between md:gap-12">
           <div className="max-w-xs md:translate-x-6 md:pl-0">
             <Link to="/" className="mb-2 inline-block pl-4 md:pl-0">
-              <img src={logo} alt="Jamu Jiva" className="h-[44px] w-auto" decoding="async" />
+              <img src={logo} alt="Jiva" className="h-[44px] w-auto" decoding="async" />
             </Link>
             <p className="pl-7 text-lg font-medium text-[#2F4F3A]/80 md:pl-2">
               Rooted in Indonesian Jamu tradition, crafted for modern wellness.

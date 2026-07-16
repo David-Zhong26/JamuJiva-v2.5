@@ -54,7 +54,9 @@ const ProductRevealSection: React.FC = () => {
         <img
           src={flavor.bottleImage}
           alt={flavor.name}
-          className="pointer-events-none absolute left-1/2 top-[38%] z-0 jj-vh-can h-[44vh] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:jj-vh-can-sm sm:h-[52vh] md:top-1/2 md:h-[86vh]"
+          className={`pointer-events-none absolute left-1/2 z-0 jj-vh-can h-[44vh] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:jj-vh-can-sm sm:h-[52vh] md:h-[86vh] ${
+            flavor.slug === 'spiced-ivory' ? 'top-[38.75%] md:top-[50.75%]' : 'top-[38%] md:top-1/2'
+          }`}
         />
         <div
           className={`pointer-events-none absolute top-[max(2.75rem,calc(env(safe-area-inset-top)+1.5rem))] z-20 flex items-center gap-1.5 whitespace-nowrap text-[0.62rem] font-bold uppercase tracking-widest md:hidden ${
@@ -202,7 +204,7 @@ const WhyJivaSection: React.FC = () => {
         <div className="relative flex items-center justify-center translate-x-4 lg:translate-x-8 lg:justify-end">
           <motion.img
             src={artworkImg}
-            alt="Jamu Jiva artwork"
+            alt="Jiva artwork"
             style={{ x: artworkX, opacity: artworkOpacity }}
             className="w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl object-contain will-change-transform"
           />

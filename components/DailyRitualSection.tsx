@@ -19,7 +19,7 @@ const DailyRitualSection: React.FC = () => {
           >
             <img
               src={ritualLifestyleImg}
-              alt="Jamu Jiva wellness shot on a sunlit table"
+              alt="Jiva wellness shot on a sunlit table"
               className="h-full w-full object-cover object-center"
             />
           </motion.div>
