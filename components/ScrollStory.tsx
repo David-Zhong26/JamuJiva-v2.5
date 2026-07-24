@@ -55,7 +55,7 @@ const ProductRevealSection: React.FC = () => {
           src={flavor.bottleImage}
           alt={flavor.name}
           className={`pointer-events-none absolute left-1/2 z-0 jj-vh-can h-[44vh] w-auto max-w-none -translate-x-1/2 -translate-y-1/2 object-contain sm:jj-vh-can-sm sm:h-[52vh] md:h-[86vh] ${
-            flavor.slug === 'spiced-ivory' ? 'top-[38.75%] md:top-[50.75%]' : 'top-[38%] md:top-1/2'
+            flavor.slug === 'spiced-ivory' ? 'top-[39.5%] md:top-[51.5%]' : 'top-[38%] md:top-1/2'
           }`}
         />
         <div
