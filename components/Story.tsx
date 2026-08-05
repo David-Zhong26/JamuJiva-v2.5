@@ -16,7 +16,7 @@ const Story: React.FC = () => {
 
   return (
     <section id="story" ref={containerRef} className="relative h-[300vh] bg-[#2D4F3E] text-[#F6F1E8]">
-      <div className="sticky top-0 h-screen w-full flex flex-col lg:flex-row overflow-hidden">
+      <div className="sticky top-0 jj-h-screen w-full flex flex-col lg:flex-row overflow-hidden">
         
         {/* Left: Sticky Text */}
         <div className="flex-1 flex flex-col justify-center p-8 md:p-24 z-10">

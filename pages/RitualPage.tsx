@@ -1,7 +1,7 @@
 import React from 'react';
 
 const RitualPage: React.FC = () => (
-  <main className="flex min-h-screen items-center justify-center bg-[#F6F1E8] pt-28 pb-16 px-8">
+  <main className="flex jj-min-screen items-center justify-center bg-[#F6F1E8] pt-28 pb-16 px-8">
     <div className="text-center">
       <span className="text-[#A76D2A] font-black tracking-widest uppercase text-sm mb-4 block">
         Small moments add up

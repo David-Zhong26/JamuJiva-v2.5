@@ -135,7 +135,7 @@ const ProductDive: React.FC = () => {
       {/* Pinned container - stays in view during scroll */}
       <motion.div 
         style={{ backgroundColor: bgColor }}
-        className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden"
+        className="sticky top-0 jj-h-screen w-full flex items-center justify-center overflow-hidden"
       >
         {/* Very subtle background typography */}
         <motion.div 

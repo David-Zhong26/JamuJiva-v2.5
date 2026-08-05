@@ -304,7 +304,7 @@ const ScrollStory: React.FC = () => {
         id="hero"
         className="relative bg-[#F6F1E8]"
       >
-        <div className="sticky top-0 h-screen overflow-hidden bg-white">
+        <div className="sticky top-0 jj-h-screen overflow-hidden bg-white">
           <div className="absolute inset-0 z-0">
             {/* Mobile: motion-blur still instead of background 4 */}
             {HERO_BACKGROUNDS_MOBILE.map((src, index) => (
@@ -335,8 +335,8 @@ const ScrollStory: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative z-10 -mt-[100vh]">
-          <div className="flex min-h-screen w-full items-center justify-center px-6 pb-12 pt-28 text-center pointer-events-none sm:px-8 md:px-12 md:pb-16 md:pt-36">
+        <div className="relative z-10 jj-neg-screen-mt">
+          <div className="flex jj-min-screen w-full items-center justify-center px-6 pb-12 pt-28 text-center pointer-events-none sm:px-8 md:px-12 md:pb-16 md:pt-36">
             <div className="flex max-w-[44rem] flex-col items-center">
               <h1 className="font-serif text-[clamp(2.1rem,4.8vw,3.75rem)] font-normal leading-[0.96] tracking-tight text-white">
                 Drink the Life

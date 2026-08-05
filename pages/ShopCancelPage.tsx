@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ShopCancelPage: React.FC = () => (
-  <main className="flex min-h-screen items-center justify-center bg-[#6F2E1E] px-8 pb-16 pt-28">
+  <main className="flex jj-min-screen items-center justify-center bg-[#6F2E1E] px-8 pb-16 pt-28">
     <div className="max-w-md text-center">
       <h1 className="font-serif text-4xl font-black text-white">Checkout canceled</h1>
       <p className="mt-4 text-white/85">No charge was made. Your cart is still waiting.</p>

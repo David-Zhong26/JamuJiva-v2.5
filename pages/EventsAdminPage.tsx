@@ -129,7 +129,7 @@ const EventsAdminPage: React.FC = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#F6F1E8] px-5 pb-16 pt-28 text-[#3A1A10] sm:px-8">
+    <main className="jj-min-screen bg-[#F6F1E8] px-5 pb-16 pt-28 text-[#3A1A10] sm:px-8">
       <div className="mx-auto max-w-3xl">
         <h1 className="font-serif text-4xl">Events Admin</h1>
         <p className="mt-2 text-sm text-[#3A1A10]/75">

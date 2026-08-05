@@ -81,13 +81,13 @@ const ProductShopPage: React.FC = () => {
   const otherFlavors = SHOP_GROUPS.filter((g) => g.id !== group.id);
 
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <section className="relative jj-min-screen overflow-hidden">
       <div className="absolute inset-0">
         <img src={journalBg} alt="" className="h-full w-full object-cover object-center" />
         <div className="absolute inset-0 bg-[#120904]/22" />
       </div>
 
-      <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col px-5 pb-12 pt-28 md:px-10 md:pb-16 md:pt-32">
+      <div className="relative mx-auto flex jj-min-screen max-w-7xl flex-col px-5 pb-12 pt-28 md:px-10 md:pb-16 md:pt-32">
         <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:gap-10">
           <div className="relative">
             <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-[2rem] shadow-[0_30px_90px_rgba(16,5,0,0.24)]">

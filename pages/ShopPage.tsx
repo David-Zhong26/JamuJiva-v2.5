@@ -113,7 +113,7 @@ const DrinksAccessGate: React.FC<{ children: React.ReactNode }> = ({ children })
 
   if (!isEligible) {
     return (
-      <div className="relative flex h-dvh min-h-screen items-center justify-center overflow-hidden px-8">
+      <div className="relative flex jj-min-screen items-center justify-center overflow-hidden px-8">
         <div className="absolute inset-0">
           <img src={journalBg} alt="" className="h-full w-full object-cover object-center" />
           <div className="absolute inset-0 bg-[#1C100A]/28" />

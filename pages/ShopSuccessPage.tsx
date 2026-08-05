@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ShopSuccessPage: React.FC = () => (
-  <main className="flex min-h-screen items-center justify-center bg-[#F6F1E8] px-8 pb-16 pt-28">
+  <main className="flex jj-min-screen items-center justify-center bg-[#F6F1E8] px-8 pb-16 pt-28">
     <div className="max-w-md text-center">
       <h1 className="font-serif text-4xl font-black text-[#2D4F3E]">Thank you for your order!</h1>
       <p className="mt-4 text-[#2D4F3E]/75">

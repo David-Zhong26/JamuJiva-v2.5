@@ -22,7 +22,7 @@ import { MailingListProvider } from './contexts/MailingListContext';
 import shopMerchImg from './materials/shop-merch.png';
 
 const MerchPlaceholder: React.FC = () => (
-  <main className="relative flex min-h-screen items-center justify-center overflow-hidden">
+  <main className="relative flex jj-min-screen items-center justify-center overflow-hidden">
     <div className="absolute inset-0">
       <img
         src={shopMerchImg}

@@ -93,7 +93,7 @@ const ShopDrinksCatalog: React.FC = () => {
       : 'Functional drinks rooted in Indonesian heritage, made for modern rituals.';
 
   return (
-    <section className="relative min-h-screen overflow-hidden">
+    <section className="relative jj-min-screen overflow-hidden">
       <div className="absolute inset-0">
         <img
           src={nowPouringBg}

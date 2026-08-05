@@ -24,7 +24,7 @@ const ShopIndex: React.FC = () => {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.06),transparent_55%)]" />
         </div>
 
-        <div className="relative z-10 mx-auto flex min-h-[min(96vh,54rem)] max-w-[88rem] flex-col px-4 pb-20 pt-24 sm:px-6 md:min-h-[min(100vh,58rem)] md:px-8 md:pb-24 md:pt-28 lg:px-10">
+        <div className="relative z-10 mx-auto flex min-h-[min(96svh,54rem)] max-w-[88rem] flex-col px-4 pb-20 pt-24 sm:px-6 md:min-h-[min(100svh,58rem)] md:px-8 md:pb-24 md:pt-28 lg:px-10">
           <div className="pt-1 md:pt-2">
             <h1 className="font-serif text-5xl leading-none text-white sm:text-6xl md:text-[4.25rem]">
               Shop All

@@ -3,7 +3,7 @@ import whiteLogo from '../materials/white jiva logo.png';
 import journalBg from '../materials/journal-bg-red.png';
 
 const JournalPage: React.FC = () => (
-  <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-8 pb-16 pt-28">
+  <main className="relative flex jj-min-screen items-center justify-center overflow-hidden px-8 pb-16 pt-28">
     <div className="absolute inset-0">
       <img
         src={journalBg}

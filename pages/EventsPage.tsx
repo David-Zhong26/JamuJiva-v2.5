@@ -4,7 +4,7 @@ import heroMobileImg from '../materials/hero-mobile.png';
 
 /** Public events listing is on hold — same treatment as Merch. */
 const EventsPage: React.FC = () => (
-  <main className="relative flex min-h-screen items-center justify-center overflow-hidden">
+  <main className="relative flex jj-min-screen items-center justify-center overflow-hidden">
     <div className="absolute inset-0">
       {/* Mobile: same cover as homepage hero motion still */}
       <img
