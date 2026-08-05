@@ -139,7 +139,7 @@ const DrinksAccessGate: React.FC<{ children: React.ReactNode }> = ({ children })
                 <button
                   type="button"
                   onClick={handleInMa}
-                  className="rounded-full bg-white py-3.5 text-xs font-black uppercase tracking-widest text-[#2D4F3E] transition-colors hover:bg-[#F6F1E8]"
+                  className="rounded-full bg-white py-3.5 text-xs font-black uppercase tracking-widest text-black transition-colors hover:bg-[#F6F1E8]"
                 >
                   Yes, I&apos;m in MA!
                 </button>

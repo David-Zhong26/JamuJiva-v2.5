@@ -255,17 +255,17 @@ const Navbar: React.FC = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="mb-6 flex items-center justify-between">
-                <span className="font-serif text-lg font-black text-[#2D4F3E]">Menu</span>
+                <span className="font-serif text-lg font-black text-[#8C3F1F]">Menu</span>
                 <button
                   type="button"
                   aria-label="Close"
                   onClick={() => setMobileOpen(false)}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#2D4F3E]/20 text-[#2D4F3E]"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#8C3F1F]/20 text-[#8C3F1F]"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <nav className="flex flex-col gap-1 font-bold text-xs uppercase tracking-widest text-[#2D4F3E]">
+              <nav className="flex flex-col gap-1 font-bold text-xs uppercase tracking-widest text-[#8C3F1F]">
                 {NAV_LINKS.map((link) => (
                   <Link
                     key={link.to}

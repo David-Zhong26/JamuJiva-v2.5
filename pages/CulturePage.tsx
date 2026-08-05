@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import background4Img from '../materials/background 4.png';
+import heroMobileImg from '../materials/hero-mobile.png';
 
 const ABOUT_STICKERS = [
   {
@@ -63,7 +64,7 @@ const StickerFace: React.FC<{ sticker: Sticker; interactive?: boolean }> = ({
 }) => (
   <article
     style={{ backgroundColor: sticker.cardBg, color: sticker.textColor }}
-    className="relative h-[30rem] w-full rounded-[2rem] px-7 py-7 shadow-[0_32px_90px_rgba(44,15,4,0.26)] sm:h-[31rem] sm:px-9 sm:py-8 md:h-[32rem] md:px-10 md:py-8"
+    className="relative h-[37.5rem] w-full rounded-[2rem] px-7 py-7 shadow-[0_32px_90px_rgba(44,15,4,0.26)] sm:h-[35rem] sm:px-9 sm:py-8 md:h-[32rem] md:px-10 md:py-8"
     aria-hidden={!interactive}
   >
     <div className="max-w-[33rem] pr-4 pb-24 md:pb-20">
@@ -153,7 +154,16 @@ const CulturePage: React.FC = () => {
   return (
     <main className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#8C3F1F]">
       <div className="absolute inset-0">
-        <img src={background4Img} alt="" className="h-full w-full object-cover object-center" />
+        <img
+          src={heroMobileImg}
+          alt=""
+          className="h-full w-full object-cover object-center md:hidden"
+        />
+        <img
+          src={background4Img}
+          alt=""
+          className="hidden h-full w-full object-cover object-center md:block"
+        />
         <div className="absolute inset-0 bg-[#7A2E14]/76" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_54%)]" />
       </div>
@@ -171,7 +181,7 @@ const CulturePage: React.FC = () => {
           </button>
 
           <div className="relative w-full max-w-[50rem] px-2 sm:px-8 md:px-16">
-            <div className="relative h-[30rem] sm:h-[31rem] md:h-[32rem]">
+            <div className="relative h-[37.5rem] sm:h-[35rem] md:h-[32rem]">
               {renderOrder.map((stickerIndex) => {
                 const depth = stack.indexOf(stickerIndex);
                 const isTop = depth === 0;

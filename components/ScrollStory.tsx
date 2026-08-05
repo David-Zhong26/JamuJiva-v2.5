@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown, Flower2, Heart, Leaf, Sparkles } from 'lucide-react';
 import background3Img from '../materials/background 3.png';
 import background4Img from '../materials/background 4.png';
+import heroMobileImg from '../materials/hero-mobile.png';
 import artworkImg from '../materials/Artwork.png';
 import whiteLogo from '../materials/white jiva logo.png';
 import DailyRitualSection from './DailyRitualSection';
@@ -11,10 +12,9 @@ import { PRODUCT_DRINKS } from '../constants/productDrinks';
 
 const HERO_BG_INTERVAL_MS = 4000;
 
-const HERO_BACKGROUNDS = [
-  background3Img,
-  background4Img,
-] as const;
+const HERO_BACKGROUNDS_DESKTOP = [background3Img, background4Img] as const;
+/** Mobile cover: same carousel rhythm, but swap bg4 for the vertical motion still. */
+const HERO_BACKGROUNDS_MOBILE = [background3Img, heroMobileImg] as const;
 
 const BENEFITS_MARQUEE_ITEMS = [
   '100% Natural',
@@ -65,7 +65,7 @@ const ProductRevealSection: React.FC = () => {
           }`}
         />
         <div
-          className={`pointer-events-none absolute top-[max(2.75rem,calc(env(safe-area-inset-top)+1.5rem))] z-20 flex items-center gap-1.5 whitespace-nowrap text-[0.62rem] font-bold uppercase tracking-widest md:hidden ${
+          className={`pointer-events-none absolute top-[max(3.5rem,calc(env(safe-area-inset-top)+2rem))] z-20 flex items-center gap-1.5 whitespace-nowrap text-[0.62rem] font-bold uppercase tracking-widest md:hidden ${
             flavor.slug === 'spiced-ivory' ? 'right-[1.375rem]' : 'right-5'
           }`}
           style={{ color: flavor.bodyColor }}
@@ -291,7 +291,7 @@ const ScrollStory: React.FC = () => {
 
   useEffect(() => {
     const t = setInterval(
-      () => setHeroBgIndex((i) => (i + 1) % HERO_BACKGROUNDS.length),
+      () => setHeroBgIndex((i) => (i + 1) % HERO_BACKGROUNDS_DESKTOP.length),
       HERO_BG_INTERVAL_MS
     );
     return () => clearInterval(t);
@@ -306,12 +306,25 @@ const ScrollStory: React.FC = () => {
       >
         <div className="sticky top-0 h-screen overflow-hidden bg-white">
           <div className="absolute inset-0 z-0">
-            {HERO_BACKGROUNDS.map((src, index) => (
+            {/* Mobile: motion-blur still instead of background 4 */}
+            {HERO_BACKGROUNDS_MOBILE.map((src, index) => (
               <motion.img
-                key={index}
+                key={`mobile-${index}`}
                 src={src}
                 alt=""
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
+                initial={false}
+                animate={{ opacity: heroBgIndex === index ? 1 : 0 }}
+                transition={{ duration: 0.8 }}
+              />
+            ))}
+            {/* Desktop: keep background 3 / 4 carousel */}
+            {HERO_BACKGROUNDS_DESKTOP.map((src, index) => (
+              <motion.img
+                key={`desktop-${index}`}
+                src={src}
+                alt=""
+                className="absolute inset-0 hidden h-full w-full object-cover md:block"
                 initial={false}
                 animate={{ opacity: heroBgIndex === index ? 1 : 0 }}
                 transition={{ duration: 0.8 }}

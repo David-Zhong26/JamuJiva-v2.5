@@ -1,14 +1,22 @@
 import React from 'react';
 import background4Img from '../materials/background 4.png';
+import heroMobileImg from '../materials/hero-mobile.png';
 
 /** Public events listing is on hold — same treatment as Merch. */
 const EventsPage: React.FC = () => (
   <main className="relative flex min-h-screen items-center justify-center overflow-hidden">
     <div className="absolute inset-0">
+      {/* Mobile: same cover as homepage hero motion still */}
+      <img
+        src={heroMobileImg}
+        alt=""
+        className="h-full w-full object-cover object-center md:hidden"
+      />
+      {/* Desktop keeps the landscape cover */}
       <img
         src={background4Img}
         alt=""
-        className="h-full w-full object-cover object-center"
+        className="hidden h-full w-full object-cover object-center md:block"
       />
       <div className="absolute inset-0 bg-[#1A0C08]/35" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(255,255,255,0.08),transparent_55%)]" />
