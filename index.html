@@ -12,18 +12,18 @@
     <link rel="icon" type="image/png" href="/favicon.png?v=4">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=4">
     <link rel="manifest" href="/manifest.webmanifest">
-    <meta name="theme-color" content="#F5E8CA">
+    <meta name="theme-color" content="#F6F1E8">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="description" content="Jiva brings Indonesian herbal wellness to modern life. Turmeric, ginger, and botanical wellness shots rooted in tradition.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,700;9..144,900&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;600&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #F5F2ED;
+            background-color: #F6F1E8;
             margin: 0;
             overflow-x: hidden;
             color: #2D4F3E;
@@ -31,8 +31,14 @@
         .font-serif {
             font-family: 'Fraunces', serif;
         }
+        .font-instrument {
+            font-family: 'Instrument Serif', serif;
+        }
         .font-condensed {
             font-family: 'Barlow Condensed', 'Inter', system-ui, sans-serif;
+        }
+        .font-lato {
+            font-family: 'Lato', 'Inter', system-ui, sans-serif;
         }
         .grainy-texture::before {
             content: "";
@@ -43,20 +49,9 @@
             pointer-events: none;
             z-index: 100;
         }
-        /* Custom scrollbar for premium feel */
-        ::-webkit-scrollbar {
-          width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-          background: #F5F2ED;
-        }
-        ::-webkit-scrollbar-thumb {
-          background: #2D4F3E;
-          border-radius: 10px;
-        }
         html {
             scroll-behavior: smooth;
-            background-color: #F5E8CA;
+            background-color: #F6F1E8;
         }
         /* Full-height sections — default uses normal vh (Safari, desktop, etc.) */
         .jj-vh-screen {
@@ -99,7 +94,7 @@
             100% { transform: translateX(-50%); }
         }
         .jj-benefits-marquee-track {
-            animation: jj-benefits-marquee 55s linear infinite;
+            animation: jj-benefits-marquee 26s linear infinite;
             will-change: transform;
         }
         @media (prefers-reduced-motion: reduce) {

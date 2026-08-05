@@ -15,7 +15,7 @@ const Story: React.FC = () => {
   const img2Scale = useTransform(scrollYProgress, [0.33, 0.66], [0.8, 1]);
 
   return (
-    <section id="story" ref={containerRef} className="relative h-[300vh] bg-[#2D4F3E] text-[#F5F2ED]">
+    <section id="story" ref={containerRef} className="relative h-[300vh] bg-[#2D4F3E] text-[#F6F1E8]">
       <div className="sticky top-0 h-screen w-full flex flex-col lg:flex-row overflow-hidden">
         
         {/* Left: Sticky Text */}

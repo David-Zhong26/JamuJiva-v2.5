@@ -11,7 +11,7 @@ const FeatureCard: React.FC<{ title: string; desc: string; icon: React.ReactNode
     transition={{ duration: 0.6, delay: index * 0.15 }}
     className="p-10 rounded-[2.5rem] bg-white shadow-xl shadow-[#2D4F3E]/5 border border-[#2D4F3E]/5 hover:-translate-y-2 transition-transform cursor-pointer group"
   >
-    <div className="w-16 h-16 bg-[#F5F2ED] rounded-2xl flex items-center justify-center text-[#F47C3E] mb-8 group-hover:bg-[#F47C3E] group-hover:text-white transition-colors">
+    <div className="w-16 h-16 bg-[#F6F1E8] rounded-2xl flex items-center justify-center text-[#F47C3E] mb-8 group-hover:bg-[#F47C3E] group-hover:text-white transition-colors">
       {icon}
     </div>
     <h3 className="font-serif text-3xl font-black text-[#2D4F3E] mb-4">{title}</h3>

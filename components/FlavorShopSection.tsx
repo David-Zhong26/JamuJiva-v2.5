@@ -24,7 +24,7 @@ const FlavorShopSection: React.FC<FlavorShopSectionProps> = ({ onOpenMailingList
   }, [searchParams]);
 
   return (
-    <section id="shop" className="relative border-y-2 border-[#2D4F3E] bg-[#F5E8CA] py-14 md:py-20">
+    <section id="shop" className="relative border-y-2 border-[#2D4F3E] bg-[#F6F1E8] py-14 md:py-20">
       <div className="mx-auto max-w-6xl px-5 md:px-10">
         <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
           <div className="relative">

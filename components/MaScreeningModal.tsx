@@ -96,7 +96,7 @@ const MaScreeningModal: React.FC<MaScreeningModalProps> = ({ open, onClose, init
             initial={{ y: 24, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 24, opacity: 0 }}
-            className="relative w-full max-w-xl rounded-2xl border border-[#2D4F3E]/15 bg-[#F5E8CA] p-6 shadow-2xl sm:p-8"
+            className="relative w-full max-w-xl rounded-2xl border border-[#2D4F3E]/15 bg-[#F6F1E8] p-6 shadow-2xl sm:p-8"
             onClick={(e) => e.stopPropagation()}
           >
             <button

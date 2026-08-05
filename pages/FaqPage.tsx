@@ -25,7 +25,7 @@ const FAQ_ITEMS = [
 ] as const;
 
 const FaqPage: React.FC = () => (
-  <main className="bg-[#F5E8CA] px-5 pb-16 pt-24 md:px-12 md:pb-20 md:pt-32">
+  <main className="bg-[#F6F1E8] px-5 pb-16 pt-24 md:px-12 md:pb-20 md:pt-32">
     <section className="mx-auto max-w-3xl">
       <h1 className="text-center font-serif text-4xl font-black text-[#2D4F3E] md:text-5xl">FAQ</h1>
 

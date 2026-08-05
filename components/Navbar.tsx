@@ -1,29 +1,60 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Instagram, Menu, X } from 'lucide-react';
 import colorLogo from '../materials/Jiva (8）.png';
 import whiteLogo from '../materials/white jiva logo.png';
 
-const PAGE_BG = '#F5E8CA';
-const HERO_LOGO_HEIGHT = 72;
-const COMPACT_LOGO_HEIGHT = 44;
+const PAGE_BG = '#F6F1E8';
+const PAGE_BG_SOFT = 'rgba(246, 241, 232, 0.86)';
+const NAV_BROWN = '#8C3F1F';
+const PAGE_BG_BOTTOM_FADE =
+  'linear-gradient(180deg, rgba(246, 241, 232, 0.86) 0%, rgba(246, 241, 232, 0.86) 80%, rgba(246, 241, 232, 0) 100%)';
+const HERO_LOGO_HEIGHT = 38;
+const COMPACT_LOGO_HEIGHT = 38;
 const NAV_TRANSITION = { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const };
 const MOBILE_HEADER_PADDING_TOP = 'max(0.75rem, env(safe-area-inset-top))';
+const INSTAGRAM_URL = 'https://www.instagram.com/jamujiva/';
+const NAV_LINKS = [
+  { to: '/culture', label: 'About Us' },
+  { to: '/shop', label: 'Shop All' },
+  { to: '/events', label: 'Events' },
+  { to: '/journal', label: 'Jiva Journal' },
+] as const;
 
 const Navbar: React.FC = () => {
   const location = useLocation();
-  const isHome = location.pathname === '/';
+  const isShopRoute =
+    location.pathname === '/shop' ||
+    location.pathname === '/shop/' ||
+    location.pathname.startsWith('/shop/');
+  const isShopCancel = location.pathname.startsWith('/shop/cancel');
+  const isShopCheckoutResult = location.pathname.startsWith('/shop/success');
 
-  const [navCompact, setNavCompact] = useState(!isHome);
+  const isOverlayNav =
+    location.pathname === '/' ||
+    (isShopRoute && !isShopCheckoutResult) ||
+    location.pathname === '/culture' ||
+    location.pathname.startsWith('/merch') ||
+    location.pathname.startsWith('/journal') ||
+    location.pathname.startsWith('/events');
+
+  const [navCompact, setNavCompact] = useState(!isOverlayNav);
   const [hideNav, setHideNav] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const showCompactNav = !isHome || navCompact;
+  // Solid brown cancel page: keep white overlay nav, no cream compact bar
+  const showCompactNav = isShopCancel ? false : !isOverlayNav || navCompact;
 
   useEffect(() => {
-    if (!isHome) {
+    if (!isOverlayNav) {
       setNavCompact(true);
+      setHideNav(false);
+      return;
+    }
+
+    if (isShopCancel) {
+      setNavCompact(false);
       setHideNav(false);
       return;
     }
@@ -31,23 +62,13 @@ const Navbar: React.FC = () => {
     const check = () => {
       const sy = window.scrollY;
       setNavCompact(sy > 0);
-
-      const halfHero = window.innerHeight * 0.5;
-      const el = document.getElementById('benefits');
-      if (!el) {
-        setHideNav(sy > halfHero);
-        return;
-      }
-      const sectionHeight = el.offsetHeight;
-      const scrolledInto = sy - el.offsetTop;
-      const past = scrolledInto >= sectionHeight * 0.75;
-      setHideNav(sy > halfHero && !past);
+      setHideNav(false);
     };
 
     check();
     window.addEventListener('scroll', check, { passive: true });
     return () => window.removeEventListener('scroll', check);
-  }, [isHome, location.pathname]);
+  }, [isOverlayNav, isShopCancel, location.pathname]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -66,7 +87,7 @@ const Navbar: React.FC = () => {
     'font-bold text-sm uppercase tracking-widest transition-colors hover:text-[#F47C3E]';
 
   const renderLogo = (className: string) =>
-    isHome ? (
+    isOverlayNav ? (
       <motion.img
         src={showCompactNav ? colorLogo : whiteLogo}
         alt="Jiva"
@@ -87,12 +108,12 @@ const Navbar: React.FC = () => {
     );
 
   const renderMobileMenuButton = () =>
-    isHome ? (
+    isOverlayNav ? (
       <motion.button
         type="button"
         animate={{
-          borderColor: showCompactNav ? 'rgba(45, 79, 62, 0.25)' : 'rgba(255, 255, 255, 0.45)',
-          color: showCompactNav ? '#2D4F3E' : '#FFFFFF',
+          borderColor: showCompactNav ? 'rgba(140, 63, 31, 0.25)' : 'rgba(255, 255, 255, 0.45)',
+          color: showCompactNav ? NAV_BROWN : '#FFFFFF',
         }}
         transition={NAV_TRANSITION}
         className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border bg-transparent"
@@ -104,7 +125,7 @@ const Navbar: React.FC = () => {
     ) : (
       <button
         type="button"
-        className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#2D4F3E]/25 text-[#2D4F3E]"
+        className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#8C3F1F]/25 text-[#8C3F1F]"
         aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
         onClick={() => setMobileOpen((v) => !v)}
       >
@@ -128,16 +149,16 @@ const Navbar: React.FC = () => {
           style={{
             top: 'calc(-1 * max(0.75rem, env(safe-area-inset-top)) - 1.25rem)',
             WebkitBackdropFilter: 'blur(8px)',
+            background: showCompactNav ? PAGE_BG_BOTTOM_FADE : 'transparent',
           }}
           animate={{
             opacity: showCompactNav ? 1 : 0,
             visibility: showCompactNav ? 'visible' : 'hidden',
-            backgroundColor: showCompactNav ? 'rgba(255, 255, 255, 0.28)' : 'rgba(0, 0, 0, 0)',
           }}
           transition={NAV_TRANSITION}
         />
         <div
-          className="relative flex items-center justify-between px-5 pb-3"
+          className="relative flex items-center justify-between px-5 pb-4"
           style={{ paddingTop: MOBILE_HEADER_PADDING_TOP }}
         >
           <Link to="/" onClick={closeAll} className="inline-flex shrink-0">
@@ -148,43 +169,72 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Desktop header */}
-      <motion.div
-        animate={{
-          backgroundColor: showCompactNav ? PAGE_BG : 'rgba(245, 232, 202, 0)',
-        }}
-        transition={NAV_TRANSITION}
-        className="relative hidden w-full md:block"
-      >
-        <Link
-          to="/"
-          onClick={closeAll}
-          className="absolute left-12 top-4 z-10"
+      {isOverlayNav ? (
+        <motion.div
+          className="relative hidden px-9 py-7 md:block"
+          style={{
+            background: showCompactNav ? PAGE_BG_BOTTOM_FADE : 'transparent',
+          }}
         >
-          {renderLogo('block w-auto origin-top-left')}
-        </Link>
+          <Link to="/" onClick={closeAll} className="absolute left-9 top-1/2 z-10 inline-flex -translate-y-1/2 items-center">
+            {renderLogo('block w-auto origin-top-left')}
+          </Link>
 
-        <div className="relative flex min-h-[2.75rem] items-center justify-end gap-10 px-10 py-4">
           <motion.div
-            className="flex h-10 items-center gap-10"
-            animate={{ color: showCompactNav ? '#2D4F3E' : '#FFFFFF' }}
+            className="flex items-center justify-center"
+            animate={{ color: showCompactNav ? NAV_BROWN : '#FFFFFF' }}
             transition={NAV_TRANSITION}
           >
-            <Link to="/shop" className={linkClass} onClick={closeAll}>
-              Shop All
-            </Link>
-            <Link to="/merch" className={linkClass} onClick={closeAll}>
-              Merch
-            </Link>
-            <Link to="/culture" className={linkClass} onClick={closeAll}>
-              About Us
-            </Link>
-            <Link to="/journal" className={linkClass} onClick={closeAll}>
-              Jiva Journal
-            </Link>
+            <div className="flex items-center gap-8 text-xs font-bold uppercase tracking-[0.1em] md:gap-10 lg:gap-12">
+              {NAV_LINKS.map((link) => (
+                <Link key={link.to} to={link.to} className={linkClass} onClick={closeAll}>
+                  {link.label}
+                </Link>
+              ))}
+            </div>
           </motion.div>
 
+          <motion.a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute right-9 top-1/2 inline-flex -translate-y-1/2 items-center justify-center transition-opacity hover:opacity-80"
+            animate={{
+              color: showCompactNav ? NAV_BROWN : '#FFFFFF',
+            }}
+            transition={NAV_TRANSITION}
+            aria-label="Instagram"
+          >
+            <Instagram className="h-7 w-7" />
+          </motion.a>
+        </motion.div>
+      ) : (
+        <div className="relative hidden w-full px-9 py-4 md:block" style={{ background: PAGE_BG_SOFT }}>
+          <Link to="/" onClick={closeAll} className="absolute left-9 top-1/2 z-10 inline-flex -translate-y-1/2 items-center">
+            {renderLogo('block w-auto origin-top-left')}
+          </Link>
+
+          <div className="flex items-center justify-center text-[#8C3F1F]">
+            <div className="flex items-center gap-8 text-xs font-bold uppercase tracking-[0.1em] md:gap-10 lg:gap-12">
+              {NAV_LINKS.map((link) => (
+                <Link key={link.to} to={link.to} className={linkClass} onClick={closeAll}>
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute right-9 top-1/2 inline-flex -translate-y-1/2 items-center justify-center text-[#8C3F1F] transition-opacity hover:opacity-80"
+            aria-label="Instagram"
+          >
+            <Instagram className="h-7 w-7" />
+          </a>
         </div>
-      </motion.div>
+      )}
 
       <AnimatePresence>
         {mobileOpen ? (
@@ -200,7 +250,7 @@ const Navbar: React.FC = () => {
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ type: 'spring', stiffness: 380, damping: 34 }}
-              className="absolute right-0 top-0 flex h-full w-[min(100%,19rem)] flex-col bg-[#F5E8CA] p-6 shadow-2xl"
+              className="absolute right-0 top-0 flex h-full w-[min(100%,19rem)] flex-col bg-[#F6F1E8] p-6 shadow-2xl"
               style={{ paddingTop: 'calc(1.5rem + env(safe-area-inset-top))' }}
               onClick={(e) => e.stopPropagation()}
             >
@@ -216,18 +266,16 @@ const Navbar: React.FC = () => {
                 </button>
               </div>
               <nav className="flex flex-col gap-1 font-bold text-xs uppercase tracking-widest text-[#2D4F3E]">
-                <Link to="/shop" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
-                  Shop All
-                </Link>
-                <Link to="/merch" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
-                  Merch
-                </Link>
-                <Link to="/culture" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
-                  About Us
-                </Link>
-                <Link to="/journal" onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
-                  Jiva Journal
-                </Link>
+                {NAV_LINKS.map((link) => (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    onClick={closeAll}
+                    className="rounded-lg py-3 hover:bg-[#F9D067]/35"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
               </nav>
             </motion.div>
           </motion.div>

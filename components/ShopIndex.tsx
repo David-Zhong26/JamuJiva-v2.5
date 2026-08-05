@@ -1,80 +1,111 @@
 import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { SHOP_GROUPS, formatShopPrice, shopGroupDisplayPrice } from '../constants/shopProducts';
-import { useShopAccess } from '../contexts/ShopAccessContext';
+import { Link, useLocation } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
+import shopHeroImg from '../materials/background 3.png';
+import shopDrinksImg from '../materials/shop-drinks.png';
+import shopMerchImg from '../materials/shop-merch.png';
+
+const cardClassName =
+  'group relative flex w-full min-w-0 flex-1 flex-col overflow-hidden rounded-[1.5rem] bg-[#F6F1E8] shadow-[0_16px_40px_rgba(48,16,4,0.16)] outline-none transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-none';
 
 const ShopIndex: React.FC = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  const { accessMode, clearAccess } = useShopAccess();
 
   return (
-    <section className="pb-10 pt-6 md:pb-12 md:pt-8">
-      <div className="mx-auto max-w-5xl px-5 md:px-10">
-      <div className="-mt-7 flex justify-start md:-mt-9">
-        <button
-          type="button"
-          onClick={() => {
-            clearAccess();
-            navigate('/shop');
-          }}
-          className="mb-1 text-left text-[11px] font-black uppercase tracking-[0.16em] text-[#2D4F3E]/60 underline underline-offset-4 hover:text-[#2D4F3E]"
-        >
-          {accessMode === 'pickup' ? 'Change pickup or delivery option' : 'Change delivery or pickup option'}
-        </button>
-      </div>
-      <h1 className="mt-6 font-serif text-4xl font-black text-[#2D4F3E] md:mt-8 md:text-5xl">
-        Shop All
-      </h1>
-      <p className="mt-3 text-sm text-[#2D4F3E]/75 md:text-base md:whitespace-nowrap">
-        {accessMode === 'pickup'
-          ? 'Pick up at the NY Indonesian Food Bazaar on July 11, from 11 AM to 6 PM.'
-          : 'Massachusetts-area delivery. Pick a flavor to choose your size and add to cart.'}
-      </p>
+    <div className="bg-[#F6F1E8]">
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={shopHeroImg}
+            alt=""
+            className="h-full w-full object-cover object-[center_22%] brightness-[0.72]"
+          />
+          <div className="absolute inset-0 bg-[#1A100C]/48" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.06),transparent_55%)]" />
+        </div>
 
-      <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {SHOP_GROUPS.map((group) => (
-          <Link
-            key={group.id}
-            to={`/shop/${group.slug}${location.search}`}
-            className="group relative overflow-hidden rounded-2xl border border-[#2D4F3E]/15 bg-[#F9EFD4]/40 transition-colors duration-300 hover:border-[#2D4F3E]/35"
-          >
-            {group.badge ? (
-              <span className="absolute right-4 top-4 z-10 rounded-md bg-[#2D4F3E] px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.18em] text-white">
-                {group.badge}
-              </span>
-            ) : null}
-            <div className="flex min-h-[200px] items-center justify-center bg-[#F5E8CA] p-8 transition-colors duration-300">
-              <img
-                src={group.image}
-                alt={group.name}
-                className="max-h-40 w-auto rounded-2xl object-contain transition-transform duration-300 group-hover:scale-[1.03]"
-              />
+        <div className="relative z-10 mx-auto flex min-h-[min(96vh,54rem)] max-w-[88rem] flex-col px-4 pb-20 pt-24 sm:px-6 md:min-h-[min(100vh,58rem)] md:px-8 md:pb-24 md:pt-28 lg:px-10">
+          <div className="pt-1 md:pt-2">
+            <h1 className="font-serif text-5xl leading-none text-white sm:text-6xl md:text-[4.25rem]">
+              Shop All
+            </h1>
+            <p className="mt-3 max-w-md text-sm leading-relaxed text-white/90 sm:text-base">
+              Drinks that uplift. Merch that inspires.
+            </p>
+          </div>
+
+          <div className="mt-8 flex flex-1 flex-col items-stretch justify-center sm:mt-10 md:mt-12 md:pb-4">
+            <div className="flex w-full flex-col items-stretch justify-center gap-5 sm:flex-row sm:items-stretch sm:gap-5 md:gap-6 lg:gap-7">
+              <Link to={`/shop/drinks${location.search}`} className={cardClassName}>
+                <div className="relative aspect-[16/10] overflow-hidden bg-[#EDE4D8]">
+                  <img
+                    src={shopDrinksImg}
+                    alt="Jiva drinks"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    decoding="async"
+                  />
+                </div>
+                <div className="relative flex items-end gap-3 px-5 py-4 sm:px-6 sm:py-5">
+                  <div className="min-w-0 flex-1">
+                    <h2 className="font-serif text-[1.7rem] leading-none text-[#6F2E1E] sm:text-[1.85rem]">
+                      Drinks
+                    </h2>
+                    <p className="mt-1.5 text-sm leading-snug text-[#6F2E1E]/75">
+                      Explore our wellness beverages.
+                    </p>
+                  </div>
+                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#6F2E1E] text-white transition-transform group-hover:scale-105">
+                    <ArrowRight className="h-4 w-4" />
+                  </span>
+                </div>
+              </Link>
+
+              <Link to="/merch" className={cardClassName}>
+                <div
+                  className="pointer-events-none absolute right-3 top-3 z-10 flex h-[4.5rem] w-[4.5rem] items-center justify-center sm:right-4 sm:top-4 sm:h-[4.75rem] sm:w-[4.75rem]"
+                  aria-hidden
+                >
+                  <span
+                    className="absolute inset-0 bg-[#F2BBB5]"
+                    style={{
+                      clipPath:
+                        'polygon(50% 0%, 63% 12%, 80% 8%, 82% 26%, 97% 35%, 90% 50%, 97% 65%, 82% 74%, 80% 92%, 63% 88%, 50% 100%, 37% 88%, 20% 92%, 18% 74%, 3% 65%, 10% 50%, 3% 35%, 18% 26%, 20% 8%, 37% 12%)',
+                    }}
+                  />
+                  <span className="relative px-1.5 text-center text-[9px] font-black uppercase leading-tight tracking-[0.06em] text-[#6F2E1E] sm:text-[10px]">
+                    Coming
+                    <br />
+                    Soon
+                  </span>
+                </div>
+
+                <div className="relative aspect-[16/10] overflow-hidden bg-[#EDE4D8]">
+                  <img
+                    src={shopMerchImg}
+                    alt="Jiva merch"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                    decoding="async"
+                  />
+                </div>
+                <div className="relative flex items-end gap-3 px-5 py-4 sm:px-6 sm:py-5">
+                  <div className="min-w-0 flex-1">
+                    <h2 className="font-serif text-[1.7rem] leading-none text-[#6F2E1E] sm:text-[1.85rem]">
+                      Merch
+                    </h2>
+                    <p className="mt-1.5 text-sm leading-snug text-[#6F2E1E]/75">
+                      Shop our everyday essentials.
+                    </p>
+                  </div>
+                  <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#6F2E1E] text-white transition-transform group-hover:scale-105">
+                    <ArrowRight className="h-4 w-4" />
+                  </span>
+                </div>
+              </Link>
             </div>
-            <div className="p-6 transition-colors duration-300">
-              <h2 className="font-serif text-2xl font-bold text-[#2D4F3E]">{group.name}</h2>
-              <p className="mt-1 text-sm font-black text-[#2D4F3E]">
-                {formatShopPrice(shopGroupDisplayPrice(group))}
-              </p>
-              {group.eyebrow ? (
-                <p className="mt-1 text-[0.65rem] font-black uppercase tracking-[0.2em] text-[#2D4F3E]/65">
-                  {group.eyebrow}
-                </p>
-              ) : null}
-              <p className="mt-2 text-sm leading-relaxed text-[#2D4F3E]/75">{group.description}</p>
-              <span
-                className={`inline-block text-xs font-black uppercase tracking-widest text-[#F47C3E] group-hover:text-[#2D4F3E] ${
-                  group.id === 'mixed' ? 'mt-12' : 'mt-4'
-                }`}
-              >
-                Shop now →
-              </span>
-            </div>
-          </Link>
-        ))}
-      </div>
-      </div>
-    </section>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };
 

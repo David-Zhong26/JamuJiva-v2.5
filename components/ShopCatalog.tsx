@@ -40,7 +40,7 @@ const ShopCatalog: React.FC = () => {
               className="overflow-hidden rounded-2xl border border-[#2D4F3E]/15 bg-[#F9EFD4]/40"
             >
               <div className="grid gap-0 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
-                <div className="flex min-h-[200px] items-center justify-center bg-[#F5E8CA] p-8 md:min-h-[240px]">
+                <div className="flex min-h-[200px] items-center justify-center bg-[#F6F1E8] p-8 md:min-h-[240px]">
                   <img
                     src={group.image}
                     alt={group.name}
@@ -72,7 +72,7 @@ const ShopCatalog: React.FC = () => {
                           }
                           className={`rounded-full border px-4 py-2 text-xs font-black uppercase tracking-widest transition-colors ${
                             selected
-                              ? 'border-[#2D4F3E] bg-[#2D4F3E] text-[#F5E8CA]'
+                              ? 'border-[#2D4F3E] bg-[#2D4F3E] text-[#F6F1E8]'
                               : 'border-[#2D4F3E]/30 bg-white/50 text-[#2D4F3E] hover:border-[#2D4F3E]/55'
                           }`}
                         >

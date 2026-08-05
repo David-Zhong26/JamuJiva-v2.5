@@ -8,22 +8,22 @@ const QuantityStepper: React.FC<{
   value: number;
   onChange: (next: number) => void;
 }> = ({ value, onChange }) => (
-  <div className="flex items-center rounded-lg border border-[#2D4F3E]/20 bg-white">
+  <div className="flex items-center rounded-lg border border-[#8C3F1F]/20 bg-white">
     <button
       type="button"
       onClick={() => onChange(value - 1)}
-      className="flex h-9 w-9 items-center justify-center text-[#2D4F3E] transition-colors hover:bg-[#F9D067]/40"
+      className="flex h-9 w-9 items-center justify-center text-[#6F2E1E] transition-colors hover:bg-[#8C3F1F]/10"
       aria-label="Decrease quantity"
     >
       <Minus className="h-3.5 w-3.5" />
     </button>
-    <span className="min-w-[2rem] text-center text-sm font-black tabular-nums text-[#2D4F3E]">
+    <span className="min-w-[2rem] text-center text-sm font-black tabular-nums text-[#6F2E1E]">
       {value}
     </span>
     <button
       type="button"
       onClick={() => onChange(value + 1)}
-      className="flex h-9 w-9 items-center justify-center text-[#2D4F3E] transition-colors hover:bg-[#F9D067]/40"
+      className="flex h-9 w-9 items-center justify-center text-[#6F2E1E] transition-colors hover:bg-[#8C3F1F]/10"
       aria-label="Increase quantity"
     >
       <Plus className="h-3.5 w-3.5" />
@@ -80,15 +80,15 @@ const CartPanel: React.FC<{
   };
 
   return (
-    <div className="flex h-full flex-col bg-[#FAF6EC]">
-      <div className="flex items-center justify-between border-b border-[#2D4F3E]/10 px-5 py-5 md:px-6">
-        <h2 className="font-serif text-2xl font-bold lowercase tracking-tight text-[#2D4F3E]">
+    <div className="flex h-full flex-col bg-[#FBF9F4]">
+      <div className="flex items-center justify-between border-b border-[#8C3F1F]/12 px-5 py-5 md:px-6">
+        <h2 className="font-serif text-2xl font-bold lowercase tracking-tight text-[#6F2E1E]">
           my shopping cart
         </h2>
         <button
           type="button"
           onClick={onClose}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#2D4F3E]/15 text-[#2D4F3E] transition-colors hover:bg-[#F9D067]/35"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[#8C3F1F]/20 text-[#6F2E1E] transition-colors hover:bg-[#8C3F1F]/10"
           aria-label="Close cart"
         >
           <X className="h-4 w-4" />
@@ -98,11 +98,11 @@ const CartPanel: React.FC<{
       <div className="flex-1 overflow-y-auto px-5 py-4 md:px-6">
         {lines.length === 0 ? (
           <div className="flex h-full min-h-[220px] flex-col items-center justify-center px-4 text-center">
-            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#F9D067]/35">
-              <ShoppingBag className="h-7 w-7 text-[#2D4F3E]/45" />
+            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#8C3F1F]/10">
+              <ShoppingBag className="h-7 w-7 text-[#8C3F1F]/55" />
             </div>
-            <p className="font-serif text-lg font-bold text-[#2D4F3E]">Your cart is empty</p>
-            <p className="mt-2 max-w-[14rem] text-sm leading-relaxed text-[#2D4F3E]/60">
+            <p className="font-serif text-lg font-bold text-[#6F2E1E]">Your cart is empty</p>
+            <p className="mt-2 max-w-[14rem] text-sm leading-relaxed text-[#6F2E1E]/65">
               Choose a flavor and tap <span className="font-bold">Add to cart</span>.
             </p>
           </div>
@@ -114,9 +114,9 @@ const CartPanel: React.FC<{
               return (
                 <li
                   key={line.productId}
-                  className="flex gap-4 border-b border-[#2D4F3E]/8 pb-5 last:border-0"
+                  className="flex gap-4 border-b border-[#8C3F1F]/10 pb-5 last:border-0"
                 >
-                  <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-[#F5E8CA] p-2">
+                  <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-xl bg-white p-2">
                     <img
                       src={product.image}
                       alt=""
@@ -126,11 +126,11 @@ const CartPanel: React.FC<{
                   <div className="min-w-0 flex-1">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <p className="font-bold leading-snug text-[#2D4F3E]">
+                        <p className="font-bold leading-snug text-[#6F2E1E]">
                           {cartLineLabel(line)}
                         </p>
-                        <p className="mt-1 text-xs text-[#2D4F3E]/55">{product.variantLabel}</p>
-                        <p className="mt-1 text-xs font-bold text-[#2D4F3E]/65">
+                        <p className="mt-1 text-xs text-[#6F2E1E]/55">{product.variantLabel}</p>
+                        <p className="mt-1 text-xs font-bold text-[#6F2E1E]/70">
                           {formatShopPrice(product.price)} each
                         </p>
                       </div>
@@ -138,12 +138,12 @@ const CartPanel: React.FC<{
                         <button
                           type="button"
                           onClick={() => removeItem(line.productId)}
-                          className="p-1 text-[#2D4F3E]/40 transition-colors hover:text-[#F47C3E]"
+                          className="p-1 text-[#8C3F1F]/45 transition-colors hover:text-[#8C3F1F]"
                           aria-label="Remove item"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
-                        <span className="text-sm font-black tabular-nums text-[#2D4F3E]">
+                        <span className="text-sm font-black tabular-nums text-[#6F2E1E]">
                           {formatShopPrice(lineTotal)}
                         </span>
                       </div>
@@ -163,28 +163,31 @@ const CartPanel: React.FC<{
       </div>
 
       <div
-        className="border-t border-[#2D4F3E]/10 bg-[#FAF6EC] px-5 py-5 md:px-6"
+        className="border-t border-[#8C3F1F]/12 bg-[#FBF9F4] px-5 py-5 md:px-6"
         style={{ paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
       >
         {zip ? (
-          <p className="mb-3 text-center text-xs text-[#2D4F3E]/55">
+          <p className="mb-3 text-center text-xs text-[#6F2E1E]/60">
             {accessMode === 'pickup' ? (
               <>
-                Pickup at <span className="font-bold text-[#2D4F3E]">{accessLabel || 'NY Indonesian Food Bazaar'}</span>
+                Pickup at{' '}
+                <span className="font-bold text-[#6F2E1E]">
+                  {accessLabel || 'NY Indonesian Food Bazaar'}
+                </span>
               </>
             ) : (
               <>
-                Delivering to <span className="font-mono font-bold text-[#2D4F3E]">{zip}</span>
+                Delivering to <span className="font-mono font-bold text-[#6F2E1E]">{zip}</span>
               </>
             )}
           </p>
         ) : null}
 
         <div className="mb-4 flex items-center justify-between text-sm">
-          <span className="font-bold uppercase tracking-widest text-[#2D4F3E]/70">
+          <span className="font-bold uppercase tracking-widest text-[#6F2E1E]/75">
             Subtotal ({itemCount} {itemCount === 1 ? 'item' : 'items'})
           </span>
-          <span className="text-base font-black tabular-nums text-[#2D4F3E]">
+          <span className="text-base font-black tabular-nums text-[#6F2E1E]">
             {formatShopPrice(subtotal)}
           </span>
         </div>
@@ -195,7 +198,7 @@ const CartPanel: React.FC<{
           type="button"
           disabled={lines.length === 0 || checkingOut}
           onClick={handleCheckout}
-          className="flex w-full items-center justify-center gap-2 rounded-full bg-[#F47C3E] py-4 text-xs font-black uppercase tracking-widest text-white transition-all hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-45"
+          className="flex w-full items-center justify-center gap-2 rounded-full bg-[#8C3F1F] py-4 text-xs font-black uppercase tracking-widest text-white transition-all hover:bg-[#6F2E1E] disabled:cursor-not-allowed disabled:opacity-45"
         >
           {checkingOut ? 'Redirecting…' : 'Checkout'}
           {!checkingOut ? <ArrowRight className="h-4 w-4" /> : null}
@@ -205,7 +208,7 @@ const CartPanel: React.FC<{
           <button
             type="button"
             onClick={clearCart}
-            className="mt-3 w-full text-center text-xs font-bold uppercase tracking-widest text-[#2D4F3E]/50 hover:text-[#2D4F3E]"
+            className="mt-3 w-full text-center text-xs font-bold uppercase tracking-widest text-[#8C3F1F]/55 hover:text-[#6F2E1E]"
           >
             Clear cart
           </button>
@@ -223,13 +226,13 @@ const ShoppingCart: React.FC = () => {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-5 z-40 flex items-center gap-2 rounded-full bg-[#2D4F3E] px-5 py-3.5 text-xs font-black uppercase tracking-widest text-white shadow-lg md:bottom-auto md:right-6 md:top-28"
+        className="fixed bottom-6 right-5 z-40 flex items-center gap-2 rounded-full bg-[#F6F1E8] px-5 py-3.5 text-xs font-black uppercase tracking-widest text-[#6F2E1E] shadow-lg md:bottom-auto md:right-6 md:top-28"
         aria-label="Open cart"
       >
         <ShoppingBag className="h-4 w-4" />
         Cart
         {itemCount > 0 ? (
-          <span className="flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-[#F47C3E] px-1 text-[0.65rem]">
+          <span className="flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-[#8C3F1F] px-1 text-[0.65rem] text-white">
             {itemCount}
           </span>
         ) : null}
@@ -237,7 +240,7 @@ const ShoppingCart: React.FC = () => {
 
       {isOpen ? (
         <div
-          className="fixed inset-0 z-[65] bg-[#2D4F3E]/40 backdrop-blur-sm"
+          className="fixed inset-0 z-[65] bg-[#3A1A10]/40 backdrop-blur-sm"
           onClick={() => setOpen(false)}
           aria-hidden
         />

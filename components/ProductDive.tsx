@@ -110,7 +110,7 @@ const ProductDive: React.FC = () => {
   const bgColor = useTransform(
     smoothProgress,
     [0, 0.2, 0.6, 1],
-    ["#F5F2ED", "#F5F2ED", "#1a1a1a", "#2D4F3E"]
+    ["#F6F1E8", "#F6F1E8", "#1a1a1a", "#2D4F3E"]
   );
 
   // Subtle background text (very minimal)

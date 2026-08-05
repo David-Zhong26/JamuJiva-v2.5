@@ -8,7 +8,7 @@ interface MailingListModalProps {
 }
 
 const fieldClass =
-  'w-full rounded-2xl border border-[#2D4F3E]/15 bg-white px-5 py-4 text-[#2D4F3E] outline-none transition-colors placeholder:text-[#2D4F3E]/35 focus:border-[#2D4F3E]';
+  'w-full rounded-2xl border border-[#8C3F1F]/85 bg-white/92 px-5 py-4 text-[#8C3F1F] outline-none transition-colors placeholder:text-[#8C3F1F]/42 focus:border-[#8C3F1F]';
 
 const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
@@ -130,7 +130,7 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25, ease: 'easeOut' }}
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-[#2D4F3E]/45 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-[#8C3F1F]/22 p-4 backdrop-blur-sm"
           onWheel={(e) => {
             e.preventDefault();
             nudgeModal(e.deltaY);
@@ -146,11 +146,11 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
             dragElastic={0.28}
             dragSnapToOrigin
             style={{ y: modalY }}
-            className="relative w-full max-w-md overflow-hidden rounded-[2rem] bg-[#F5F2ED] p-8 shadow-[0_24px_80px_rgba(0,0,0,0.24)]"
+            className="relative w-full max-w-md overflow-hidden rounded-[2rem] bg-[#F6F1E8] p-8 shadow-[0_24px_80px_rgba(104,53,31,0.24)]"
           >
-            <div className="absolute left-0 right-0 top-0 h-1 bg-[#2D4F3E]/15">
+            <div className="absolute left-0 right-0 top-0 h-1 bg-[#8C3F1F]/12">
               <motion.div
-                className="h-full bg-[#2D4F3E]"
+                className="h-full bg-[#8C3F1F]"
                 initial={false}
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.35, ease: 'easeOut' }}
@@ -161,14 +161,14 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
               type="button"
               aria-label="Close mailing list modal"
               onClick={onClose}
-              className="absolute right-5 top-5 inline-flex h-10 w-10 items-center justify-center rounded-full text-[#2D4F3E]/70 transition-colors hover:bg-white hover:text-[#2D4F3E]"
+              className="absolute right-5 top-5 inline-flex h-10 w-10 items-center justify-center rounded-full text-[#8C3F1F]/82 transition-colors hover:bg-white/65 hover:text-[#8C3F1F]"
             >
               <X className="h-4 w-4" />
             </button>
 
             {!submitted ? (
               <>
-                <p className="mx-auto mt-5 max-w-[32rem] text-center text-base font-semibold leading-relaxed text-[#2D4F3E]/70">
+                <p className="mx-auto mt-5 max-w-[32rem] text-center text-base font-semibold leading-relaxed text-[#8C3F1F]/95">
                   Join our early members club to be the first to hear about launches, restocks, and
                   special releases from Jiva!
                 </p>
@@ -199,7 +199,7 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
 
                   <button
                     type="submit"
-                    className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#2D4F3E] px-6 py-4 font-black text-white transition-colors hover:bg-[#F47C3E]"
+                    className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#8C3F1F] px-6 py-4 font-black text-white transition-colors hover:bg-[#A34D27]"
                   >
                     Continue
                     <ArrowRight className="h-4 w-4" />
@@ -208,32 +208,32 @@ const MailingListModal: React.FC<MailingListModalProps> = ({ open, onClose }) =>
               </>
             ) : (
               <div className="flex flex-col items-center py-6 text-center">
-                <span className="mb-3 block text-xs font-black uppercase tracking-[0.22em] text-[#F47C3E]">
+                <span className="mb-3 block text-xs font-black uppercase tracking-[0.22em] text-[#A34D27]">
                   You&apos;re in
                 </span>
-                <h3 className="font-serif text-3xl font-black leading-tight text-[#2D4F3E]">
+                <h3 className="font-serif text-3xl font-black leading-tight text-[#8C3F1F]">
                   {name.trim() ? `Thanks, ${name.trim()}!` : "You're on the list!"}
                 </h3>
-                <p className="mt-4 text-base leading-relaxed text-[#2D4F3E]/75">
+                <p className="mt-4 text-base leading-relaxed text-[#8C3F1F]/78">
                   We&apos;ll let you know when the
                   <br />
                   next product drop is ready!
                 </p>
-                <div className="mt-5 w-full rounded-2xl bg-[#F9EFD4] px-5 py-4 text-center text-[#2D4F3E]">
-                  <span className="block text-[11px] font-black uppercase tracking-[0.18em] text-[#2D4F3E]/60">
+                <div className="mt-5 w-full rounded-2xl bg-[#F3E6D7] px-5 py-4 text-center text-[#8C3F1F]">
+                  <span className="block text-[11px] font-black uppercase tracking-[0.18em] text-[#8C3F1F]/60">
                     Your discount code
                   </span>
-                  <p className="mt-2 font-serif text-2xl font-black tracking-[0.08em] text-[#2D4F3E]">
+                  <p className="mt-2 font-serif text-2xl font-black tracking-[0.08em] text-[#8C3F1F]">
                     JIVADAY1
                   </p>
-                  <p className="mt-2 text-sm leading-relaxed text-[#2D4F3E]/75">
+                  <p className="mt-2 text-sm leading-relaxed text-[#8C3F1F]/78">
                     Use it at checkout for 10% off your order.
                   </p>
                 </div>
                 <button
                   type="button"
                   onClick={onClose}
-                  className="mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-[#F47C3E] px-8 py-4 font-black text-white transition-colors hover:bg-[#2D4F3E]"
+                  className="mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-[#8C3F1F] px-8 py-4 font-black text-white transition-colors hover:bg-[#A34D27]"
                 >
                   Close
                 </button>

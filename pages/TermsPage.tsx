@@ -60,7 +60,7 @@ const TermsPage: React.FC = () => {
   const bodyBlocks = blocks.slice(2);
 
   return (
-    <main className="bg-[#F5E8CA] pt-24 pb-16 md:pt-32 md:pb-24">
+    <main className="bg-[#F6F1E8] pt-24 pb-16 md:pt-32 md:pb-24">
       <article className="mx-auto max-w-5xl px-8 md:px-16 lg:px-24">
         <header className="mb-12 text-center md:mb-16">
           <h1 className="font-serif text-4xl font-black text-[#2D4F3E] md:text-5xl lg:text-6xl">

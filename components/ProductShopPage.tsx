@@ -13,6 +13,7 @@ import {
   type ShopProductId,
 } from '../constants/shopProducts';
 import { useCart } from '../contexts/CartContext';
+import journalBg from '../materials/journal-bg-red.png';
 
 const FlavorCard: React.FC<{ group: ShopGroup; compact?: boolean }> = ({ group, compact }) => {
   const location = useLocation();
@@ -29,7 +30,7 @@ const FlavorCard: React.FC<{ group: ShopGroup; compact?: boolean }> = ({ group, 
           {group.badge}
         </span>
       ) : null}
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-xl bg-[#F5E8CA] p-2 transition-colors duration-300 group-hover:bg-[#F4E2A8]">
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-xl bg-[#F6F1E8] p-2 transition-colors duration-300 group-hover:bg-[#F4E2A8]">
         <img
           src={group.image}
           alt={group.name}
@@ -67,7 +68,7 @@ const ProductShopPage: React.FC = () => {
   }, [group?.id, group?.options]);
 
   if (!group) {
-    return <Navigate to={`/shop${location.search}`} replace />;
+    return <Navigate to={`/shop/drinks${location.search}`} replace />;
   }
 
   const drinkMeta =
@@ -77,52 +78,55 @@ const ProductShopPage: React.FC = () => {
         ? PRODUCT_DRINKS[1]
         : null;
 
-  const heroImage = group.image;
   const otherFlavors = SHOP_GROUPS.filter((g) => g.id !== group.id);
 
   return (
-    <section className="border-b-2 border-[#2D4F3E]/10 py-10 md:py-14">
-      <div className="mx-auto max-w-6xl px-5 md:px-10">
-        <Link
-          to={`/shop${location.search}`}
-          className="text-xs font-bold uppercase tracking-widest text-[#2D4F3E]/55 hover:text-[#2D4F3E]"
-        >
-          ← Shop All
-        </Link>
+    <section className="relative min-h-screen overflow-hidden">
+      <div className="absolute inset-0">
+        <img src={journalBg} alt="" className="h-full w-full object-cover object-center" />
+        <div className="absolute inset-0 bg-[#120904]/22" />
+      </div>
 
-        <div className="mt-8 grid items-start gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16">
+      <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col px-5 pb-12 pt-28 md:px-10 md:pb-16 md:pt-32">
+        <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,26rem)_minmax(0,1fr)] lg:gap-10">
           <div className="relative">
-            <div className="relative flex min-h-[280px] items-center justify-center md:min-h-[420px]">
+            <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-[2rem] shadow-[0_30px_90px_rgba(16,5,0,0.24)]">
+              <img
+                src={journalBg}
+                alt=""
+                className="absolute inset-0 h-full w-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-[#3A1A10]/18" />
               <motion.img
                 key={group.slug}
-                src={heroImage}
+                src={group.image}
                 alt={group.name}
                 initial={{ opacity: 0, y: 10, scale: 0.985 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-                className="relative z-10 h-auto w-[min(78vw,22rem)] max-w-none rounded-2xl object-contain md:w-[min(42vw,28rem)]"
+                className="relative z-10 h-[92%] w-[96%] object-contain drop-shadow-[0_18px_40px_rgba(16,5,0,0.22)]"
               />
             </div>
           </div>
 
-          <div className="relative z-10">
-            <h1 className="mt-2 font-serif text-4xl font-bold tracking-tight text-[#2D4F3E] md:text-5xl">
+          <div className="relative z-10 rounded-[2rem] bg-[#F6F1E8] px-6 py-7 text-[#6F2E1E] shadow-[0_30px_90px_rgba(16,5,0,0.22)] sm:px-8 sm:py-8 md:px-10 md:py-10">
+            <h1 className="font-serif text-5xl font-normal leading-[0.95] tracking-tight text-[#6F2E1E] md:text-[4rem]">
               {group.name}
             </h1>
             {group.eyebrow ? (
-              <p className="mt-3 max-w-md text-sm font-bold uppercase leading-relaxed tracking-widest text-[#2D4F3E]/75">
+              <p className="mt-3 max-w-md text-sm font-bold uppercase leading-relaxed tracking-widest text-[#6F2E1E]/75">
                 {group.eyebrow}
               </p>
             ) : null}
-            <p className={`${group.eyebrow ? 'mt-2' : 'mt-3'} ${SHOP_BOTTLE_SIZE_CLASS}`}>
+            <p className={`${group.eyebrow ? 'mt-2' : 'mt-3'} ${SHOP_BOTTLE_SIZE_CLASS.replace('#2D4F3E', '#6F2E1E')}`}>
               {shopGroupSizeLabel(group, 'product')}
             </p>
 
-            <p className="mt-8 text-base font-medium leading-relaxed text-[#2D4F3E]/85 md:text-[1.05rem]">
+            <p className="mt-8 max-w-xl text-base font-medium leading-relaxed text-[#6F2E1E]/85 md:text-[1.08rem]">
               {drinkMeta?.description ?? group.description}
             </p>
 
-            <p className="mt-10 text-[0.65rem] font-black uppercase tracking-widest text-[#2D4F3E]/55">
+            <p className="mt-10 text-[0.65rem] font-black uppercase tracking-widest text-[#8C3F1F]/65">
               Choose size
             </p>
             <div className="mt-3 space-y-3">
@@ -138,52 +142,58 @@ const ProductShopPage: React.FC = () => {
                     }}
                     className={`flex w-full items-center justify-between gap-4 rounded-xl border px-4 py-4 text-left transition-colors md:px-5 ${
                       selected
-                        ? 'border-[#2D4F3E] bg-[#F9EFD4]'
-                        : 'border-[#2D4F3E]/30 bg-[#F9D067]/20 hover:border-[#2D4F3E]/50'
+                        ? 'border-[#8C3F1F] bg-[#F9EFD4]'
+                        : 'border-[#8C3F1F]/24 bg-[#F9D067]/18 hover:border-[#8C3F1F]/45'
                     }`}
                   >
                     <span className="flex items-center gap-3">
                       <span
                         className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border ${
-                          selected ? 'border-[#2D4F3E]' : 'border-[#2D4F3E]/35'
+                          selected ? 'border-[#8C3F1F]' : 'border-[#8C3F1F]/35'
                         }`}
                       >
-                        {selected ? <span className="h-2 w-2 rounded-full bg-[#2D4F3E]" /> : null}
+                        {selected ? <span className="h-2 w-2 rounded-full bg-[#8C3F1F]" /> : null}
                       </span>
-                      <span className="text-xs font-black uppercase tracking-widest text-[#2D4F3E]">
+                      <span className="text-xs font-black uppercase tracking-widest text-[#6F2E1E]">
                         {opt.label}
                       </span>
                     </span>
                     <span className="flex shrink-0 items-baseline gap-2 text-sm font-black">
                       {opt.compareAtPrice != null ? (
-                        <span className="text-[#2D4F3E]/45 line-through">
+                        <span className="text-[#6F2E1E]/45 line-through">
                           {formatShopPrice(opt.compareAtPrice)}
                         </span>
                       ) : null}
-                      <span className="text-[#2D4F3E]">{formatShopPrice(opt.price)}</span>
+                      <span className="text-[#6F2E1E]">{formatShopPrice(opt.price)}</span>
                     </span>
                   </button>
                 );
               })}
             </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <div className="flex items-center rounded-full border border-[#2D4F3E]/25 bg-white/60">
+            <p className="mt-8 text-3xl font-black text-[#8C3F1F]">
+              {formatShopPrice(
+                group.options.find((opt) => opt.productId === selectedProductId)?.price ?? group.options[0].price
+              )}
+            </p>
+
+            <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
+              <div className="flex items-center rounded-xl border border-[#8C3F1F]/25 bg-white/65">
                 <button
                   type="button"
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className="flex h-10 w-10 items-center justify-center text-lg font-bold text-[#2D4F3E]"
+                  className="flex h-11 w-11 items-center justify-center text-lg font-bold text-[#6F2E1E]"
                   aria-label="Decrease quantity"
                 >
                   −
                 </button>
-                <span className="min-w-[2rem] text-center text-sm font-black text-[#2D4F3E]">
+                <span className="min-w-[2rem] text-center text-sm font-black text-[#6F2E1E]">
                   {quantity}
                 </span>
                 <button
                   type="button"
                   onClick={() => setQuantity((q) => Math.min(10, q + 1))}
-                  className="flex h-10 w-10 items-center justify-center text-lg font-bold text-[#2D4F3E]"
+                  className="flex h-11 w-11 items-center justify-center text-lg font-bold text-[#6F2E1E]"
                   aria-label="Increase quantity"
                 >
                   +
@@ -193,7 +203,7 @@ const ProductShopPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => addItem(selectedProductId, quantity)}
-                className="flex-1 rounded-full bg-[#F47C3E] py-4 text-sm font-black uppercase tracking-widest text-white transition-transform duration-200 hover:brightness-[1.03] active:scale-[0.99] sm:flex-none sm:px-10"
+                className="flex-1 rounded-xl bg-[#8C3F1F] px-8 py-4 text-sm font-black uppercase tracking-widest text-white transition-transform duration-200 hover:bg-[#A34D27] active:scale-[0.99] sm:min-w-[18rem]"
               >
                 Add to cart
               </button>
@@ -202,11 +212,11 @@ const ProductShopPage: React.FC = () => {
         </div>
 
         {otherFlavors.length > 0 ? (
-          <div className="mt-16 border-t border-[#2D4F3E]/10 pt-12">
+          <div className="mt-12 rounded-[1.5rem] bg-[#F6F1E8] px-6 py-7 shadow-[0_18px_50px_rgba(16,5,0,0.16)] md:mt-14 md:px-8">
             <p className="text-xs font-black uppercase tracking-widest text-[#F47C3E]">
               Explore
             </p>
-            <h2 className="mt-2 font-serif text-2xl font-bold text-[#2D4F3E] md:text-3xl">
+            <h2 className="mt-2 font-serif text-2xl font-bold text-[#6F2E1E] md:text-3xl">
               Other Flavors
             </h2>
             <div className="mt-6 flex flex-wrap gap-3">
