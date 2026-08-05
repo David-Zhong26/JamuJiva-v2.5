@@ -64,7 +64,7 @@ const StickerFace: React.FC<{ sticker: Sticker; interactive?: boolean }> = ({
 }) => (
   <article
     style={{ backgroundColor: sticker.cardBg, color: sticker.textColor }}
-    className="relative h-[37.5rem] w-full rounded-[2rem] px-7 py-7 shadow-[0_32px_90px_rgba(44,15,4,0.26)] sm:h-[35rem] sm:px-9 sm:py-8 md:h-[32rem] md:px-10 md:py-8"
+    className="relative min-h-[40rem] w-full rounded-[2rem] px-7 py-7 shadow-[0_32px_90px_rgba(44,15,4,0.26)] sm:h-[35rem] sm:min-h-0 sm:px-9 sm:py-8 md:h-[32rem] md:px-10 md:py-8"
     aria-hidden={!interactive}
   >
     <div className="max-w-[33rem] pr-4 pb-24 md:pb-20">
@@ -152,7 +152,7 @@ const CulturePage: React.FC = () => {
   const outgoingSticker = outgoing ? ABOUT_STICKERS[outgoing.id] : null;
 
   return (
-    <main className="relative min-h-[100dvh] w-full overflow-x-hidden bg-[#8C3F1F]">
+    <main className="relative w-full overflow-x-hidden bg-[#8C3F1F] md:min-h-[100dvh]">
       <div className="absolute inset-0">
         <img
           src={heroMobileImg}
@@ -168,8 +168,8 @@ const CulturePage: React.FC = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_54%)]" />
       </div>
 
-      <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-7xl flex-col px-5 sm:px-8 md:px-10">
-        <div className="relative flex min-h-[100dvh] flex-1 items-center justify-center pt-16 md:pt-14 md:-translate-y-4 lg:-translate-y-6">
+      <div className="relative z-10 mx-auto flex max-w-7xl flex-col px-5 sm:px-8 md:min-h-[100dvh] md:px-10">
+        <div className="relative flex flex-1 items-start justify-center pb-28 pt-24 md:min-h-[100dvh] md:items-center md:pb-0 md:pt-14 md:-translate-y-4 lg:-translate-y-6">
           <button
             type="button"
             onClick={() => navigateSticker(-1)}
@@ -181,7 +181,7 @@ const CulturePage: React.FC = () => {
           </button>
 
           <div className="relative w-full max-w-[50rem] px-2 sm:px-8 md:px-16">
-            <div className="relative h-[37.5rem] sm:h-[35rem] md:h-[32rem]">
+            <div className="relative min-h-[40rem] sm:h-[35rem] sm:min-h-0 md:h-[32rem]">
               {renderOrder.map((stickerIndex) => {
                 const depth = stack.indexOf(stickerIndex);
                 const isTop = depth === 0;
