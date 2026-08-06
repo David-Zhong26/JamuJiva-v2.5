@@ -63,12 +63,18 @@ const StickerFace: React.FC<{ sticker: Sticker; interactive?: boolean }> = ({
 }) => (
   <article
     style={{ backgroundColor: sticker.cardBg, color: sticker.textColor }}
-    className="relative min-h-[40rem] w-full rounded-[2rem] px-7 py-7 shadow-[0_32px_90px_rgba(44,15,4,0.26)] sm:h-[35rem] sm:min-h-0 sm:px-9 sm:py-8 md:h-[32rem] md:px-10 md:py-8"
+    className="relative flex h-full w-full flex-col overflow-hidden rounded-[2rem] px-7 py-7 shadow-[0_32px_90px_rgba(44,15,4,0.26)] sm:px-9 sm:py-8 md:px-10 md:py-8"
     aria-hidden={!interactive}
   >
-    <div className="max-w-[33rem] pr-4 pb-24 md:pb-20">
-      <h1 className="font-serif text-2xl leading-[1] sm:text-3xl md:text-[2.75rem]">{sticker.title}</h1>
-      <div className="mt-7 space-y-4 text-sm leading-relaxed sm:text-base md:mt-7 md:space-y-4 md:text-[1rem] md:leading-[1.42]">
+    <div
+      className={`flex min-h-0 flex-1 flex-col max-w-[33rem] pr-1 ${
+        sticker.showFooter ? 'pb-20 md:pb-16' : 'pb-2'
+      }`}
+    >
+      <h1 className="shrink-0 font-serif text-2xl leading-[1.05] sm:text-3xl md:text-[2.75rem]">
+        {sticker.title}
+      </h1>
+      <div className="mt-5 min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain text-sm leading-relaxed sm:mt-6 sm:space-y-3.5 sm:text-[0.95rem] sm:leading-[1.45] md:mt-6 md:space-y-3.5 md:text-[1rem] md:leading-[1.42] [scrollbar-width:thin]">
         {sticker.paragraphs.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
         ))}
@@ -175,7 +181,7 @@ const CulturePage: React.FC = () => {
           </button>
 
           <div className="relative w-full max-w-[50rem] px-2 sm:px-8 md:px-16">
-            <div className="relative min-h-[40rem] sm:h-[35rem] sm:min-h-0 md:h-[32rem]">
+            <div className="relative h-[min(72dvh,42rem)] min-h-[36rem] sm:h-[38rem] sm:min-h-0 md:h-[34rem]">
               {renderOrder.map((stickerIndex) => {
                 const depth = stack.indexOf(stickerIndex);
                 const isTop = depth === 0;
