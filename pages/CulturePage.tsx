@@ -2,8 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import background4Img from '../materials/background 4.png';
-import heroMobileImg from '../materials/hero-mobile.png';
+import aboutGingerBg from '../materials/about-ginger-bg.png';
 
 const ABOUT_STICKERS = [
   {
@@ -155,14 +154,9 @@ const CulturePage: React.FC = () => {
     <main className="relative w-full overflow-x-hidden bg-[#8C3F1F] md:min-h-[100dvh]">
       <div className="absolute inset-0">
         <img
-          src={heroMobileImg}
+          src={aboutGingerBg}
           alt=""
-          className="h-full w-full object-cover object-center md:hidden"
-        />
-        <img
-          src={background4Img}
-          alt=""
-          className="hidden h-full w-full object-cover object-center md:block"
+          className="h-full w-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-[#7A2E14]/76" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08),transparent_54%)]" />

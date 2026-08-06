@@ -6,13 +6,13 @@ import heroMobileImg from '../materials/hero-mobile.png';
 const EventsPage: React.FC = () => (
   <main className="relative flex jj-min-screen items-center justify-center overflow-hidden">
     <div className="absolute inset-0">
-      {/* Mobile: same cover as homepage hero motion still */}
+      {/* Mobile: motion-blur cover */}
       <img
         src={heroMobileImg}
         alt=""
         className="h-full w-full object-cover object-center md:hidden"
       />
-      {/* Desktop keeps the landscape cover */}
+      {/* Desktop: background 4 */}
       <img
         src={background4Img}
         alt=""
