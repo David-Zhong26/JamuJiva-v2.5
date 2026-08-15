@@ -65,8 +65,10 @@ const ProductRevealSection: React.FC = () => {
           }`}
         />
         <div
-          className={`pointer-events-none absolute top-[max(3.5rem,calc(env(safe-area-inset-top)+2rem))] z-20 flex items-center gap-1.5 whitespace-nowrap text-[0.62rem] font-bold uppercase tracking-widest md:hidden ${
-            flavor.slug === 'spiced-ivory' ? 'right-[1.375rem]' : 'right-5'
+          className={`pointer-events-none absolute z-20 flex items-center gap-1.5 whitespace-nowrap text-[0.62rem] font-bold uppercase tracking-widest md:text-xs ${
+            flavor.slug === 'spiced-ivory'
+              ? 'right-[1.375rem] top-[max(3.5rem,calc(env(safe-area-inset-top)+2rem))] md:bottom-8 md:right-10 md:top-auto'
+              : 'right-5 top-[max(3.5rem,calc(env(safe-area-inset-top)+2rem))] md:bottom-8 md:right-10 md:top-auto'
           }`}
           style={{ color: flavor.bodyColor }}
           aria-hidden
@@ -76,7 +78,7 @@ const ProductRevealSection: React.FC = () => {
             animate={{ y: [0, 4, 0] }}
             transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
           >
-            <ChevronDown className="h-3.5 w-3.5 stroke-[3]" />
+            <ChevronDown className="h-3.5 w-3.5 stroke-[3] md:h-4 md:w-4" />
           </motion.div>
         </div>
         <div
