@@ -1,14 +1,14 @@
 import React from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import ShopIndex from '../components/ShopIndex';
-import shopDrinksImg from '../materials/shop-drinks.png';
+import shopDrinksComingSoonBg from '../materials/shop-drinks-coming-soon-bg.png';
 
 /** Temporary stand-in while purchase is paused. Full shop lives on archive/shop-with-purchase. */
 const DrinksComingSoon: React.FC = () => (
   <main className="relative flex jj-min-screen items-center justify-center overflow-hidden">
     <div className="absolute inset-0">
       <img
-        src={shopDrinksImg}
+        src={shopDrinksComingSoonBg}
         alt=""
         className="h-full w-full object-cover object-center"
       />

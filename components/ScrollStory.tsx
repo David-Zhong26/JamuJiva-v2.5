@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronDown, Flower2, Heart, Leaf, Sparkles } from 'lucide-react';
+import { Flower2, Heart, Leaf, Sparkles } from 'lucide-react';
 import background3Img from '../materials/background 3.png';
 import background4Img from '../materials/background 4.png';
 import heroMobileImg from '../materials/hero-mobile.png';
 import artworkImg from '../materials/Artwork.png';
 import whiteLogo from '../materials/white jiva logo.png';
 import DailyRitualSection from './DailyRitualSection';
-import { PRODUCT_DRINKS } from '../constants/productDrinks';
 
 const HERO_BG_INTERVAL_MS = 4000;
 
@@ -24,150 +23,6 @@ const BENEFITS_MARQUEE_ITEMS = [
   'Gluten Free',
   'Real Ingredients Only',
 ] as const;
-
-const ProductRevealSection: React.FC = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end end'],
-  });
-
-  const revealProgress = useTransform(scrollYProgress, [0.12, 0.82], [0, 100]);
-  const gingerWidth = useTransform(revealProgress, (v) => `${100 - v}%`);
-  const mintWidth = useTransform(revealProgress, (v) => `${v}%`);
-  const dividerLeft = useTransform(revealProgress, (v) => `${100 - v}%`);
-  const dividerOpacity = useTransform(scrollYProgress, [0.08, 0.12, 0.9, 1], [0, 1, 1, 0]);
-
-  const goldenGlow = PRODUCT_DRINKS[0];
-  const spicedIvory = PRODUCT_DRINKS[1];
-
-  const renderFlavorLayer = (flavor: (typeof PRODUCT_DRINKS)[number]) => (
-    <div
-      className="absolute inset-0"
-      style={{
-        color: flavor.textColor,
-        background: flavor.backgroundGradient,
-      }}
-    >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.14),transparent_52%)]" />
-      <div
-        className={`relative z-10 flex h-full flex-col justify-end gap-5 overflow-visible px-5 pb-10 pt-24 sm:px-8 md:justify-center md:gap-8 md:px-14 md:py-12${
-          flavor.slug === 'spiced-ivory' ? ' md:translate-x-1' : ''
-        }`}
-      >
-        <img
-          src={flavor.bottleImage}
-          alt={flavor.name}
-          className={`pointer-events-none absolute left-1/2 z-0 jj-vh-can h-[44vh] w-auto max-w-none -translate-y-1/2 object-contain sm:jj-vh-can-sm sm:h-[52vh] md:h-[86vh] ${
-            flavor.slug === 'spiced-ivory'
-              ? '-translate-x-[50.5%] top-[39.5%] md:top-[51.5%]'
-              : '-translate-x-1/2 top-[38%] md:top-1/2'
-          }`}
-        />
-        <div
-          className={`pointer-events-none absolute z-20 flex items-center gap-1.5 whitespace-nowrap text-[0.62rem] font-bold uppercase tracking-widest md:text-xs ${
-            flavor.slug === 'spiced-ivory'
-              ? 'right-[1.375rem] top-[max(3.5rem,calc(env(safe-area-inset-top)+2rem))] md:bottom-8 md:right-10 md:top-auto'
-              : 'right-5 top-[max(3.5rem,calc(env(safe-area-inset-top)+2rem))] md:bottom-8 md:right-10 md:top-auto'
-          }`}
-          style={{ color: flavor.bodyColor }}
-          aria-hidden
-        >
-          Scroll to explore
-          <motion.div
-            animate={{ y: [0, 4, 0] }}
-            transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
-          >
-            <ChevronDown className="h-3.5 w-3.5 stroke-[3] md:h-4 md:w-4" />
-          </motion.div>
-        </div>
-        <div
-          className={`relative z-10 grid w-full gap-6 md:grid-cols-2 md:items-center md:gap-8 md:pl-0${
-            flavor.slug === 'spiced-ivory' ? ' pl-4' : flavor.slug === 'bali-gold' ? ' pl-4' : ''
-          }`}
-        >
-          <div className="text-left md:translate-x-3 lg:translate-x-4">
-            <h2
-              className="-translate-x-2 font-instrument text-5xl font-normal leading-[0.88] sm:text-6xl md:translate-x-0 md:text-8xl"
-              style={{ color: flavor.textColor }}
-            >
-              {flavor.name.split(' ').map((word, index, words) => (
-                <React.Fragment key={word}>
-                  {word.toUpperCase()}
-                  {index < words.length - 1 ? <br /> : null}
-                </React.Fragment>
-              ))}
-            </h2>
-            <p
-              className="-translate-x-1 mt-5 font-lato text-base uppercase tracking-[0.18em] sm:text-lg md:translate-x-0 md:text-xl"
-              style={{ color: flavor.bodyColor }}
-            >
-              {flavor.eyebrow}
-            </p>
-            <p
-              className="-translate-x-1 mt-2 font-lato text-xs font-bold uppercase tracking-[0.2em] opacity-80 md:translate-x-0 md:text-sm"
-              style={{ color: flavor.bodyColor }}
-            >
-              {flavor.bottleSize} per bottle
-            </p>
-          </div>
-
-          <div
-            className={`max-w-sm text-left md:col-start-2 md:mr-0 ${
-              flavor.slug === 'spiced-ivory'
-                ? '-translate-x-4 sm:-translate-x-4 md:-translate-x-7 md:justify-self-end lg:-translate-x-10 lg:mr-0'
-                : '-translate-x-2 sm:-translate-x-1 md:-translate-x-4 md:justify-self-end lg:mr-2 lg:-translate-x-6'
-            }`}
-          >
-            <p
-              className="font-lato text-sm font-normal leading-relaxed sm:text-base md:min-h-[6.75rem] md:text-lg lg:min-h-[7.25rem]"
-              style={{ color: flavor.bodyColor }}
-            >
-              {'descriptionDesktop' in flavor && flavor.descriptionDesktop ? (
-                <>
-                  <span className="md:hidden">{flavor.description}</span>
-                  <span className="hidden md:inline">{flavor.descriptionDesktop}</span>
-                </>
-              ) : (
-                flavor.description
-              )}
-            </p>
-            <Link
-              to="/shop"
-              style={{
-                backgroundColor: flavor.buttonBg,
-                color: flavor.buttonText,
-                borderColor: flavor.buttonBorder,
-              }}
-              className="mt-5 inline-flex items-center justify-center rounded-full border px-6 py-3 text-xs font-black uppercase tracking-[0.14em] transition-all hover:brightness-105 sm:mt-8 sm:px-8 sm:py-4 sm:text-sm md:mt-6"
-            >
-              Shop now
-            </Link>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-
-  return (
-    <section ref={sectionRef} id="benefits" className="relative jj-vh-section-220 bg-[#F6F1E8] md:bg-[#F6F1E8]">
-      <div className="sticky top-0 jj-vh-screen overflow-hidden">
-        <motion.div style={{ width: gingerWidth }} className="absolute inset-y-0 left-0 overflow-hidden">
-          <div className="absolute inset-y-0 left-0 w-screen">{renderFlavorLayer(goldenGlow)}</div>
-        </motion.div>
-
-        <motion.div style={{ width: mintWidth }} className="absolute inset-y-0 right-0 overflow-hidden">
-          <div className="absolute inset-y-0 right-0 w-screen">{renderFlavorLayer(spicedIvory)}</div>
-        </motion.div>
-
-        <motion.div
-          style={{ left: dividerLeft, opacity: dividerOpacity }}
-          className="absolute top-0 z-30 h-full w-[2px] -translate-x-1/2 bg-white/80 shadow-[0_0_0_1px_rgba(45,79,62,0.15),0_0_22px_rgba(255,255,255,0.35)]"
-        />
-      </div>
-    </section>
-  );
-};
 
 const HomePromoCards: React.FC = () => {
   return (
@@ -412,8 +267,6 @@ const ScrollStory: React.FC = () => {
           ))}
         </div>
       </div>
-
-      <ProductRevealSection />
 
       <DailyRitualSection />
 

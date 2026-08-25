@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import shopHeroImg from '../materials/background 3.png';
-import shopDrinksImg from '../materials/shop-drinks.png';
+import shopDrinksImg from '../materials/shop-drinks-card.png';
 import shopMerchImg from '../materials/shop-merch.png';
 
 const cardClassName =
