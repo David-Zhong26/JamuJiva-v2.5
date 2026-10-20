@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
     (isShopRoute && !isShopCheckoutResult) ||
     location.pathname === '/culture' ||
     location.pathname.startsWith('/merch') ||
-    location.pathname.startsWith('/journal') ||
+    location.pathname === '/journal' ||
     location.pathname.startsWith('/events');
 
   const [navCompact, setNavCompact] = useState(!isOverlayNav);
