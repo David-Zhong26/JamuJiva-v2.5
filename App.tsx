@@ -16,6 +16,7 @@ import EventsAdminPage from './pages/EventsAdminPage';
 import OrdersAdminPage from './pages/OrdersAdminPage';
 import FaqPage from './pages/FaqPage';
 import JournalPage from './pages/JournalPage';
+import JournalArticlePage from './pages/JournalArticlePage';
 import RitualPage from './pages/RitualPage';
 import TermsPage from './pages/TermsPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
@@ -71,6 +72,7 @@ const AppShell: React.FC = () => {
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/ritual" element={<RitualPage />} />
           <Route path="/journal" element={<JournalPage />} />
+          <Route path="/journal/:slug" element={<JournalArticlePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/account" element={<AccountPage />} />
           <Route path="/auth/callback" element={<AuthCallbackPage />} />

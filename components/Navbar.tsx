@@ -42,7 +42,7 @@ const Navbar: React.FC = () => {
     (isShopRoute && !isShopCheckoutResult) ||
     location.pathname === '/culture' ||
     location.pathname.startsWith('/merch') ||
-    location.pathname.startsWith('/journal') ||
+    location.pathname === '/journal' ||
     location.pathname === '/login' ||
     location.pathname === '/account' ||
     location.pathname.startsWith('/events');
