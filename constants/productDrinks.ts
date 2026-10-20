@@ -3,7 +3,7 @@ import spicedIvoryBottle from '../materials/spiced ivory bottle transparent.png'
 
 export const PRODUCT_DRINKS = [
   {
-    slug: 'bali-gold' as const,
+    slug: 'golden-glow' as const,
     name: 'Golden Glow',
     shortLabel: 'Golden Glow',
     eyebrow: 'Turmeric rooted daily glow',

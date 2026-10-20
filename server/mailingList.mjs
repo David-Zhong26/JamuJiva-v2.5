@@ -1,14 +1,18 @@
 import { createClient } from '@supabase/supabase-js';
+import { getServerKey, getSupabaseUrl } from './supabaseAuth.mjs';
+import { recordPrelaunchJoin } from './prelaunch.mjs';
 
 function getSupabaseConfig() {
-  const url = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
-  const key = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY;
-  return { url, key };
+  return { url: getSupabaseUrl(), key: getServerKey() };
 }
 
 const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
-export async function subscribeToMailingList(body) {
+export async function subscribeToMailingList(body, accessToken = '') {
+  if (String(body?.source ?? '') === 'prelaunch') {
+    return recordPrelaunchJoin(accessToken, body?.firstName ?? body?.first_name);
+  }
+
   const { url, key } = getSupabaseConfig();
   if (!url || !key) {
     return {

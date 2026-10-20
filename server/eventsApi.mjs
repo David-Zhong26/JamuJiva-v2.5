@@ -1,12 +1,8 @@
 import { createClient } from '@supabase/supabase-js';
+import { getServerKey, getSupabaseUrl } from './supabaseAuth.mjs';
 
 function getSupabaseConfig() {
-  const url = process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
-  const key =
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.VITE_SUPABASE_ANON_KEY ||
-    process.env.SUPABASE_ANON_KEY;
-  return { url, key };
+  return { url: getSupabaseUrl(), key: getServerKey() };
 }
 
 function getAdminPassword() {

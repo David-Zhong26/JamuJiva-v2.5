@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Instagram, Menu, X } from 'lucide-react';
+import { CircleUser, Instagram, Menu, ShoppingCart as ShoppingCartIcon, X } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import { useCart } from '../contexts/CartContext';
 import colorLogo from '../materials/Jiva (8）.png';
 import whiteLogo from '../materials/white jiva logo.png';
 
@@ -24,6 +26,10 @@ const NAV_LINKS = [
 
 const Navbar: React.FC = () => {
   const location = useLocation();
+  const { user } = useAuth();
+  const { itemCount, setOpen: setCartOpen } = useCart();
+  const accountHref = user ? '/account' : '/login';
+  const accountLabel = user ? 'Account' : 'Sign in';
   const isShopRoute =
     location.pathname === '/shop' ||
     location.pathname === '/shop/' ||
@@ -37,6 +43,8 @@ const Navbar: React.FC = () => {
     location.pathname === '/culture' ||
     location.pathname.startsWith('/merch') ||
     location.pathname.startsWith('/journal') ||
+    location.pathname === '/login' ||
+    location.pathname === '/account' ||
     location.pathname.startsWith('/events');
 
   const [navCompact, setNavCompact] = useState(!isOverlayNav);
@@ -82,6 +90,27 @@ const Navbar: React.FC = () => {
   const closeAll = () => {
     setMobileOpen(false);
   };
+
+  const openCart = () => {
+    closeAll();
+    setCartOpen(true);
+  };
+
+  const renderCartButton = (className: string) => (
+    <button
+      type="button"
+      onClick={openCart}
+      aria-label={itemCount > 0 ? `Shopping cart, ${itemCount} items` : 'Shopping cart'}
+      className={`relative inline-flex items-center justify-center transition-opacity hover:opacity-80 ${className}`}
+    >
+      <ShoppingCartIcon className="h-7 w-7" strokeWidth={1.75} />
+      {itemCount > 0 ? (
+        <span className="absolute -right-1.5 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#8C3F1F] px-1 text-[0.6rem] font-black leading-none text-white">
+          {itemCount}
+        </span>
+      ) : null}
+    </button>
+  );
 
   const linkClass =
     'font-bold text-sm uppercase tracking-widest transition-colors hover:text-[#F47C3E]';
@@ -164,7 +193,20 @@ const Navbar: React.FC = () => {
           <Link to="/" onClick={closeAll} className="inline-flex shrink-0">
             {renderLogo('block w-auto origin-top-left')}
           </Link>
-          {renderMobileMenuButton()}
+          <div className="flex items-center gap-2">
+            {renderCartButton(showCompactNav ? 'text-[#8C3F1F]' : 'text-white')}
+            <Link
+              to={accountHref}
+              onClick={closeAll}
+              aria-label={accountLabel}
+              className={`inline-flex items-center justify-center transition-opacity hover:opacity-80 ${
+                showCompactNav ? 'text-[#8C3F1F]' : 'text-white'
+              }`}
+            >
+              <CircleUser className="h-7 w-7" strokeWidth={1.75} />
+            </Link>
+            {renderMobileMenuButton()}
+          </div>
         </div>
       </div>
 
@@ -194,19 +236,30 @@ const Navbar: React.FC = () => {
             </div>
           </motion.div>
 
-          <motion.a
-            href={INSTAGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute right-9 top-1/2 inline-flex -translate-y-1/2 items-center justify-center transition-opacity hover:opacity-80"
-            animate={{
-              color: showCompactNav ? NAV_BROWN : '#FFFFFF',
-            }}
+          <motion.div
+            className="absolute right-9 top-1/2 z-10 flex -translate-y-1/2 items-center gap-5"
+            animate={{ color: showCompactNav ? NAV_BROWN : '#FFFFFF' }}
             transition={NAV_TRANSITION}
-            aria-label="Instagram"
           >
-            <Instagram className="h-7 w-7" />
-          </motion.a>
+            {renderCartButton('')}
+            <Link
+              to={accountHref}
+              onClick={closeAll}
+              aria-label={accountLabel}
+              className="inline-flex items-center justify-center transition-opacity hover:opacity-80"
+            >
+              <CircleUser className="h-7 w-7" strokeWidth={1.75} />
+            </Link>
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center transition-opacity hover:opacity-80"
+              aria-label="Instagram"
+            >
+              <Instagram className="h-7 w-7" />
+            </a>
+          </motion.div>
         </motion.div>
       ) : (
         <div className="relative hidden w-full px-9 py-4 md:block" style={{ background: PAGE_BG_SOFT }}>
@@ -224,15 +277,26 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          <a
-            href={INSTAGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute right-9 top-1/2 inline-flex -translate-y-1/2 items-center justify-center text-[#8C3F1F] transition-opacity hover:opacity-80"
-            aria-label="Instagram"
-          >
-            <Instagram className="h-7 w-7" />
-          </a>
+          <div className="absolute right-9 top-1/2 z-10 flex -translate-y-1/2 items-center gap-5 text-[#8C3F1F]">
+            {renderCartButton('')}
+            <Link
+              to={accountHref}
+              onClick={closeAll}
+              aria-label={accountLabel}
+              className="inline-flex items-center justify-center transition-opacity hover:opacity-80"
+            >
+              <CircleUser className="h-7 w-7" strokeWidth={1.75} />
+            </Link>
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center transition-opacity hover:opacity-80"
+              aria-label="Instagram"
+            >
+              <Instagram className="h-7 w-7" />
+            </a>
+          </div>
         </div>
       )}
 
@@ -266,6 +330,9 @@ const Navbar: React.FC = () => {
                 </button>
               </div>
               <nav className="flex flex-col gap-1 font-bold text-xs uppercase tracking-widest text-[#8C3F1F]">
+                <Link to={accountHref} onClick={closeAll} className="rounded-lg py-3 hover:bg-[#F9D067]/35">
+                  {accountLabel}
+                </Link>
                 {NAV_LINKS.map((link) => (
                   <Link
                     key={link.to}

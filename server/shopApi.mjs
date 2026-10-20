@@ -1,4 +1,7 @@
 import Stripe from 'stripe';
+import { getUserFromAccessToken } from './supabaseAuth.mjs';
+import { normalizeZip } from './orderState.mjs';
+import { FIRST_PRELAUNCH_BATCH } from './prelaunch.mjs';
 
 const PRODUCT_ENV_KEYS = {
   golden: ['STRIPE_PRODUCT_GOLDEN', 'STRIPE_PRICE_GOLDEN'],
@@ -56,7 +59,7 @@ function getClientUrl() {
   return process.env.CLIENT_URL || 'http://localhost:3000';
 }
 
-function getStripe() {
+export function getStripe() {
   if (!process.env.STRIPE_SECRET_KEY) return null;
   return new Stripe(process.env.STRIPE_SECRET_KEY);
 }
@@ -70,16 +73,7 @@ function calculateOnlineOrderFee(subtotalCents) {
   return Math.ceil((subtotalCents + fixedFeeCents) / (1 - percentageFee) - subtotalCents);
 }
 
-async function resolvePriceInfo(stripe, productKey) {
-  const label = PRODUCT_LABELS[productKey] ?? productKey;
-  const envKeys = PRODUCT_ENV_KEYS[productKey] ?? [];
-  const stripeRef = getStripeRef(productKey);
-  if (!stripeRef) {
-    throw new Error(
-      `Missing Stripe config for "${label}" (${envKeys.join(' or ')} in .env).`
-    );
-  }
-
+async function resolveStripeRef(stripe, label, stripeRef) {
   if (priceCache.has(stripeRef)) {
     return priceCache.get(stripeRef);
   }
@@ -118,9 +112,25 @@ async function resolvePriceInfo(stripe, productKey) {
   return priceInfo;
 }
 
+async function resolvePriceInfo(stripe, productKey) {
+  const label = PRODUCT_LABELS[productKey] ?? productKey;
+  const envKeys = PRODUCT_ENV_KEYS[productKey] ?? [];
+  const stripeRef = getStripeRef(productKey);
+  if (!stripeRef) {
+    throw new Error(
+      `Missing Stripe config for "${label}" (${envKeys.join(' or ')} in .env).`
+    );
+  }
+  return resolveStripeRef(stripe, label, stripeRef);
+}
+
 function isZipEligible(zip, deliveryZips) {
-  const normalized = String(zip || '').trim();
-  return deliveryZips.includes(normalized);
+  const normalized = normalizeZip(zip);
+  return Boolean(normalized) && deliveryZips.includes(normalized);
+}
+
+export function isDeliveryZip(zip) {
+  return isZipEligible(zip, getDeliveryZips());
 }
 
 function buildCheckoutCustomFields(isPickup = false) {
@@ -178,10 +188,17 @@ export function getDeliveryZipsPayload() {
   return { zips: getDeliveryZips() };
 }
 
-export async function createCheckoutSession(body) {
+export async function createCheckoutSession(body, accessToken = '') {
   const stripe = getStripe();
   if (!stripe) {
     return { status: 503, body: { error: 'Stripe is not configured on the server.' } };
+  }
+
+  let accountUser = null;
+  try {
+    accountUser = await getUserFromAccessToken(accessToken);
+  } catch (err) {
+    console.warn('[checkout] could not read account session', err);
   }
 
   const deliveryZips = getDeliveryZips();
@@ -239,11 +256,14 @@ export async function createCheckoutSession(body) {
     cancel_url: `${clientUrl}/shop/cancel`,
     allow_promotion_codes: true,
     custom_fields: buildCheckoutCustomFields(isPickup),
+    ...(accountUser?.id ? { client_reference_id: accountUser.id } : {}),
+    ...(accountUser?.email ? { customer_email: accountUser.email } : {}),
     metadata: {
       delivery_zip: String(zip ?? '').trim(),
       fulfillment_type: isPickup ? 'pickup' : 'delivery',
       pickup_location: isPickup ? String(accessLabel ?? 'NY Indonesian Food Bazaar') : '',
       source: 'jamu-jiva-shop',
+      ...(accountUser?.id ? { user_id: accountUser.id } : {}),
     },
     ...(isPickup
       ? {}
@@ -259,6 +279,66 @@ export async function createCheckoutSession(body) {
   };
 
   const session = await stripe.checkout.sessions.create(sessionConfig);
+
+  return { status: 200, body: { url: session.url } };
+}
+
+/** First-batch Golden Glow. Charges STRIPE_EARLY_BIRD_PRICE_ID and tags the order as a pre-order. */
+export async function createPrelaunchCheckout(accessToken = '', quantity = 1) {
+  const stripe = getStripe();
+  if (!stripe) {
+    return { status: 503, body: { error: 'Stripe is not configured on the server.' } };
+  }
+
+  const qty = Number(quantity);
+  if (!Number.isInteger(qty) || qty < 1 || qty > 20) {
+    return { status: 400, body: { error: 'Invalid quantity.' } };
+  }
+
+  const stripeRef = String(process.env.STRIPE_EARLY_BIRD_PRICE_ID || '').trim();
+  if (!stripeRef) {
+    return { status: 503, body: { error: 'Early-bird price is not configured.' } };
+  }
+
+  let accountUser = null;
+  try {
+    accountUser = accessToken ? await getUserFromAccessToken(accessToken) : null;
+  } catch (err) {
+    console.warn('[prelaunch checkout] could not read account session', err);
+  }
+
+  let priceId;
+  try {
+    ({ priceId } = await resolveStripeRef(stripe, 'Golden Glow pre-launch', stripeRef));
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Invalid early-bird price.';
+    return { status: 400, body: { error: message } };
+  }
+
+  const clientUrl = getClientUrl();
+  const session = await stripe.checkout.sessions.create({
+    mode: 'payment',
+    line_items: [{ price: priceId, quantity: qty }],
+    success_url: `${clientUrl}/shop/success?session_id={CHECKOUT_SESSION_ID}&preorder=1`,
+    cancel_url: `${clientUrl}/shop/drinks`,
+    custom_fields: buildCheckoutCustomFields(false),
+    shipping_address_collection: { allowed_countries: ['US'] },
+    custom_text: {
+      shipping_address: {
+        message:
+          'This is a pre-order for the first Golden Glow batch. We collect your address now and contact you before delivery.',
+      },
+    },
+    ...(accountUser?.id ? { client_reference_id: accountUser.id } : {}),
+    ...(accountUser?.email ? { customer_email: accountUser.email } : {}),
+    metadata: {
+      source: 'prelaunch',
+      order_kind: 'preorder',
+      batch_id: FIRST_PRELAUNCH_BATCH,
+      fulfillment_type: 'delivery',
+      ...(accountUser?.id ? { user_id: accountUser.id } : {}),
+    },
+  });
 
   return { status: 200, body: { url: session.url } };
 }

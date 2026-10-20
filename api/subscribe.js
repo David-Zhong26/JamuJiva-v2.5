@@ -7,7 +7,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    const result = await subscribeToMailingList(req.body);
+    const token = String(req.headers.authorization || '').replace(/^Bearer\s+/i, '');
+    const result = await subscribeToMailingList(req.body, token);
     return res.status(result.status).json(result.body);
   } catch (err) {
     console.error('[subscribe]', err);

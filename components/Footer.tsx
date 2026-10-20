@@ -13,9 +13,9 @@ const headingClass = 'mb-4 font-serif text-lg font-bold text-black md:text-lg';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="relative z-20 border-t border-black/10 bg-[#F6F1E8] px-5 py-12 md:px-6 md:py-20">
-      <div className="mx-auto max-w-6xl">
-        <div className="md:flex md:items-start md:justify-between md:gap-12">
+    <footer className="relative z-20 border-t border-black/10 bg-[#F6F1E8] px-5 py-10 md:px-6 md:py-12">
+      <div className="mx-auto max-w-5xl">
+        <div className="md:flex md:items-start md:justify-between md:gap-10">
           <div className="max-w-xs md:translate-x-6 md:pl-0">
             <Link to="/" className="mb-2 inline-block pl-4 md:pl-0">
               <img src={logo} alt="Jiva" className="h-[44px] w-auto" decoding="async" />
@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div className="mt-8 w-full md:mt-0 md:w-auto md:-translate-x-10">
-            <div className="grid grid-cols-2 gap-x-8 md:flex md:gap-x-16">
+            <div className="grid grid-cols-2 gap-x-8 md:flex md:gap-x-12">
               <div className="pl-8 md:pl-0">
                 <h4 className={headingClass}>Shop</h4>
                 <ul className="space-y-4">
@@ -51,6 +51,11 @@ const Footer: React.FC = () => {
                     <a href="mailto:info@jivalivin.com" className={linkClass}>
                       Contact
                     </a>
+                  </li>
+                  <li>
+                    <Link to="/account" className={linkClass}>
+                      Account
+                    </Link>
                   </li>
                   <li>
                     <Link to="/faq" className={linkClass}>
@@ -144,7 +149,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-black/10 pt-8 md:mt-20 md:pt-10">
+        <div className="mt-8 border-t border-black/10 pt-6 md:mt-10 md:pt-6">
           <p className="pl-6 text-sm font-medium text-black/35 md:hidden md:pl-0">© 2026 Jiva Drinks LLC.</p>
           <div className="mt-2 pl-6 md:mt-0 md:pl-0">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium text-black/35 md:hidden">

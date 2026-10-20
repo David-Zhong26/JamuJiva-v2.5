@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { cartLineLabel, useCart } from '../contexts/CartContext';
 import { cartLineTotal, formatShopPrice, shopProductById } from '../constants/shopProducts';
 import { useShopAccess } from '../contexts/ShopAccessContext';
+import { useAuth } from '../contexts/AuthContext';
 
 const QuantityStepper: React.FC<{
   value: number;
@@ -36,6 +38,7 @@ const CartPanel: React.FC<{
 }> = ({ onClose }) => {
   const { lines, itemCount, setQuantity, removeItem, clearCart } = useCart();
   const { zip, accessMode, accessLabel } = useShopAccess();
+  const { user, session } = useAuth();
   const [checkingOut, setCheckingOut] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const visibleError =
@@ -57,7 +60,10 @@ const CartPanel: React.FC<{
     try {
       const res = await fetch('/api/checkout', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : {}),
+        },
         body: JSON.stringify({
           zip,
           fulfillmentType: accessMode,
@@ -82,8 +88,8 @@ const CartPanel: React.FC<{
   return (
     <div className="flex h-full flex-col bg-[#FBF9F4]">
       <div className="flex items-center justify-between border-b border-[#8C3F1F]/12 px-5 py-5 md:px-6">
-        <h2 className="font-serif text-2xl font-bold lowercase tracking-tight text-[#6F2E1E]">
-          my shopping cart
+        <h2 className="font-serif text-2xl font-bold tracking-tight text-[#6F2E1E]">
+          My shopping cart
         </h2>
         <button
           type="button"
@@ -192,6 +198,15 @@ const CartPanel: React.FC<{
           </span>
         </div>
 
+        {lines.length > 0 && !user ? (
+          <p className="mb-3 text-center text-xs leading-relaxed text-[#6F2E1E]/70">
+            <Link to="/login?next=/shop" onClick={onClose} className="font-bold underline underline-offset-2">
+              Sign in
+            </Link>{' '}
+            so this order shows up in your account.
+          </p>
+        ) : null}
+
         {visibleError ? <p className="mb-3 text-center text-sm text-[#B45309]">{visibleError}</p> : null}
 
         <button
@@ -219,25 +234,10 @@ const CartPanel: React.FC<{
 };
 
 const ShoppingCart: React.FC = () => {
-  const { isOpen, setOpen, itemCount } = useCart();
+  const { isOpen, setOpen } = useCart();
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-5 z-40 flex items-center gap-2 rounded-full bg-[#F6F1E8] px-5 py-3.5 text-xs font-black uppercase tracking-widest text-[#6F2E1E] shadow-lg md:bottom-auto md:right-6 md:top-28"
-        aria-label="Open cart"
-      >
-        <ShoppingBag className="h-4 w-4" />
-        Cart
-        {itemCount > 0 ? (
-          <span className="flex h-5 min-w-[1.25rem] items-center justify-center rounded-full bg-[#8C3F1F] px-1 text-[0.65rem] text-white">
-            {itemCount}
-          </span>
-        ) : null}
-      </button>
-
       {isOpen ? (
         <div
           className="fixed inset-0 z-[65] bg-[#3A1A10]/40 backdrop-blur-sm"

@@ -13,12 +13,20 @@ import CulturePage from './pages/CulturePage';
 import EventsPage from './pages/EventsPage';
 import EventDetailPage from './pages/EventDetailPage';
 import EventsAdminPage from './pages/EventsAdminPage';
+import OrdersAdminPage from './pages/OrdersAdminPage';
 import FaqPage from './pages/FaqPage';
 import JournalPage from './pages/JournalPage';
 import RitualPage from './pages/RitualPage';
 import TermsPage from './pages/TermsPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import LoginPage from './pages/LoginPage';
+import AccountPage from './pages/AccountPage';
+import AuthCallbackPage from './pages/AuthCallbackPage';
+import ShoppingCart from './components/ShoppingCart';
 import { MailingListProvider } from './contexts/MailingListContext';
+import { AuthProvider } from './contexts/AuthContext';
+import { CartProvider } from './contexts/CartContext';
+import { ShopAccessProvider } from './contexts/ShopAccessContext';
 import shopMerchImg from './materials/shop-merch.png';
 
 const MerchPlaceholder: React.FC = () => (
@@ -43,11 +51,12 @@ const MerchPlaceholder: React.FC = () => (
 
 const AppShell: React.FC = () => {
   const { pathname } = useLocation();
-  const hideFooter = pathname.startsWith('/admin');
+  const hideFooter = pathname.startsWith('/admin') || pathname === '/login';
 
   return (
     <div className="relative">
       <Navbar />
+      <ShoppingCart />
       <main className="pt-0">
         <Routes>
           <Route path="/" element={<ScrollStory />} />
@@ -58,9 +67,14 @@ const AppShell: React.FC = () => {
           <Route path="/events" element={<EventsPage />} />
           <Route path="/events/:eventId" element={<EventDetailPage />} />
           <Route path="/admin/events" element={<EventsAdminPage />} />
+          <Route path="/admin/orders" element={<OrdersAdminPage />} />
           <Route path="/faq" element={<FaqPage />} />
           <Route path="/ritual" element={<RitualPage />} />
           <Route path="/journal" element={<JournalPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/account" element={<AccountPage />} />
+          <Route path="/auth/callback" element={<AuthCallbackPage />} />
+          <Route path="/auth/recovery" element={<AuthCallbackPage />} />
           <Route path="/merch" element={<MerchPlaceholder />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
@@ -74,12 +88,18 @@ const AppShell: React.FC = () => {
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <MailingListProvider>
-        <HashScroll />
-        <AppShell />
-        <Analytics />
-        <SpeedInsights />
-      </MailingListProvider>
+      <AuthProvider>
+        <ShopAccessProvider>
+          <CartProvider>
+            <MailingListProvider>
+              <HashScroll />
+              <AppShell />
+              <Analytics />
+              <SpeedInsights />
+            </MailingListProvider>
+          </CartProvider>
+        </ShopAccessProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 };

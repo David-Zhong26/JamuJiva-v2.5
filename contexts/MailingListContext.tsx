@@ -21,6 +21,12 @@ export const MailingListProvider: React.FC<{ children: React.ReactNode }> = ({ c
   }, []);
 
   useEffect(() => {
+    const isAccountFlow =
+      location.pathname.startsWith('/login') ||
+      location.pathname.startsWith('/account') ||
+      location.pathname.startsWith('/auth');
+    if (isAccountFlow) return;
+
     const params = new URLSearchParams(location.search);
     if (params.get('waitlist') === '1' || autoOpenedRef.current) return;
 
@@ -49,7 +55,7 @@ export const MailingListProvider: React.FC<{ children: React.ReactNode }> = ({ c
       window.clearTimeout(timerId);
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [location.search]);
+  }, [location.pathname, location.search]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
